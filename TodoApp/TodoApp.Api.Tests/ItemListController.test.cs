@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Mime;
-using System.Web.Http.Results;
+﻿using System.Web.Http.Results;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
 using TodoApp.Api.Models;
