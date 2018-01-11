@@ -9,6 +9,7 @@ using System.Web.Http.Results;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
 using TodoApp.Api.Models;
+using TodoApp.Api.Tests.Comparers;
 
 namespace TodoApp.Api.Tests
 {
@@ -25,15 +26,6 @@ namespace TodoApp.Api.Tests
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
             };
-        }
-
-        private class ItemModelComparer : IEqualityComparer<ItemModel>
-        {
-            public bool Equals(ItemModel x, ItemModel y)
-                => x?.Id == y?.Id && x?.Text == y?.Text;
-
-            public int GetHashCode(ItemModel obj)
-                => obj.Id.GetHashCode();
         }
 
         [Test]
@@ -53,7 +45,7 @@ namespace TodoApp.Api.Tests
             message.TryGetContentValue(out ItemModel[] actualItems);
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(actualItems, Is.EqualTo(expectedItems).Using(new ItemModelComparer()));
+            Assert.That(actualItems, Is.EqualTo(expectedItems).UsingItemModelComparer());
         }
 
         [Test]
@@ -67,7 +59,7 @@ namespace TodoApp.Api.Tests
             message.TryGetContentValue(out ItemModel actualItem);
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(actualItem, Is.EqualTo(expectedItem).Using(new ItemModelComparer()));
+            Assert.That(actualItem, Is.EqualTo(expectedItem).UsingItemModelComparer());
         }
 
         [Test]
@@ -81,7 +73,7 @@ namespace TodoApp.Api.Tests
             message.TryGetContentValue(out ItemModel actualItem);
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.Created));
-            Assert.That(actualItem, Is.EqualTo(expectedItem).Using(new ItemModelComparer()));
+            Assert.That(actualItem, Is.EqualTo(expectedItem).UsingItemModelComparer());
         }
         
         [Test]
@@ -95,7 +87,7 @@ namespace TodoApp.Api.Tests
             message.TryGetContentValue(out ItemModel actualItem);
             
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(actualItem, Is.EqualTo(updateItem).Using(new ItemModelComparer()));
+            Assert.That(actualItem, Is.EqualTo(updateItem).UsingItemModelComparer());
         }
 
         public async Task PutItem_UnexistingItem_ItemAdded()
@@ -108,7 +100,7 @@ namespace TodoApp.Api.Tests
             message.TryGetContentValue(out ItemModel actualItem);
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(actualItem, Is.EqualTo(updateItem).Using(new ItemModelComparer()));
+            Assert.That(actualItem, Is.EqualTo(updateItem).UsingItemModelComparer());
         }
 
         [Test]

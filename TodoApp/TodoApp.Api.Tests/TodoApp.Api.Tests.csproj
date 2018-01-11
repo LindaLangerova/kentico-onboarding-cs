@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="ItemListController.test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Comparers\EqualConstraintsExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
