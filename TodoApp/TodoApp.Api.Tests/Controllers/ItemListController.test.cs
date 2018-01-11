@@ -63,7 +63,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostNewItem_UniqueItem_ItemAdded()
         {
-            var expectedItem = new ItemModel { Id = Guid.Parse("00000000000000000000000000000000"), Text = "Another coffee" };
+            var expectedItem = new ItemModel { Id = Guid.Parse("00000000000000000000000000000004"), Text = "Another coffee" };
 
             var result = await _controller.PostNewItem(expectedItem);
             var message = await result.ExecuteAsync(CancellationToken.None);

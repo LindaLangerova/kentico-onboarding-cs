@@ -13,7 +13,7 @@ namespace TodoApp.Api.Controllers
     [ApiVersion("1.0")]
     public class ItemListController : ApiController
     {
-        private ItemModel[] ItemList =
+        private static ItemModel[] ItemList =
         {
             new ItemModel {Id = Guid.Parse("00000000000000000000000000000000"), Text = "Make a cofee"},
             new ItemModel {Id = Guid.Parse("00000000000000000000000000000001"), Text = "Make second coffee"},
@@ -30,7 +30,14 @@ namespace TodoApp.Api.Controllers
             return await Task.FromResult(Ok(item));
         }
 
-        public async Task<IHttpActionResult> PostNewItem(ItemModel item) => await Task.FromResult(Created("api/itemlist/5", item));
+        public async Task<IHttpActionResult> PostNewItem(ItemModel item)
+        {
+            if(ItemList.FirstOrDefault(t => t.Id == item.Id) != null)
+            {
+                return await Task.FromResult(Conflict());
+            };
+            return await Task.FromResult(Created("api/itemlist/5", item));
+        } 
 
         public async Task<IHttpActionResult> PutItem(Guid id, ItemModel item)
         {
@@ -38,7 +45,7 @@ namespace TodoApp.Api.Controllers
             if (selectedItem != null) selectedItem.Text = item.Text;
             else
             {
-                //addItem
+                //ItemList.Add(item);
             }
             return await Task.FromResult(Ok(item));
         }
