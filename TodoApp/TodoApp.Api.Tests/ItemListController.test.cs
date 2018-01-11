@@ -1,8 +1,14 @@
-﻿using System.Web.Http.Results;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
 using TodoApp.Api.Models;
-using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace TodoApp.Api.Tests
 {
@@ -14,48 +20,105 @@ namespace TodoApp.Api.Tests
         [SetUp]
         public void SetUp()
         {
-            _controller = new ItemListController();
+            _controller = new ItemListController
+            {
+                Request = new HttpRequestMessage(),
+                Configuration = new HttpConfiguration()
+            };
+        }
+
+        private class ItemModelComparer : IEqualityComparer<ItemModel>
+        {
+            public bool Equals(ItemModel x, ItemModel y)
+                => x?.Id == y?.Id && x?.Text == y?.Text;
+
+            public int GetHashCode(ItemModel obj)
+                => obj.Id.GetHashCode();
         }
 
         [Test]
-        public void GetAllItemsTest()
+        public async Task GetAllItems_AllItemsReturned()
         {
-            var allItems = _controller.GetAllItems();
+            var expectedItems = new[]
+            {
+                new ItemModel {Id = "0", Text = "Make a cofee"},
+                new ItemModel {Id = "1", Text = "Make second coffee"},
+                new ItemModel {Id = "2", Text = "Make third cofffee"},
+                new ItemModel {Id = "3", Text = "Coffee is awesome as well as Kentico is"}
+            };
 
-            Assert.AreEqual(allItems, ItemListController.ItemList);
+            var result = await _controller.GetAllItems();
+            var message = await result.ExecuteAsync(CancellationToken.None);
+            var actualStatusCode = message.StatusCode;
+            message.TryGetContentValue(out ItemModel[] actualItems);
+
+            Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(actualItems, Is.EqualTo(expectedItems).Using(new ItemModelComparer()));
         }
 
         [Test]
-        public void GetItemTest()
+        public async Task GetItem_ExistingId_ItemReturned()
         {
-            var item = _controller.GetItem("0");
+            var expectedItem = new ItemModel {Id = "0", Text = "Make a cofee"};
 
-            Assert.AreEqual("Make a cofee", item.Text);
+            var result = await _controller.GetItem("0");
+            var message = await result.ExecuteAsync(CancellationToken.None);
+            var actualStatusCode = message.StatusCode;
+            message.TryGetContentValue(out ItemModel actualItem);
+
+            Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(actualItem, Is.EqualTo(expectedItem).Using(new ItemModelComparer()));
         }
 
         [Test]
-        public void AddNewItemTest()
+        public async Task PostNewItem_UniqueItem_ItemAdded()
         {
-            ItemModel item = new ItemModel {Id = "4", Text = "New data"};
-            var result = _controller.AddNewItem(item);
+            var expectedItem = new ItemModel { Id = "4", Text = "Another coffee" };
 
-            Assert.AreSame(result.GetType(), typeof(OkResult));
+            var result = await _controller.PostNewItem(expectedItem);
+            var message = await result.ExecuteAsync(CancellationToken.None);
+            var actualStatusCode = message.StatusCode;
+            message.TryGetContentValue(out ItemModel actualItem);
+
+            Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.Created));
+            Assert.That(actualItem, Is.EqualTo(expectedItem).Using(new ItemModelComparer()));
+        }
+        
+        [Test]
+        public async Task PutItem_ExistingItem_ItemUpdated()
+        {
+            var updateItem = new ItemModel { Id = "0", Text = "Add some milk" };
+
+            var result = await _controller.PutItem(updateItem.Id, updateItem);
+            var message = await result.ExecuteAsync(CancellationToken.None);
+            var actualStatusCode = message.StatusCode;
+            message.TryGetContentValue(out ItemModel actualItem);
+            
+            Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(actualItem, Is.EqualTo(updateItem).Using(new ItemModelComparer()));
+        }
+
+        public async Task PutItem_UnexistingItem_ItemAdded()
+        {
+            var updateItem = new ItemModel { Id = "4", Text = "Coffee overflow" };
+
+            var result = await _controller.PutItem(updateItem.Id, updateItem);
+            var message = await result.ExecuteAsync(CancellationToken.None);
+            var actualStatusCode = message.StatusCode;
+            message.TryGetContentValue(out ItemModel actualItem);
+
+            Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(actualItem, Is.EqualTo(updateItem).Using(new ItemModelComparer()));
         }
 
         [Test]
-        public void UpdateItemTest()
+        public async Task DeleteItem_ItemDeleted()
         {
-            var result = _controller.UpdateItem("0", new ItemModel {Id = "0", Text ="New data"});
-
-            Assert.AreSame(result.GetType(), typeof(OkResult));
-        }
-
-        [Test]
-        public void DeleteItemTest()
-        {
-            var result = _controller.DeleteItem("2");
-
-            Assert.AreSame(result.GetType(), typeof(OkResult));
+            var result = await _controller.DeleteItem("0");
+            var message = await result.ExecuteAsync(CancellationToken.None);
+            var actualStatusCode = message.StatusCode;
+            
+            Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 
     }
