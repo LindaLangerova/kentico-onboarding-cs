@@ -1,8 +1,10 @@
-﻿namespace TodoApp.Api.Models
+﻿using System;
+
+namespace TodoApp.Api.Models
 {
     public class ItemModel
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Text { get; set; }
 
         public override string ToString() 

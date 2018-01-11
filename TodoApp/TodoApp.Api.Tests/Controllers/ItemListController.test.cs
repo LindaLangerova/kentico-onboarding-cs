@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,10 +31,10 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var expectedItems = new[]
             {
-                new ItemModel {Id = "0", Text = "Make a cofee"},
-                new ItemModel {Id = "1", Text = "Make second coffee"},
-                new ItemModel {Id = "2", Text = "Make third cofffee"},
-                new ItemModel {Id = "3", Text = "Coffee is awesome as well as Kentico is"}
+                new ItemModel {Id = Guid.Parse("00000000000000000000000000000000"), Text = "Make a cofee"},
+                new ItemModel {Id = Guid.Parse("00000000000000000000000000000001"), Text = "Make second coffee"},
+                new ItemModel {Id = Guid.Parse("00000000000000000000000000000002"), Text = "Make third cofffee"},
+                new ItemModel {Id = Guid.Parse("00000000000000000000000000000003"), Text = "Coffee is awesome as well as Kentico is"}
             };
 
             var result = await _controller.GetAllItems();
@@ -48,9 +49,9 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetItem_ExistingId_ItemReturned()
         {
-            var expectedItem = new ItemModel {Id = "0", Text = "Make a cofee"};
+            var expectedItem = new ItemModel {Id = Guid.Parse("00000000000000000000000000000000"), Text = "Make a cofee"};
 
-            var result = await _controller.GetItem("0");
+            var result = await _controller.GetItem(Guid.Parse("00000000000000000000000000000000"));
             var message = await result.ExecuteAsync(CancellationToken.None);
             var actualStatusCode = message.StatusCode;
             message.TryGetContentValue(out ItemModel actualItem);
@@ -62,7 +63,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostNewItem_UniqueItem_ItemAdded()
         {
-            var expectedItem = new ItemModel { Id = "4", Text = "Another coffee" };
+            var expectedItem = new ItemModel { Id = Guid.Parse("00000000000000000000000000000000"), Text = "Another coffee" };
 
             var result = await _controller.PostNewItem(expectedItem);
             var message = await result.ExecuteAsync(CancellationToken.None);
@@ -76,7 +77,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PutItem_ExistingItem_ItemUpdated()
         {
-            var updateItem = new ItemModel { Id = "0", Text = "Add some milk" };
+            var updateItem = new ItemModel { Id = Guid.Parse("00000000000000000000000000000000"), Text = "Add some milk" };
 
             var result = await _controller.PutItem(updateItem.Id, updateItem);
             var message = await result.ExecuteAsync(CancellationToken.None);
@@ -89,7 +90,7 @@ namespace TodoApp.Api.Tests.Controllers
 
         public async Task PutItem_UnexistingItem_ItemAdded()
         {
-            var updateItem = new ItemModel { Id = "4", Text = "Coffee overflow" };
+            var updateItem = new ItemModel { Id = Guid.Parse("00000000000000000000000000000000"), Text = "Coffee overflow" };
 
             var result = await _controller.PutItem(updateItem.Id, updateItem);
             var message = await result.ExecuteAsync(CancellationToken.None);
@@ -103,7 +104,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task DeleteItem_ItemDeleted()
         {
-            var result = await _controller.DeleteItem("0");
+            var result = await _controller.DeleteItem(Guid.Parse("00000000000000000000000000000000"));
             var message = await result.ExecuteAsync(CancellationToken.None);
             var actualStatusCode = message.StatusCode;
             
