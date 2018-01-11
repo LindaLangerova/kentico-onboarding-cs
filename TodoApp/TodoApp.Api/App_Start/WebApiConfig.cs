@@ -1,4 +1,6 @@
 ﻿using System.Web.Http;
+using System.Web.Http.Routing;
+using Microsoft.Web.Http.Routing;
 
 namespace TodoApp.Api
 {
@@ -9,13 +11,15 @@ namespace TodoApp.Api
             // Web API configuration and services
 
             // Web API routes
-            config.MapHttpAttributeRoutes();
-
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+            var versionConstraintResolver = new DefaultInlineConstraintResolver()
+            {
+                ConstraintMap =
+                {
+                    ["apiVersion"] = typeof( ApiVersionRouteConstraint )
+                }
+            };
+            config.MapHttpAttributeRoutes(versionConstraintResolver);
+            
         }
     }
 }
