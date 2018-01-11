@@ -11,7 +11,7 @@ using TodoApp.Api.Models;
 namespace TodoApp.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/itemlist")]
+    [RoutePrefix("api/v{version:apiVersion}/itemlist")]
     public class ItemListController : ApiController
     {
         public static ItemModel[] ItemList =
@@ -26,15 +26,19 @@ namespace TodoApp.Api.Controllers
         public async Task<IHttpActionResult> GetAllItems()
             => await Task.FromResult(Ok(ItemList));
         
+        [Route("{id}")]
         public async Task<IHttpActionResult> GetItem(Guid id) 
             => await Task.FromResult(Ok(ItemList[0]));
 
+        [Route("")]
         public async Task<IHttpActionResult> PostNewItem(ItemModel item) 
             => await Task.FromResult(Created($"api/itemlist/{ItemList[0].Id}", ItemList[0]));
 
+        [Route("{id}")]
         public async Task<IHttpActionResult> PutItem(Guid id, ItemModel item) 
             => await Task.FromResult(Ok(ItemList[2]));
 
+        [Route("{id}")]
         public async Task<IHttpActionResult> DeleteItem(Guid id) 
             => await Task.FromResult(StatusCode(HttpStatusCode.NoContent));
     }
