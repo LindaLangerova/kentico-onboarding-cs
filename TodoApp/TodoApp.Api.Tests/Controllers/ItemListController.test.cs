@@ -8,7 +8,7 @@ using TodoApp.Api.Controllers;
 using TodoApp.Api.Models;
 using TodoApp.Api.Tests.Comparers;
 
-namespace TodoApp.Api.Tests
+namespace TodoApp.Api.Tests.Controllers
 {
     [TestFixture]
     public class ItemListControllerTest
