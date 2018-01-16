@@ -12,8 +12,11 @@ namespace TodoApp.Api.Controllers
 {
     [ApiVersion("1")]
     [RoutePrefix("api/v{version:apiVersion}/itemlist")]
+    [Route("")]
     public class ItemListController : ApiController
     {
+        private const string Id = "{id}";
+
         public static ItemModel[] ItemList =
         {
             new ItemModel {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a cofee"},
@@ -26,19 +29,18 @@ namespace TodoApp.Api.Controllers
         public async Task<IHttpActionResult> GetAllAsync()
             => await Task.FromResult(Ok(ItemList));
         
-        [Route("{id}")]
+        [Route(Id)]
         public async Task<IHttpActionResult> GetAsync(Guid id) 
             => await Task.FromResult(Ok(ItemList[0]));
-
-        [Route("")]
+        
         public async Task<IHttpActionResult> PostAsync(ItemModel item) 
             => await Task.FromResult(Created($"api/itemlist/{ItemList[0].Id}", ItemList[0]));
 
-        [Route("{id}")]
+        [Route(Id)]
         public async Task<IHttpActionResult> PutAsync(Guid id, ItemModel item) 
             => await Task.FromResult(Ok(ItemList[2]));
 
-        [Route("{id}")]
+        [Route(Id)]
         public async Task<IHttpActionResult> DeleteAsync(Guid id) 
             => await Task.FromResult(StatusCode(HttpStatusCode.NoContent));
     }
