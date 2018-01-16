@@ -71,7 +71,6 @@ namespace TodoApp.Api.Tests.Controllers
             message.TryGetContentValue(out ItemModel actualItem);
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.Created));
-            //Assert.That(actualItem, Is.EqualTo(expectedItem).UsingItemModelComparer());
         }
         
         [Test]
@@ -85,7 +84,6 @@ namespace TodoApp.Api.Tests.Controllers
             message.TryGetContentValue(out ItemModel actualItem);
             
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
-            //Assert.That(actualItem, Is.EqualTo(updateItem).UsingItemModelComparer());
         }
 
         [Test]
@@ -99,7 +97,6 @@ namespace TodoApp.Api.Tests.Controllers
             message.TryGetContentValue(out ItemModel actualItem);
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
-            //Assert.That(actualItem, Is.EqualTo(updateItem).UsingItemModelComparer());
         }
 
         [Test]
