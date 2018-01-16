@@ -11,18 +11,36 @@ using TodoApp.Api.Tests.Comparers;
 
 namespace TodoApp.Api.Tests.Controllers
 {
-    [TestFixture]
-    public class ItemListControllerTest
+    internal static class ControllerExtensions
     {
-        private ItemListController _controller;
-
-        private static async Task<(HttpStatusCode, HttpResponseMessage)> ResolveResult (IHttpActionResult result)
+        private static async Task<(HttpStatusCode, HttpResponseMessage)> ResolveResult(IHttpActionResult result)
         {
             var message = await result.ExecuteAsync(CancellationToken.None);
             var actualStatusCode = message.StatusCode;
             return (actualStatusCode, message);
         }
 
+        public static async Task<(HttpStatusCode, TResult)> ResolveResult<TController,TResult>(this TController controller, Func<TController,Task<IHttpActionResult>> actionSelector)
+        {
+            var result = await actionSelector(controller);
+            var (actualStatusCode, message) = await ResolveResult(result);
+            message.TryGetContentValue(out TResult actualItems);
+            return (actualStatusCode, actualItems);
+        }
+
+        public static async Task<HttpStatusCode> ResolveResult<TController>(this TController controller, Func<TController, Task<IHttpActionResult>> actionSelector)
+        {
+            var result = await actionSelector(controller);
+            var (actualStatusCode, _) = await ResolveResult(result);
+            return actualStatusCode;
+        }
+    }
+
+    [TestFixture]
+    public class ItemListControllerTest
+    {
+        private ItemListController _controller;
+        
         [SetUp]
         public void SetUp()
         {
@@ -44,8 +62,8 @@ namespace TodoApp.Api.Tests.Controllers
                 new ItemModel {Id = Guid.Parse("250be0cc-438e-46cc-a0fe-549f4d3409e2"), Text = "Coffee is awesome as well as Kentico is"}
             };
 
-            var (actualStatusCode, message) = await ResolveResult(await _controller.GetAllAsync());
-            message.TryGetContentValue(out ItemModel[] actualItems);
+            var (actualStatusCode, actualItems) =
+                await _controller.ResolveResult<ItemListController, ItemModel[]>(controller => controller.GetAllAsync());
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
             Assert.That(actualItems, Is.EqualTo(expectedItems).UsingItemModelComparer());
@@ -55,9 +73,9 @@ namespace TodoApp.Api.Tests.Controllers
         public async Task GetItem_ExistingId_ItemReturned()
         {
             var expectedItem = new ItemModel {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a cofee"};
+            var guid = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
 
-            var (actualStatusCode, message) = await ResolveResult(await _controller.GetAsync(Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3")));
-            message.TryGetContentValue(out ItemModel actualItem);
+            var (actualStatusCode, actualItem) = await _controller.ResolveResult<ItemListController, ItemModel>(controller => controller.GetAsync(guid));
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
             Assert.That(actualItem, Is.EqualTo(expectedItem).UsingItemModelComparer());
@@ -68,8 +86,8 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var expectedItem = new ItemModel { Id = Guid.Parse("a09c0705-b162-4443-b497-9812e6b5c5aa"), Text = "Another coffee" };
 
-            var (actualStatusCode, _) = await ResolveResult(await _controller.PostAsync(expectedItem));
-
+            var actualStatusCode = await _controller.ResolveResult(controller => controller.PostAsync(expectedItem));
+            
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.Created));
         }
         
@@ -78,8 +96,10 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var updateItem = new ItemModel { Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Add some milk" };
 
-            var (actualStatusCode, _) = await ResolveResult(await _controller.PutAsync(updateItem.Id, updateItem));
-            
+            var (actualStatusCode, actualItem) =
+                await _controller.ResolveResult<ItemListController, ItemModel>(controller => controller.PutAsync(updateItem.Id, updateItem));
+
+            Assert.That(actualItem, Is.EqualTo(updateItem));
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
@@ -88,15 +108,19 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var updateItem = new ItemModel { Id = Guid.Parse("a09c0705-b162-4443-b497-9812e6b5c5aa"), Text = "Coffee overflow" };
 
-            var (actualStatusCode, _) = await ResolveResult(await _controller.PutAsync(updateItem.Id, updateItem));
+            var (actualStatusCode, actualItem) =
+                await _controller.ResolveResult<ItemListController, ItemModel>(controller => controller.PutAsync(updateItem.Id, updateItem));
 
+            Assert.That(actualItem, Is.EqualTo(updateItem));
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
         [Test]
         public async Task DeleteItem_ItemDeleted()
         {
-            var (actualStatusCode, _) = await ResolveResult(await _controller.DeleteAsync(Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3")));
+            var guid = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
+
+            var actualStatusCode = await _controller.ResolveResult(controller => controller.DeleteAsync(guid));
             
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
