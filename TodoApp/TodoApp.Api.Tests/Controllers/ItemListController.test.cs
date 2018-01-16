@@ -16,6 +16,13 @@ namespace TodoApp.Api.Tests.Controllers
     {
         private ItemListController _controller;
 
+        private static async Task<(HttpStatusCode, HttpResponseMessage)> ResolveResult (IHttpActionResult result)
+        {
+            var message = await result.ExecuteAsync(CancellationToken.None);
+            var actualStatusCode = message.StatusCode;
+            return (actualStatusCode, message);
+        }
+
         [SetUp]
         public void SetUp()
         {
@@ -37,9 +44,7 @@ namespace TodoApp.Api.Tests.Controllers
                 new ItemModel {Id = Guid.Parse("250be0cc-438e-46cc-a0fe-549f4d3409e2"), Text = "Coffee is awesome as well as Kentico is"}
             };
 
-            var result = await _controller.GetAllItems();
-            var message = await result.ExecuteAsync(CancellationToken.None);
-            var actualStatusCode = message.StatusCode;
+            var (actualStatusCode, message) = await ResolveResult(await _controller.GetAllAsync());
             message.TryGetContentValue(out ItemModel[] actualItems);
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -51,9 +56,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var expectedItem = new ItemModel {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a cofee"};
 
-            var result = await _controller.GetItem(Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"));
-            var message = await result.ExecuteAsync(CancellationToken.None);
-            var actualStatusCode = message.StatusCode;
+            var (actualStatusCode, message) = await ResolveResult(await _controller.GetAsync(Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3")));
             message.TryGetContentValue(out ItemModel actualItem);
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -65,9 +68,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var expectedItem = new ItemModel { Id = Guid.Parse("a09c0705-b162-4443-b497-9812e6b5c5aa"), Text = "Another coffee" };
 
-            var result = await _controller.PostNewItem(expectedItem);
-            var message = await result.ExecuteAsync(CancellationToken.None);
-            var actualStatusCode = message.StatusCode;
+            var (actualStatusCode, _) = await ResolveResult(await _controller.PostAsync(expectedItem));
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.Created));
         }
@@ -77,9 +78,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var updateItem = new ItemModel { Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Add some milk" };
 
-            var result = await _controller.PutItem(updateItem.Id, updateItem);
-            var message = await result.ExecuteAsync(CancellationToken.None);
-            var actualStatusCode = message.StatusCode;
+            var (actualStatusCode, _) = await ResolveResult(await _controller.PutAsync(updateItem.Id, updateItem));
             
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
@@ -89,9 +88,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var updateItem = new ItemModel { Id = Guid.Parse("a09c0705-b162-4443-b497-9812e6b5c5aa"), Text = "Coffee overflow" };
 
-            var result = await _controller.PutItem(updateItem.Id, updateItem);
-            var message = await result.ExecuteAsync(CancellationToken.None);
-            var actualStatusCode = message.StatusCode;
+            var (actualStatusCode, _) = await ResolveResult(await _controller.PutAsync(updateItem.Id, updateItem));
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
@@ -99,9 +96,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task DeleteItem_ItemDeleted()
         {
-            var result = await _controller.DeleteItem(Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"));
-            var message = await result.ExecuteAsync(CancellationToken.None);
-            var actualStatusCode = message.StatusCode;
+            var (actualStatusCode, _) = await ResolveResult(await _controller.DeleteAsync(Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3")));
             
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
