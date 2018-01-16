@@ -68,7 +68,6 @@ namespace TodoApp.Api.Tests.Controllers
             var result = await _controller.PostNewItem(expectedItem);
             var message = await result.ExecuteAsync(CancellationToken.None);
             var actualStatusCode = message.StatusCode;
-            message.TryGetContentValue(out ItemModel actualItem);
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.Created));
         }
@@ -81,7 +80,6 @@ namespace TodoApp.Api.Tests.Controllers
             var result = await _controller.PutItem(updateItem.Id, updateItem);
             var message = await result.ExecuteAsync(CancellationToken.None);
             var actualStatusCode = message.StatusCode;
-            message.TryGetContentValue(out ItemModel actualItem);
             
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
@@ -94,7 +92,6 @@ namespace TodoApp.Api.Tests.Controllers
             var result = await _controller.PutItem(updateItem.Id, updateItem);
             var message = await result.ExecuteAsync(CancellationToken.None);
             var actualStatusCode = message.StatusCode;
-            message.TryGetContentValue(out ItemModel actualItem);
 
             Assert.That(actualStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }

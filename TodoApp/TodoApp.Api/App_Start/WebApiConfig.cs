@@ -8,10 +8,8 @@ namespace TodoApp.Api
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-
             // Web API routes
-            var versionConstraintResolver = new DefaultInlineConstraintResolver()
+            var versionConstraintResolver = new DefaultInlineConstraintResolver
             {
                 ConstraintMap =
                 {
@@ -19,7 +17,6 @@ namespace TodoApp.Api
                 }
             };
             config.MapHttpAttributeRoutes(versionConstraintResolver);
-            
         }
     }
 }
