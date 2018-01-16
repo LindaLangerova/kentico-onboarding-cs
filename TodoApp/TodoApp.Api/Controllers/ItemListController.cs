@@ -12,7 +12,7 @@ namespace TodoApp.Api.Controllers
 {
     [ApiVersion("1")]
     [RoutePrefix("api/v{version:apiVersion}/itemlist")]
-    public class ItemListControllerAsync : ApiController
+    public class ItemListController : ApiController
     {
         public static ItemModel[] ItemList =
         {
@@ -23,23 +23,23 @@ namespace TodoApp.Api.Controllers
         };
 
         
-        public async Task<IHttpActionResult> GetAll()
+        public async Task<IHttpActionResult> GetAllAsync()
             => await Task.FromResult(Ok(ItemList));
         
         [Route("{id}")]
-        public async Task<IHttpActionResult> Get(Guid id) 
+        public async Task<IHttpActionResult> GetAsync(Guid id) 
             => await Task.FromResult(Ok(ItemList[0]));
 
         [Route("")]
-        public async Task<IHttpActionResult> Post(ItemModel item) 
+        public async Task<IHttpActionResult> PostAsync(ItemModel item) 
             => await Task.FromResult(Created($"api/itemlist/{ItemList[0].Id}", ItemList[0]));
 
         [Route("{id}")]
-        public async Task<IHttpActionResult> Put(Guid id, ItemModel item) 
+        public async Task<IHttpActionResult> PutAsync(Guid id, ItemModel item) 
             => await Task.FromResult(Ok(ItemList[2]));
 
         [Route("{id}")]
-        public async Task<IHttpActionResult> Delete(Guid id) 
+        public async Task<IHttpActionResult> DeleteAsync(Guid id) 
             => await Task.FromResult(StatusCode(HttpStatusCode.NoContent));
     }
 }
