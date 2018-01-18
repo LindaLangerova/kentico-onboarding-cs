@@ -10,6 +10,7 @@ namespace TodoApp.Api.Tests.Utilities.FluentAssert
     public sealed class FluentAssert : IFirstFluentAssert, IFluentAssert
     {
         private readonly IList<Exception> _accumulatedExceptions = new List<Exception>();
+        private string _message = "";
 
         public IFluentAssert That<TActual>(TActual actual, IResolveConstraint expression)
         {
@@ -20,6 +21,7 @@ namespace TodoApp.Api.Tests.Utilities.FluentAssert
             catch (Exception ex)
             {
                 _accumulatedExceptions.Add(ex);
+                _message += ex.Message;
             }
 
             return this;
@@ -33,7 +35,7 @@ namespace TodoApp.Api.Tests.Utilities.FluentAssert
         {
             if (_accumulatedExceptions.Any())
             {
-                throw new AggregateException(_accumulatedExceptions);
+                throw new AggregateException("\n" + _message);
             }
         }
     }

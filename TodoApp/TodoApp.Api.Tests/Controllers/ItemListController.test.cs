@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using TodoApp.Api.Controllers;
 using TodoApp.Api.Models;
 using TodoApp.Api.Tests.Utilities;
@@ -108,6 +102,5 @@ namespace TodoApp.Api.Tests.Controllers
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
-
     }
 }
