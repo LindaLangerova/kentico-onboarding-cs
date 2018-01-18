@@ -18,7 +18,7 @@ using TodoApp.Api.Tests.Utilities.Comparers;
 
 namespace TodoApp.Api.Tests.Controllers
 {
-    public class ItemListControllerTest
+    public class ItemListControllerTest : TestBase
     {
         private ItemListController _controller;
 
@@ -47,9 +47,9 @@ namespace TodoApp.Api.Tests.Controllers
                 .ResolveAction(controller => controller.GetAllAsync())
                 .BeItReducedResponse<ItemModel[]>();
 
-
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(response.Content, Is.EqualTo(expectedItems).UsingItemModelComparer());
+            Assert
+                .That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK))
+                .AndThat(response.Content, Is.EqualTo(expectedItems).UsingItemModelComparer());
         }
 
         [Test]
@@ -62,8 +62,9 @@ namespace TodoApp.Api.Tests.Controllers
                 .ResolveAction(controller => controller.GetAsync(guid))
                 .BeItReducedResponse<ItemModel>();
 
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(response.Content, Is.EqualTo(expectedItem).UsingItemModelComparer());
+            Assert
+                .That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK))
+                .AndThat(response.Content, Is.EqualTo(expectedItem).UsingItemModelComparer());
         }
 
         [Test]
@@ -76,9 +77,10 @@ namespace TodoApp.Api.Tests.Controllers
                 .ResolveAction(controller => controller.PostAsync(expectedItem))
                 .BeItReducedResponse<ItemModel>();
 
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
-            Assert.That(response.Location, Is.EqualTo(expectedRoute));
-            Assert.That(response.Content, Is.EqualTo(expectedItem).UsingItemModelComparer());
+            Assert
+                .That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created))
+                .AndThat(response.Location, Is.EqualTo(expectedRoute))
+                .AndThat(response.Content, Is.EqualTo(expectedItem).UsingItemModelComparer());
         }
 
         [Test]
@@ -90,9 +92,9 @@ namespace TodoApp.Api.Tests.Controllers
                 .ResolveAction(controller => controller.PutAsync(updateItem.Id, updateItem))
                 .BeItReducedResponse<ItemModel>();
 
-
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(response.Content, Is.EqualTo(updateItem).UsingItemModelComparer());
+            Assert
+                .That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK))
+                .AndThat(response.Content, Is.EqualTo(updateItem).UsingItemModelComparer());
         }
 
         [Test]
