@@ -4,14 +4,15 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
+using TodoApp.Api.Tests.Utilities.Exceptions;
 
 namespace TodoApp.Api.Tests.Utilities.FluentAssert
 {
     public sealed class FluentAssert : IFirstFluentAssert, IFluentAssert
     {
         private readonly IList<Exception> _accumulatedExceptions = new List<Exception>();
-        private string _message = "";
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IFluentAssert That<TActual>(TActual actual, IResolveConstraint expression)
         {
             try
@@ -21,7 +22,6 @@ namespace TodoApp.Api.Tests.Utilities.FluentAssert
             catch (Exception ex)
             {
                 _accumulatedExceptions.Add(ex);
-                _message += ex.Message;
             }
 
             return this;
@@ -35,7 +35,7 @@ namespace TodoApp.Api.Tests.Utilities.FluentAssert
         {
             if (_accumulatedExceptions.Any())
             {
-                throw new AggregateException("\n" + _message);
+                throw new AllAsertException(_accumulatedExceptions);
             }
         }
     }

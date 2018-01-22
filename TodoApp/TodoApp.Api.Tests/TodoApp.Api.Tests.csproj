@@ -96,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ActionsResolution\ReducedResponse.cs" />
     <Compile Include="Utilities\Comparers\EqualConstraintsExtensions.cs" />
+    <Compile Include="Utilities\Exceptions\AllAsertException.cs" />
     <Compile Include="Utilities\FluentAssert\FluentAssert.cs" />
     <Compile Include="Utilities\FluentAssert\IFirstFluentAssert.cs" />
     <Compile Include="Utilities\FluentAssert\IFluentAssert.cs" />
