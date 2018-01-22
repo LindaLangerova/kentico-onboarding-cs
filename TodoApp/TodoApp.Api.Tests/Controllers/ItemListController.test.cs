@@ -49,11 +49,11 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetItem_ExistingId_ItemReturned()
         {
-            var guid = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
-            var expectedItem = new ItemModel { Id = guid, Text = "Make a coffee" };
+            var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
+            var expectedItem = new ItemModel { Id = id, Text = "Make a coffee" };
 
             var response = await _controller
-                .ResolveAction(controller => controller.GetAsync(guid))
+                .ResolveAction(controller => controller.GetAsync(id))
                 .BeItReducedResponse<ItemModel>();
 
             Assert
@@ -64,8 +64,9 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostNewItem_UniqueItem_ItemAdded()
         {
-            var expectedItem = new ItemModel { Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee" };
-            var expectedRoute = new Uri("api/itemlist/c5cc89a0-ab8d-4328-9000-3da679ec02d3", UriKind.Relative);
+            var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
+            var expectedItem = new ItemModel { Id = id, Text = "Make a coffee" };
+            var expectedRoute = new Uri($"api/itemlist/{id}", UriKind.Relative);
 
             var response = await _controller
                 .ResolveAction(controller => controller.PostAsync(expectedItem))
@@ -80,7 +81,8 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PutItem_ExistingItem_ItemUpdated()
         {
-            var updateItem = new ItemModel { Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d2"), Text = "Add some coffee" };
+            var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d2");
+            var updateItem = new ItemModel { Id = id, Text = "Add some coffee" };
 
             var response = await _controller
                 .ResolveAction(controller => controller.PutAsync(updateItem.Id, updateItem))
@@ -94,10 +96,10 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task DeleteItem_ItemDeleted()
         {
-            var guid = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
+            var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
 
             var response = await _controller
-                .ResolveAction(controller => controller.DeleteAsync(guid))
+                .ResolveAction(controller => controller.DeleteAsync(id))
                 .BeItReducedResponse();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
