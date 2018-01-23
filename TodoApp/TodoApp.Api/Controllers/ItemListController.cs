@@ -22,7 +22,6 @@ namespace TodoApp.Api.Controllers
             _repository = repository;
         }
 
-
         public async Task<IHttpActionResult> GetAllAsync()
             => await Task.FromResult(Ok(_repository.GetAll()));
         
