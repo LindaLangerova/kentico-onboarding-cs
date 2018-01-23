@@ -3,15 +3,13 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Web.Http;
-using TodoApp.Contract;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Controllers
 {
-    [ApiVersion("1.0")]
-    public class ItemListController : ApiController
+    [ApiVersion("1.0")] public class ItemListController : ApiController
     {
         private readonly IItemRepository _repository;
         private readonly IUrlGenerator _urlGenerator;
@@ -22,7 +20,8 @@ namespace TodoApp.Api.Controllers
             _urlGenerator = urlGenerator;
         }
 
-        public async Task<IHttpActionResult> GetAllAsync() => await Task.FromResult(Ok(_repository.GetAll()));
+        public async Task<IHttpActionResult> GetAllAsync()
+            => await Task.FromResult(Ok(_repository.GetAll()));
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {

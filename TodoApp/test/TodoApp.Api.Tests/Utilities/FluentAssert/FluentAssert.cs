@@ -18,8 +18,7 @@ namespace TodoApp.Api.Tests.Utilities.FluentAssert
             try
             {
                 Assert.That(actual, expression);
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 _accumulatedExceptions.Add(ex);
             }
@@ -27,16 +26,13 @@ namespace TodoApp.Api.Tests.Utilities.FluentAssert
             return this;
         }
 
-        public IFluentAssert AndThat<TActual>(TActual actual, IResolveConstraint expression)
-            => That(actual, expression);
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
-            if (_accumulatedExceptions.Any())
-            {
-                throw new AllAsertException(_accumulatedExceptions);
-            }
+            if (_accumulatedExceptions.Any()) throw new AllAsertException(_accumulatedExceptions);
         }
+
+        public IFluentAssert AndThat<TActual>(TActual actual, IResolveConstraint expression)
+            => That(actual, expression);
     }
 }

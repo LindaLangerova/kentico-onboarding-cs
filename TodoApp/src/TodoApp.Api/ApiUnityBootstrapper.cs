@@ -1,10 +1,7 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Web;
-using System.Web.Http.Routing;
 using TodoApp.Api.Services;
 using TodoApp.Contract;
-using TodoApp.Contract.Models;
 using TodoApp.Contract.Services;
 using Unity;
 using Unity.Injection;
@@ -15,15 +12,15 @@ namespace TodoApp.Api
     public class ApiUnityBootstrapper : IUnityBootstrapper
     {
         void IUnityBootstrapper.RegisterTypes(IUnityContainer container)
-        {
-            RegisterTypes(container);
-        }
+            => RegisterTypes(container);
 
-        public void RegisterTypes(IUnityContainer container) => container
-            .RegisterType<IUrlGenerator, UrlGenerator>(new HierarchicalLifetimeManager())
-            .RegisterType<HttpRequestMessage, HttpRequestMessage>(new HierarchicalLifetimeManager(), new InjectionFactory(GetActualRequestMessage));
+        public void RegisterTypes(IUnityContainer container)
+            => container
+               .RegisterType<IUrlGenerator, UrlGenerator>(new HierarchicalLifetimeManager())
+               .RegisterType<HttpRequestMessage, HttpRequestMessage>(new HierarchicalLifetimeManager(),
+                                                                     new InjectionFactory(GetActualRequestMessage));
 
-        private static HttpRequestMessage GetActualRequestMessage(IUnityContainer container) 
+        private static HttpRequestMessage GetActualRequestMessage(IUnityContainer container)
             => HttpContext.Current.Items["MS_HttpRequestMessage"] as HttpRequestMessage;
     }
 }

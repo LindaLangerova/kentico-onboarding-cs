@@ -157,12 +157,7 @@
       <Name>TodoApp.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utilities\ActionsResolution\" />
-    <Folder Include="Utilities\Comparers\" />
-    <Folder Include="Utilities\Exceptions\" />
-    <Folder Include="Utilities\FluentAssert\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

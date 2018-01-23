@@ -12,9 +12,10 @@ namespace TodoApp.Api.Tests.Utilities.Comparers
 
         private class ItemModelComparer : IEqualityComparer<Item>
         {
-            public static Lazy<ItemModelComparer> Instance => new Lazy<ItemModelComparer>(() => new ItemModelComparer());
-
             private ItemModelComparer() { }
+
+            public static Lazy<ItemModelComparer> Instance
+                => new Lazy<ItemModelComparer>(() => new ItemModelComparer());
 
             public bool Equals(Item x, Item y)
                 => x?.Id == y?.Id && x?.Text == y?.Text;
