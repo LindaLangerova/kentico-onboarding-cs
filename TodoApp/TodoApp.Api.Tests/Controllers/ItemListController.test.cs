@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
-using TodoApp.Api.Models;
 using TodoApp.Api.Tests.Utilities;
 using TodoApp.Api.Tests.Utilities.ActionsResolution;
 using TodoApp.Api.Tests.Utilities.Comparers;
+using TodoApp.Contract.Models;
 
 namespace TodoApp.Api.Tests.Controllers
 {
