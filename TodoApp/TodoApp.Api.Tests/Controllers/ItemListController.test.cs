@@ -47,7 +47,7 @@ namespace TodoApp.Api.Tests.Controllers
                 .AndThat(response.Content, Is.EqualTo(expectedItems).UsingItemModelComparer());
         }
 
-        /**
+        
         [Test]
         public async Task GetItem_ExistingId_ItemReturned()
         {
@@ -62,7 +62,7 @@ namespace TodoApp.Api.Tests.Controllers
                 .That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK))
                 .AndThat(response.Content, Is.EqualTo(expectedItem).UsingItemModelComparer());
         }
-
+        
         [Test]
         public async Task PostNewItem_UniqueItem_ItemAdded()
         {
@@ -79,7 +79,7 @@ namespace TodoApp.Api.Tests.Controllers
                 .AndThat(response.Location, Is.EqualTo(expectedRoute))
                 .AndThat(response.Content, Is.EqualTo(expectedItem).UsingItemModelComparer());
         }
-
+        
         [Test]
         public async Task PutItem_ExistingItem_ItemUpdated()
         {
@@ -105,6 +105,6 @@ namespace TodoApp.Api.Tests.Controllers
                 .BeItReducedResponse();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
-        }**/
+        }
     }
 }

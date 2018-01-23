@@ -25,20 +25,26 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> GetAllAsync()
             => await Task.FromResult(Ok(_repository.GetAll()));
-        /**
+        
         [Route(Id)]
         public async Task<IHttpActionResult> GetAsync(Guid id) 
-            => await Task.FromResult(Ok(ItemList[0]));
+            => await Task.FromResult(Ok(_repository.Get(id)));
         
-        public async Task<IHttpActionResult> PostAsync(ItemModel item) 
-            => await Task.FromResult(Created($"api/itemlist/{ItemList[0].Id}", ItemList[0]));
-
+        public async Task<IHttpActionResult> PostAsync(ItemModel item)
+        {
+            var newItem = _repository.Add(item);
+            return await Task.FromResult(Created($"api/itemlist/{newItem.Id}", newItem));
+        }
+        
         [Route(Id)]
         public async Task<IHttpActionResult> PutAsync(Guid id, ItemModel item) 
-            => await Task.FromResult(Ok(ItemList[2]));
+            => await Task.FromResult(Ok(_repository.Update(id,item)));
 
         [Route(Id)]
-        public async Task<IHttpActionResult> DeleteAsync(Guid id) 
-            => await Task.FromResult(StatusCode(HttpStatusCode.NoContent));**/
+        public async Task<IHttpActionResult> DeleteAsync(Guid id)
+        {
+            _repository.Delete(id);
+            return await Task.FromResult(StatusCode(HttpStatusCode.NoContent));
+        }
     }
 }

@@ -24,22 +24,21 @@ namespace TodoApp.Data.Repositories
 
         public ItemModel Get(Guid id)
         {
-            throw new NotImplementedException();
+            return ItemList[0];
         }
-
-        public ItemModel Update(Guid id, ItemModel item)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public ItemModel Add(ItemModel item)
         {
-            throw new NotImplementedException();
+            return ItemList[0];
+        }
+        
+        public ItemModel Update(Guid id, ItemModel item)
+        {
+            return ItemList[2];
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
         }
     }
 }
