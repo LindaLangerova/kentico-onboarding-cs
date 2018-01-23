@@ -115,6 +115,10 @@
       <Project>{CA56BD12-29D1-42BB-AE9A-F26B271D8982}</Project>
       <Name>TodoApp.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TodoApp.Data\TodoApp.Data.csproj">
+      <Project>{D3AFE98B-4F30-4EEB-AB77-60B352E55590}</Project>
+      <Name>TodoApp.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
