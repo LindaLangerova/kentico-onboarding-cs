@@ -6,6 +6,7 @@ namespace TodoApp.Api
     {
         protected void Application_Start()
         {
+            UnityConfig.RegisterComponents();
             GlobalConfiguration.Configure(RouteConfig.Register);
         }
     }
