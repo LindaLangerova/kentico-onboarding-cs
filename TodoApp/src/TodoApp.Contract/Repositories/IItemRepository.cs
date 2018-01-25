@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TodoApp.Contract.Models;
 
-namespace TodoApp.Data.Repositories
+namespace TodoApp.Contract.Repositories
 {
     public interface IItemRepository
     {
