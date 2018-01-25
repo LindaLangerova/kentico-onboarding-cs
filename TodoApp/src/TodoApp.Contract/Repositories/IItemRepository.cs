@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TodoApp.Contract.Models;
 
-namespace TodoApp.Data.Repositories
+namespace TodoApp.Contract.Repositories
 {
     public interface IItemRepository
     {

@@ -10,6 +10,7 @@ using TodoApp.Api.Tests.Utilities;
 using TodoApp.Api.Tests.Utilities.ActionsResolution;
 using TodoApp.Api.Tests.Utilities.Comparers;
 using TodoApp.Contract.Models;
+using TodoApp.Contract.Repositories;
 using TodoApp.Data.Repositories;
 
 namespace TodoApp.Api.Tests.Controllers

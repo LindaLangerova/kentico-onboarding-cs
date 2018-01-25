@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Web.Http;
 using TodoApp.Contract.Models;
+using TodoApp.Contract.Repositories;
 using TodoApp.Data.Repositories;
 
 namespace TodoApp.Api.Controllers
