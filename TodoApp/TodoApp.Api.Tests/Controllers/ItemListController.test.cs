@@ -44,8 +44,8 @@ namespace TodoApp.Api.Tests.Controllers
                 new ItemModel {Id = Guid.Parse("250be0cc-438e-46cc-a0fe-549f4d3409e2"), Text = "Coffee overflow"}
             });
             itemRepository.Get(fakeId).Returns(fakeItem);
-            itemRepository.Add(fakeItem).ReturnsForAnyArgs(fakeItem);
-            itemRepository.Update(fakeId,fakeItem).ReturnsForAnyArgs(fakeItem);
+            itemRepository.Add(Arg.Any<ItemModel>()).Returns(fakeItem);
+            itemRepository.Update(fakeId, Arg.Any<ItemModel>()).Returns(fakeItem);
 
             return itemRepository;
         }
