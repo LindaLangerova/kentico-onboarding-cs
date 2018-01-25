@@ -31,7 +31,7 @@ namespace TodoApp.Data.Repositories
         
         public ItemModel Update(Guid id, ItemModel item)
         {
-            return ItemList[2];
+            return ItemList[0];
         }
 
         public void Delete(Guid id)

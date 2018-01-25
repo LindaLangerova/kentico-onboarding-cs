@@ -41,8 +41,7 @@ namespace TodoApp.Api.Controllers
                 return BadRequest();
 
             var newItem = _repository.Add(item);
-
-            return await Task.FromResult(Created($"api/itemlist/{newItem.Id}", newItem));
+            return await Task.FromResult(Created($"api/itemlist/{newItem?.Id}", newItem));
         }
         
         [Route(Id)]
@@ -51,6 +50,7 @@ namespace TodoApp.Api.Controllers
             if (item?.Text == null || item.Id != id)
                 return BadRequest();
             var updatedItem = _repository.Update(id, item);
+
             return await Task.FromResult(Ok(updatedItem));
         }
 

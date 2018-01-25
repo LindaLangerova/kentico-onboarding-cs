@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using NSubstitute;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
 using TodoApp.Api.Tests.Utilities;
@@ -20,11 +21,33 @@ namespace TodoApp.Api.Tests.Controllers
         [SetUp]
         public void SetUp()
         {
-            _controller = new ItemListController(new ItemRepository())
+            var itemRepository = MockItemRepository();
+            _controller = new ItemListController(itemRepository)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
             };
+        }
+
+        internal IItemRepository MockItemRepository()
+        {
+            var itemRepository = Substitute.For<IItemRepository>();
+
+            var fakeId = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
+            var fakeItem = new ItemModel { Id = fakeId, Text = "Make a coffee" };
+
+            itemRepository.GetAll().Returns(new[]
+            {
+                new ItemModel {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee"},
+                new ItemModel {Id = Guid.Parse("55b0d56d-48d7-4f93-bd73-e4b801e26faa"), Text = "Make second coffee"},
+                new ItemModel {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d2"), Text = "Add some coffee"},
+                new ItemModel {Id = Guid.Parse("250be0cc-438e-46cc-a0fe-549f4d3409e2"), Text = "Coffee overflow"}
+            });
+            itemRepository.Get(fakeId).Returns(fakeItem);
+            itemRepository.Add(fakeItem).ReturnsForAnyArgs(fakeItem);
+            itemRepository.Update(fakeId,fakeItem).ReturnsForAnyArgs(fakeItem);
+
+            return itemRepository;
         }
 
         [Test]
@@ -83,8 +106,8 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PutItem_ExistingItem_ItemUpdated()
         {
-            var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d2");
-            var updateItem = new ItemModel { Id = id, Text = "Add some coffee" };
+            var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
+            var updateItem = new ItemModel { Id = id, Text = "Make a coffee" };
 
             var response = await _controller
                 .ResolveAction(controller => controller.PutAsync(updateItem.Id, updateItem))
