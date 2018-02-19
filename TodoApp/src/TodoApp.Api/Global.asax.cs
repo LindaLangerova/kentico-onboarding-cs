@@ -8,12 +8,9 @@ namespace TodoApp.Api
     {
         protected void Application_Start()
         {
-            IUnityContainer container = new UnityContainer();
-
             GlobalConfiguration.Configure(RouteConfig.Register);
 
-            UnityConfig.RegisterComponents(container);
-            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+            UnityConfig.RegisterComponents();
         }
     }
 }
