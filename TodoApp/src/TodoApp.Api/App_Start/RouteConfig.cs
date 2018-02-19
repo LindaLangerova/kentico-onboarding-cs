@@ -17,6 +17,11 @@ namespace TodoApp.Api
                 }
             };
             config.MapHttpAttributeRoutes(versionConstraintResolver);
+
+            config.Routes.MapHttpRoute(
+                "DefaultApi",
+                "api/v{version:apiVersion}/{controller}/{id}",
+                new {id = RouteParameter.Optional});
         }
     }
 }
