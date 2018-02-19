@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Web;
 using System.Web.Http.Routing;
+using TodoApp.Contract;
 
 namespace TodoApp.Api
 {
-    public class ItemUrlManager
+    public class ItemUrlManager:IItemUrlManager
     {
         private readonly UrlHelper _urlHelper;
 

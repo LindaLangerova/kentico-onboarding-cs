@@ -2,9 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Http.Routing;
 using NSubstitute;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
@@ -13,7 +11,6 @@ using TodoApp.Api.Tests.Utilities.ActionsResolution;
 using TodoApp.Api.Tests.Utilities.Comparers;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
-using TodoApp.Data.Repositories;
 
 namespace TodoApp.Api.Tests.Controllers
 {
@@ -25,7 +22,7 @@ namespace TodoApp.Api.Tests.Controllers
         public void SetUp()
         {
             var itemRepository = MockItemRepository();
-            _controller = new ItemListController(itemRepository, new ItemUrlManager(new UrlHelper()))
+            _controller = new ItemListController(itemRepository, new TestItemUrlManager())
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
@@ -94,7 +91,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
             var expectedItem = new ItemModel { Id = id, Text = "Make a coffee" };
-            var expectedRoute = new Uri($"api/itemlist/{id}", UriKind.Relative);
+            var expectedRoute = new Uri($"api/v1/itemlist/{id}", UriKind.Relative);
 
             var response = await _controller
                 .ResolveAction(controller => controller.PostAsync(expectedItem))

@@ -2,11 +2,10 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Routing;
 using Microsoft.Web.Http;
+using TodoApp.Contract;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
-using TodoApp.Data.Repositories;
 
 namespace TodoApp.Api.Controllers
 {
@@ -14,9 +13,9 @@ namespace TodoApp.Api.Controllers
     public class ItemListController : ApiController
     {
         private readonly IItemRepository _repository;
-        private readonly ItemUrlManager _urlManager;
+        private readonly IItemUrlManager _urlManager;
 
-        public ItemListController(IItemRepository repository,ItemUrlManager urlManager)
+        public ItemListController(IItemRepository repository,IItemUrlManager urlManager)
         {
             _repository = repository;
             _urlManager = urlManager;

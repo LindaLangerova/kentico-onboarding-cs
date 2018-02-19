@@ -137,6 +137,7 @@
     <Compile Include="Utilities\FluentAssert\IFirstFluentAssert.cs" />
     <Compile Include="Utilities\FluentAssert\IFluentAssert.cs" />
     <Compile Include="Utilities\TestBase.cs" />
+    <Compile Include="Utilities\TestItemUrlManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
