@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Routing;
 using NSubstitute;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
@@ -24,7 +25,7 @@ namespace TodoApp.Api.Tests.Controllers
         public void SetUp()
         {
             var itemRepository = MockItemRepository();
-            _controller = new ItemListController(itemRepository)
+            _controller = new ItemListController(itemRepository, new ItemUrlManager(new UrlHelper()))
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
