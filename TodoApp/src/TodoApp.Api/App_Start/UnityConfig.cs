@@ -1,17 +1,20 @@
 using System.Web.Http;
-using TodoApp.Contract.Repositories;
-using TodoApp.Data.Repositories;
+using TodoApp.Data;
 using Unity;
-using Unity.Lifetime;
 using Unity.WebApi;
 
 namespace TodoApp.Api
 {
     public static class UnityConfig
     {
-        public static void RegisterComponents(IUnityContainer container)
+        public static void RegisterComponents()
         {
-            container.RegisterType<IItemRepository, ItemRepository>(new HierarchicalLifetimeManager());
+            IUnityContainer container = new UnityContainer();
+
+            DataUnityBootstrapper.RegisterComponents(container);
+            ApiUnityBootstrapper.RegisterComponents(container);
+
+            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
 }
