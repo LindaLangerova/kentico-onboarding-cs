@@ -142,7 +142,9 @@
     <Compile Include="ItemUrlManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ConnectionStrings.config" />
     <None Include="packages.config" />
+    <Content Include="PrivateSettings.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
