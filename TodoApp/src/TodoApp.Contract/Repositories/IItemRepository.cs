@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using MongoDB.Bson;
 using TodoApp.Contract.Models;
 
 namespace TodoApp.Contract.Repositories
 {
     public interface IItemRepository
     {
-        IEnumerable<ItemModel> GetAll();
-        ItemModel Get(Guid id);
-        ItemModel Update(Guid id, ItemModel item);
-        ItemModel Add(ItemModel item);
+        List<Item> GetAll();
+        Item Get(Guid id);
+        Item Update(Guid id, Item item);
+        string Add(Item item);
         void Delete(Guid id);
     }
 }

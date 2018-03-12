@@ -6,6 +6,6 @@ namespace TodoApp.Contract
 {
     public interface IItemDbContext: IDisposable
     {
-        IDbSet<ItemModel> Items { get; set; }
+        IDbSet<Item> Items { get; set; }
     }
 }

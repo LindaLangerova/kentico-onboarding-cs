@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Web.Http;
+using MongoDB.Bson;
 using TodoApp.Contract;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
@@ -22,7 +23,7 @@ namespace TodoApp.Api.Controllers
         }
 
         public async Task<IHttpActionResult> GetAllAsync()
-            => await Task.FromResult(Ok(_repository.GetAll()));
+            => await Task.FromResult(Ok( _repository.GetAll()));
         
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
@@ -30,14 +31,14 @@ namespace TodoApp.Api.Controllers
             return await Task.FromResult(Ok(item));
         }
 
-        public async Task<IHttpActionResult> PostAsync(ItemModel item)
+        public async Task<IHttpActionResult> PostAsync(Item item)
         {
             var newItem = _repository.Add(item);
             var location = _urlManager.GetItemUrl(item.Id);
-            return await Task.FromResult(Created(location, newItem));
+            return await Task.FromResult(Created(location,newItem));
         }
         
-        public async Task<IHttpActionResult> PutAsync(Guid id, ItemModel item)
+        public async Task<IHttpActionResult> PutAsync(Guid id, Item item)
         {
             var updatedItem = _repository.Update(id, item);
             return await Task.FromResult(Ok(updatedItem));

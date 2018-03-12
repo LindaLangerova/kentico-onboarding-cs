@@ -10,16 +10,16 @@ namespace TodoApp.Api.Tests.Utilities.Comparers
         public static EqualConstraint UsingItemModelComparer(this EqualConstraint constraint)
             => constraint.Using(ItemModelComparer.Instance.Value);
 
-        private class ItemModelComparer : IEqualityComparer<ItemModel>
+        private class ItemModelComparer : IEqualityComparer<Item>
         {
             public static Lazy<ItemModelComparer> Instance => new Lazy<ItemModelComparer>(() => new ItemModelComparer());
 
             private ItemModelComparer() { }
 
-            public bool Equals(ItemModel x, ItemModel y)
+            public bool Equals(Item x, Item y)
                 => x?.Id == y?.Id && x?.Text == y?.Text;
 
-            public int GetHashCode(ItemModel obj)
+            public int GetHashCode(Item obj)
                 => obj.Id.GetHashCode();
         }
     }
