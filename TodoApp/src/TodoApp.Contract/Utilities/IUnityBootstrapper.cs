@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity;
 
-namespace TodoApp.Contract
+namespace TodoApp.Contract.Utilities
 {
     public interface IUnityBootstrapper
     {

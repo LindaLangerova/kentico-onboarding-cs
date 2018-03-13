@@ -2,7 +2,7 @@
 using System.Web.Http.Routing;
 using TodoApp.Contract;
 
-namespace TodoApp.Api
+namespace TodoApp.Api.Utilities
 {
     public class ItemUrlObtainer : IItemUrlObtainer
     {

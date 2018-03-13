@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Web.Http.Routing;
 using NSubstitute;
 using NUnit.Framework;
-using TodoApp.Api.Tests.Utilities;
+using TodoApp.Api.Utilities;
 
-namespace TodoApp.Api.Tests
+namespace TodoApp.Api.Tests.Utilities
 {
     internal class ItemUrlObtainerTest : TestBase
     {

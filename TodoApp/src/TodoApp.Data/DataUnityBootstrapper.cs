@@ -1,5 +1,6 @@
 ﻿using TodoApp.Contract;
 using TodoApp.Contract.Repositories;
+using TodoApp.Contract.Utilities;
 using TodoApp.Data.Repositories;
 using Unity;
 using Unity.Lifetime;

@@ -127,7 +127,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ItemUrlObtainer.test.cs" />
+    <Compile Include="Utilities\ItemUrlObtainer.test.cs" />
     <Compile Include="Utilities\ActionsResolution\ActionsResolutionExtensions.cs" />
     <Compile Include="Controllers\ItemListController.test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -138,7 +138,6 @@
     <Compile Include="Utilities\FluentAssert\IFirstFluentAssert.cs" />
     <Compile Include="Utilities\FluentAssert\IFluentAssert.cs" />
     <Compile Include="Utilities\TestBase.cs" />
-    <Compile Include="Utilities\TestItemUrlObtainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
