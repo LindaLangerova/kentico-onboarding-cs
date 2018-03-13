@@ -9,10 +9,10 @@ namespace TodoApp.Contract.Repositories
 {
     public interface IItemRepository
     {
-        IEnumerable<ItemModel> GetAll();
-        ItemModel Get(Guid id);
-        ItemModel Update(Guid id, ItemModel item);
-        ItemModel Add(ItemModel item);
+        IEnumerable<Item> GetAll();
+        Item Get(Guid id);
+        Item Update(Guid id, Item item);
+        Item Add(Item item);
         void Delete(Guid id);
     }
 }

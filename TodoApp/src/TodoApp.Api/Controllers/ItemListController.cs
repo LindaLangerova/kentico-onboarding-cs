@@ -31,14 +31,14 @@ namespace TodoApp.Api.Controllers
             return await Task.FromResult(Ok(item));
         }
 
-        public async Task<IHttpActionResult> PostAsync(ItemModel item)
+        public async Task<IHttpActionResult> PostAsync(Item item)
         {
             var newItem = _repository.Add(item);
             var location = _urlManager.GetItemUrl(item.Id);
             return await Task.FromResult(Created(location, newItem));
         }
         
-        public async Task<IHttpActionResult> PutAsync(Guid id, ItemModel item)
+        public async Task<IHttpActionResult> PutAsync(Guid id, Item item)
         {
             var updatedItem = _repository.Update(id, item);
             return await Task.FromResult(Ok(updatedItem));

@@ -2,7 +2,7 @@
 
 namespace TodoApp.Contract.Models
 {
-    public class ItemModel
+    public class Item
     {
         public Guid Id { get; set; }
         public string Text { get; set; }
