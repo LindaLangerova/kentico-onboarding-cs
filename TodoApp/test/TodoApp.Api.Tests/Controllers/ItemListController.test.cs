@@ -22,7 +22,7 @@ namespace TodoApp.Api.Tests.Controllers
         public void SetUp()
         {
             var itemRepository = MockItemRepository();
-            _controller = new ItemListController(itemRepository, new TestItemUrlManager())
+            _controller = new ItemListController(itemRepository, new TestItemUrlObtainer())
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()

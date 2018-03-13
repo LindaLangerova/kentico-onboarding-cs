@@ -16,7 +16,7 @@ namespace TodoApp.Api
         }
 
         public void RegisterTypes(IUnityContainer container) => container
-                .RegisterType<IItemUrlManager, ItemUrlManager>(new HierarchicalLifetimeManager())
+                .RegisterType<IItemUrlObtainer, ItemUrlObtainer>(new HierarchicalLifetimeManager())
                 .RegisterType<UrlHelper, UrlHelper>(new HierarchicalLifetimeManager())
                 .RegisterType<HttpRequestMessage, HttpRequestMessage>(new InjectionConstructor());
     }

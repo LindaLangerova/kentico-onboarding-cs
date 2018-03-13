@@ -2,7 +2,7 @@
 
 namespace TodoApp.Contract
 {
-    public interface IItemUrlManager
+    public interface IItemUrlObtainer
     {
         string GetItemUrl(Guid id);
     }

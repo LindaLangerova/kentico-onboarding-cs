@@ -139,7 +139,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ItemUrlManager.cs" />
+    <Compile Include="ItemUrlObtainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
