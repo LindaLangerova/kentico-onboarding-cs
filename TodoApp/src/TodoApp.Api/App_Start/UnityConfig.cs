@@ -1,4 +1,6 @@
+using System;
 using System.Web.Http;
+using TodoApp.Contract;
 using TodoApp.Data;
 using Unity;
 using Unity.WebApi;
@@ -11,13 +13,16 @@ namespace TodoApp.Api
         {
             IUnityContainer container = new UnityContainer();
 
-            var dataUnityBootstrapper = new DataUnityBootstrapper();
-            dataUnityBootstrapper.RegisterTypes(container);
-
-            var apiUnityBootstrapper = new ApiUnityBootstrapper();
-            apiUnityBootstrapper.RegisterTypes(container);
+            RegisterTypesBy<DataUnityBootstrapper>(container);
+            RegisterTypesBy<ApiUnityBootstrapper>(container);
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+        }
+
+        private static void RegisterTypesBy<T>(IUnityContainer container) where T : IUnityBootstrapper
+        {
+            var bootstrapper = Activator.CreateInstance<T>();
+            bootstrapper.RegisterTypes(container);
         }
     }
 }
