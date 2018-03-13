@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Http;
 
-namespace TodoApp.Api.Tests.Utilities.ActionsResolution
+namespace TodoApp.Api.Tests.TestUtilities.ActionsResolution
 {
     internal class ReducedResponse
     {
