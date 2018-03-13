@@ -9,8 +9,7 @@ namespace TodoApp.Api
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(RouteConfig.Register);
-
-            UnityConfig.RegisterComponents();
+            GlobalConfiguration.Configure(UnityConfig.RegisterComponents);
         }
     }
 }
