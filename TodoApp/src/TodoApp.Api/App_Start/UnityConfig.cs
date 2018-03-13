@@ -11,8 +11,11 @@ namespace TodoApp.Api
         {
             IUnityContainer container = new UnityContainer();
 
-            DataUnityBootstrapper.RegisterComponents(container);
-            ApiUnityBootstrapper.RegisterComponents(container);
+            var dataUnityBootstrapper = new DataUnityBootstrapper();
+            dataUnityBootstrapper.RegisterComponents(container);
+
+            var apiUnityBootstrapper = new ApiUnityBootstrapper();
+            apiUnityBootstrapper.RegisterComponents(container);
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
