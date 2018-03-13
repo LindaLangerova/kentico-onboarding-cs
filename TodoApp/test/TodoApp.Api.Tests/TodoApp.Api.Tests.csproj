@@ -127,6 +127,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ItemUrlObtainer.test.cs" />
     <Compile Include="Utilities\ActionsResolution\ActionsResolutionExtensions.cs" />
     <Compile Include="Controllers\ItemListController.test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
