@@ -1,13 +1,12 @@
 ﻿using TodoApp.Contract;
 using TodoApp.Contract.Repositories;
-using TodoApp.Contract.Utilities;
 using TodoApp.Data.Repositories;
 using Unity;
 using Unity.Lifetime;
 
 namespace TodoApp.Data
 {
-    public class DataUnityBootstrapper: IUnityBootstrapper
+    public class DataUnityBootstrapper : IUnityBootstrapper
     {
         public void RegisterTypes(IUnityContainer container)
         {

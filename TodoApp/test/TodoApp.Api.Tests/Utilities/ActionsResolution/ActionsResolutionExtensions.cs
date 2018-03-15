@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace TodoApp.Api.Tests.TestUtilities.ActionsResolution
+namespace TodoApp.Api.Tests.Utilities.ActionsResolution
 {
     internal static class ActionsResolutionExtensions
     {

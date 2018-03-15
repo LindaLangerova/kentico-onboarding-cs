@@ -127,17 +127,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Utilities\ItemUrlObtainer.test.cs" />
-    <Compile Include="TestUtilities\ActionsResolution\ActionsResolutionExtensions.cs" />
+    <Compile Include="Services\ItemUrlObtainer.test.cs" />
+    <Compile Include="Utilities\ActionsResolution\ActionsResolutionExtensions.cs" />
     <Compile Include="Controllers\ItemListController.test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestUtilities\ActionsResolution\ReducedResponse.cs" />
-    <Compile Include="TestUtilities\Comparers\EqualConstraintsExtensions.cs" />
-    <Compile Include="TestUtilities\Exceptions\AllAsertException.cs" />
-    <Compile Include="TestUtilities\FluentAssert\FluentAssert.cs" />
-    <Compile Include="TestUtilities\FluentAssert\IFirstFluentAssert.cs" />
-    <Compile Include="TestUtilities\FluentAssert\IFluentAssert.cs" />
-    <Compile Include="TestUtilities\TestBase.cs" />
+    <Compile Include="Utilities\ActionsResolution\ReducedResponse.cs" />
+    <Compile Include="Utilities\Comparers\EqualConstraintsExtensions.cs" />
+    <Compile Include="Utilities\Exceptions\AllAsertException.cs" />
+    <Compile Include="Utilities\FluentAssert\FluentAssert.cs" />
+    <Compile Include="Utilities\FluentAssert\IFirstFluentAssert.cs" />
+    <Compile Include="Utilities\FluentAssert\IFluentAssert.cs" />
+    <Compile Include="Utilities\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

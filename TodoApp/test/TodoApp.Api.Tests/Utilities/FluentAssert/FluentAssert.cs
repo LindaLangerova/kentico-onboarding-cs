@@ -4,9 +4,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using TodoApp.Api.Tests.TestUtilities.Exceptions;
+using TodoApp.Api.Tests.Utilities.Exceptions;
 
-namespace TodoApp.Api.Tests.TestUtilities.FluentAssert
+namespace TodoApp.Api.Tests.Utilities.FluentAssert
 {
     public sealed class FluentAssert : IFirstFluentAssert, IFluentAssert
     {

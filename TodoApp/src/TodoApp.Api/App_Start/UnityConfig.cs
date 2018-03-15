@@ -1,7 +1,6 @@
 using System;
 using System.Web.Http;
 using TodoApp.Contract;
-using TodoApp.Contract.Utilities;
 using TodoApp.Data;
 using Unity;
 using Unity.WebApi;
@@ -10,7 +9,7 @@ namespace TodoApp.Api
 {
     public static class UnityConfig
     {
-        public static void RegisterComponents(HttpConfiguration config)
+        public static void Register(HttpConfiguration config)
         {
             IUnityContainer container = new UnityContainer();
 

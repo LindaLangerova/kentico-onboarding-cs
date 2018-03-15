@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
-using TodoApp.Api.Tests.TestUtilities.FluentAssert;
+using TodoApp.Api.Tests.Utilities.FluentAssert;
 
-namespace TodoApp.Api.Tests.TestUtilities
+namespace TodoApp.Api.Tests.Utilities
 {
     [TestFixture]
     public abstract class TestBase : IDisposable
