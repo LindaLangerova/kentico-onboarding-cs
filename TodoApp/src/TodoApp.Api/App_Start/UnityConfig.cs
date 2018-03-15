@@ -13,13 +13,13 @@ namespace TodoApp.Api
         {
             IUnityContainer container = new UnityContainer();
 
-            RegisterTypesBy<DataUnityBootstrapper>(container);
-            RegisterTypesBy<ApiUnityBootstrapper>(container);
+            container.RegisterTypesBy<DataUnityBootstrapper>();
+            container.RegisterTypesBy<ApiUnityBootstrapper>();
 
             config.DependencyResolver = new UnityDependencyResolver(container);
         }
 
-        private static void RegisterTypesBy<T>(IUnityContainer container) where T : IUnityBootstrapper
+        private static void RegisterTypesBy<T>(this IUnityContainer container) where T : IUnityBootstrapper
         {
             var bootstrapper = Activator.CreateInstance<T>();
             bootstrapper.RegisterTypes(container);
