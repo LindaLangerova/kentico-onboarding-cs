@@ -6,6 +6,7 @@ using Microsoft.Web.Http;
 using TodoApp.Contract;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
+using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Controllers
 {
@@ -13,12 +14,12 @@ namespace TodoApp.Api.Controllers
     public class ItemListController : ApiController
     {
         private readonly IItemRepository _repository;
-        private readonly IItemUrlObtainer _urlObtainer;
+        private readonly IUrlGenerator _urlGenerator;
 
-        public ItemListController(IItemRepository repository, IItemUrlObtainer urlObtainer)
+        public ItemListController(IItemRepository repository, IUrlGenerator urlGenerator)
         {
             _repository = repository;
-            _urlObtainer = urlObtainer;
+            _urlGenerator = urlGenerator;
         }
 
         public async Task<IHttpActionResult> GetAllAsync() => await Task.FromResult(Ok(_repository.GetAll()));
@@ -32,7 +33,7 @@ namespace TodoApp.Api.Controllers
         public async Task<IHttpActionResult> PostAsync(Item item)
         {
             var newItem = _repository.Add(item);
-            var location = _urlObtainer.GetItemUrl(item.Id);
+            var location = _urlGenerator.GetItemUrl(item.Id);
             return await Task.FromResult(Created(location, newItem));
         }
 

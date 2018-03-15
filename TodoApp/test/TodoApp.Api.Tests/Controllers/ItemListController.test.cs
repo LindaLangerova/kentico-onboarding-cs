@@ -13,6 +13,7 @@ using TodoApp.Api.Tests.Utilities.Comparers;
 using TodoApp.Api.Services;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
+using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Tests.Controllers
 {
@@ -29,11 +30,11 @@ namespace TodoApp.Api.Tests.Controllers
         [SetUp]
         public void SetUp()
         {
-            var urlHelper = Substitute.For<UrlHelper>(Substitute.For<HttpRequestMessage>());
-            urlHelper.Request.Version = new Version("1.1");
+            var urlGenerator = Substitute.For<IUrlGenerator>();
+            urlGenerator.GetItemUrl(Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3")).Returns("api/v1.1/itemlist/c5cc89a0-ab8d-4328-9000-3da679ec02d3");
 
             var itemRepository = MockItemRepository();
-            _controller = new ItemListController(itemRepository, new ItemUrlObtainer(urlHelper))
+            _controller = new ItemListController(itemRepository, urlGenerator)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()

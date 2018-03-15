@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Web.Http.Routing;
 using TodoApp.Contract;
+using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Services
 {
-    public class ItemUrlObtainer : IItemUrlObtainer
+    public class UrlGenerator : IUrlGenerator
     {
         private readonly UrlHelper _urlHelper;
 
-        public ItemUrlObtainer(UrlHelper urlHelper)
+        public UrlGenerator(UrlHelper urlHelper)
         {
             _urlHelper = urlHelper;
         }

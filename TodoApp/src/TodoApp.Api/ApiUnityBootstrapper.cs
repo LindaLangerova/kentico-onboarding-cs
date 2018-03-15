@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Http.Routing;
 using TodoApp.Api.Services;
 using TodoApp.Contract;
+using TodoApp.Contract.Services;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
@@ -17,7 +18,7 @@ namespace TodoApp.Api
         }
 
         public void RegisterTypes(IUnityContainer container) => container
-                .RegisterType<IItemUrlObtainer, ItemUrlObtainer>(new HierarchicalLifetimeManager())
+                .RegisterType<IUrlGenerator, UrlGenerator>(new HierarchicalLifetimeManager())
                 .RegisterType<UrlHelper, UrlHelper>(new HierarchicalLifetimeManager())
                 .RegisterType<HttpRequestMessage, HttpRequestMessage>(new InjectionConstructor());
     }

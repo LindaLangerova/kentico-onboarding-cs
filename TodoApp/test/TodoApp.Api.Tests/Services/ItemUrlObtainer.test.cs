@@ -2,13 +2,14 @@
 using System.Net.Http;
 using System.Web.Http.Routing;
 using NSubstitute;
+using NSubstitute.Extensions;
 using NUnit.Framework;
 using TodoApp.Api.Tests.Utilities;
 using TodoApp.Api.Services;
 
 namespace TodoApp.Api.Tests.Services
 {
-    internal class ItemUrlObtainerTest : TestBase
+    internal class ItemUrlGeneratorTest : TestBase
     {
         [SetUp]
         public void SetUp()
@@ -18,11 +19,12 @@ namespace TodoApp.Api.Tests.Services
                 Version = new Version("2.1")
             };
             var urlHelper = Substitute.For<UrlHelper>(request);
-
-            _itemUrlObtainer = new ItemUrlObtainer(urlHelper);
+            urlHelper.Route("DefaultApi", Arg.Any<object>())
+                .Returns("api/v2.1/itemlist/5f6a2723-040a-4398-8b63-9d55153378ba");
+            _itemUrlGenerator = new UrlGenerator(urlHelper);
         }
 
-        private ItemUrlObtainer _itemUrlObtainer;
+        private UrlGenerator _itemUrlGenerator;
 
         [Test]
         public void GetItemUrl_UrlReceived()
@@ -30,7 +32,7 @@ namespace TodoApp.Api.Tests.Services
             var id = Guid.Parse("5f6a2723-040a-4398-8b63-9d55153378ba");
             var requestedUrl = "api/v2.1/itemlist/5f6a2723-040a-4398-8b63-9d55153378ba";
 
-            var receivedUrl = _itemUrlObtainer.GetItemUrl(id);
+            var receivedUrl = _itemUrlGenerator.GetItemUrl(id);
 
             Assert.That(receivedUrl, Is.EqualTo(requestedUrl));
         }
