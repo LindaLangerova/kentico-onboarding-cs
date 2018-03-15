@@ -13,8 +13,11 @@ namespace TodoApp.Api.Tests.Services
         [SetUp]
         public void SetUp()
         {
-            var urlHelper = Substitute.For<UrlHelper>(Substitute.For<HttpRequestMessage>());
-            urlHelper.Request.Version = new Version("1.1");
+            var request = new HttpRequestMessage
+            {
+                Version = new Version("2.1")
+            };
+            var urlHelper = Substitute.For<UrlHelper>(request);
 
             _itemUrlObtainer = new ItemUrlObtainer(urlHelper);
         }
@@ -25,7 +28,7 @@ namespace TodoApp.Api.Tests.Services
         public void GetItemUrl_UrlReceived()
         {
             var id = Guid.Parse("5f6a2723-040a-4398-8b63-9d55153378ba");
-            var requestedUrl = "api/v1.1/itemlist/5f6a2723-040a-4398-8b63-9d55153378ba";
+            var requestedUrl = "api/v2.1/itemlist/5f6a2723-040a-4398-8b63-9d55153378ba";
 
             var receivedUrl = _itemUrlObtainer.GetItemUrl(id);
 
