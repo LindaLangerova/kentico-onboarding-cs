@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Http.Routing;
-using TodoApp.Contract;
 using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Services
@@ -10,10 +9,9 @@ namespace TodoApp.Api.Services
         private readonly UrlHelper _urlHelper;
 
         public UrlGenerator(UrlHelper urlHelper)
-        {
-            _urlHelper = urlHelper;
-        }
+            => _urlHelper = urlHelper;
 
-        public string GetItemUrl(Guid id) => $"api/v{_urlHelper.Request.Version}/itemlist/{id}";
+        public string GetItemUrl(Guid id)
+            => _urlHelper.Route("DefaultApi", new {id});
     }
 }
