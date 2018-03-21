@@ -1,22 +1,19 @@
-﻿using System;
-using System.Data.Entity;
-using CodeMash.MongoDB.Repository;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using TodoApp.Contract.Models;
 
 namespace TodoApp.Data.Contexts
 {
     public class MongoDbContext
     {
-        internal IMongoClient _client { get; set; }
-        internal IMongoDatabase _database { get; set; }
-        internal IMongoCollection<Item> _itemsCollection { get; set; }
-
         public MongoDbContext(string mongoDbConnectionString)
         {
-            _client = new MongoClient(mongoDbConnectionString);
-            _database = _client.GetDatabase("tododb");
-            _itemsCollection = _database.GetCollection<Item>("Items");
+            Client = new MongoClient(mongoDbConnectionString);
+            Database = Client.GetDatabase("tododb");
+            ItemsCollection = Database.GetCollection<Item>("Items");
         }
+
+        internal IMongoClient Client { get; set; }
+        internal IMongoDatabase Database { get; set; }
+        internal IMongoCollection<Item> ItemsCollection { get; set; }
     }
 }

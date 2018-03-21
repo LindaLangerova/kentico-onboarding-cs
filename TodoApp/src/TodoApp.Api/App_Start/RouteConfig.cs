@@ -13,9 +13,10 @@ namespace TodoApp.Api
             {
                 ConstraintMap =
                 {
-                    ["apiVersion"] = typeof( ApiVersionRouteConstraint )
+                    ["apiVersion"] = typeof(ApiVersionRouteConstraint)
                 }
             };
+
             config.MapHttpAttributeRoutes(versionConstraintResolver);
 
             config.Routes.MapHttpRoute(

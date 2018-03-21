@@ -1,14 +1,14 @@
-﻿using System.Web.Http;
+﻿using System.Web;
+using System.Web.Http;
 
 namespace TodoApp.Api
 {
-    public class WebApiApplication : System.Web.HttpApplication
+    public class WebApiApplication : HttpApplication
     {
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(RouteConfig.Register);
-
-            UnityConfig.RegisterComponents();
+            GlobalConfiguration.Configure(UnityConfig.Register);
         }
     }
 }

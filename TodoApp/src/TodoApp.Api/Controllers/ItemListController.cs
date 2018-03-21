@@ -3,10 +3,9 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Web.Http;
-using MongoDB.Bson;
-using TodoApp.Contract;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
+using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Controllers
 {
@@ -14,17 +13,17 @@ namespace TodoApp.Api.Controllers
     public class ItemListController : ApiController
     {
         private readonly IItemRepository _repository;
-        private readonly IItemUrlManager _urlManager;
+        private readonly IUrlGenerator _urlGenerator;
 
-        public ItemListController(IItemRepository repository,IItemUrlManager urlManager)
+        public ItemListController(IItemRepository repository, IUrlGenerator urlGenerator)
         {
             _repository = repository;
-            _urlManager = urlManager;
+            _urlGenerator = urlGenerator;
         }
 
         public async Task<IHttpActionResult> GetAllAsync()
-            => await Task.FromResult(Ok( _repository.GetAll()));
-        
+            => await Task.FromResult(Ok(_repository.GetAll()));
+
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
             var item = _repository.Get(id);
@@ -34,16 +33,16 @@ namespace TodoApp.Api.Controllers
         public async Task<IHttpActionResult> PostAsync(Item item)
         {
             var newItem = _repository.Add(item);
-            var location = _urlManager.GetItemUrl(item.Id);
-            return await Task.FromResult(Created(location,newItem));
+            var location = _urlGenerator.GetItemUrl(item.Id);
+            return await Task.FromResult(Created(location, newItem));
         }
-        
+
         public async Task<IHttpActionResult> PutAsync(Guid id, Item item)
         {
             var updatedItem = _repository.Update(id, item);
             return await Task.FromResult(Ok(updatedItem));
         }
-        
+
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
             _repository.Delete(id);

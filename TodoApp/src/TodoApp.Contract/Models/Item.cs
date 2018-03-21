@@ -1,5 +1,4 @@
 ﻿using System;
-using MongoDB.Bson;
 
 namespace TodoApp.Contract.Models
 {
@@ -16,7 +15,7 @@ namespace TodoApp.Contract.Models
         public DateTime CreatedAt { get; set; }
         public DateTime LastChange { get; set; }
 
-        public override string ToString() 
+        public override string ToString()
             => $"{nameof(Id)}: {Id}, {nameof(Text)}: {Text}";
     }
 }

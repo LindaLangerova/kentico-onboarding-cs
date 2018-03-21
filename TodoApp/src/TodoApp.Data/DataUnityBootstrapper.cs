@@ -1,4 +1,4 @@
-﻿using MongoDB.Driver.Core.Configuration;
+﻿using System.Configuration;
 using TodoApp.Contract;
 using TodoApp.Contract.Repositories;
 using TodoApp.Data.Contexts;
@@ -9,19 +9,19 @@ using Unity.Lifetime;
 
 namespace TodoApp.Data
 {
-    public class DataUnityBootstrapper: IUnityBootstrapper
+    public class DataUnityBootstrapper : IUnityBootstrapper
     {
-        public static void RegisterComponents(IUnityContainer container)
-        {
-            container
-                .RegisterType<IItemRepository, ItemRepository>(new HierarchicalLifetimeManager())
-                .RegisterType<MongoDbContext, MongoDbContext>(new HierarchicalLifetimeManager(),
-                    new InjectionConstructor(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString));
-        }
+        void IUnityBootstrapper.RegisterTypes(IUnityContainer container) => RegisterTypes(container);
 
-        void IUnityBootstrapper.RegisterComponents(IUnityContainer container)
-        {
-            RegisterComponents(container);
-        }
+        public static void RegisterTypes(IUnityContainer container) => container
+                                                                       .RegisterType<IItemRepository, ItemRepository>(
+                                                                           new HierarchicalLifetimeManager())
+                                                                       .RegisterType<MongoDbContext, MongoDbContext>(
+                                                                           new HierarchicalLifetimeManager(),
+                                                                           new InjectionConstructor(
+                                                                               ConfigurationManager
+                                                                                   .ConnectionStrings[
+                                                                                       "DefaultConnection"]
+                                                                                   .ConnectionString));
     }
 }
