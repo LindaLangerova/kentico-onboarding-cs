@@ -151,17 +151,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\IUrlGenerator.test.cs" />
-    <Compile Include="Utilities\ActionsResolution\ActionsResolutionExtensions.cs" />
+    <Compile Include="Services\UrlGenerator.test.cs" />
     <Compile Include="Controllers\ItemListController.test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\ActionsResolution\ReducedResponse.cs" />
-    <Compile Include="Utilities\Comparers\EqualConstraintsExtensions.cs" />
-    <Compile Include="Utilities\Exceptions\AllAsertException.cs" />
-    <Compile Include="Utilities\FluentAssert\FluentAssert.cs" />
-    <Compile Include="Utilities\FluentAssert\IFirstFluentAssert.cs" />
-    <Compile Include="Utilities\FluentAssert\IFluentAssert.cs" />
-    <Compile Include="Utilities\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -181,6 +173,10 @@
     <ProjectReference Include="..\..\src\TodoApp.Data\TodoApp.Data.csproj">
       <Project>{D3AFE98B-4F30-4EEB-AB77-60B352E55590}</Project>
       <Name>TodoApp.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TodoApp.Contract.Tests\TodoApp.Contract.Tests.csproj">
+      <Project>{6A4C1C35-C61A-4F48-A590-86D094655EFE}</Project>
+      <Name>TodoApp.Contract.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

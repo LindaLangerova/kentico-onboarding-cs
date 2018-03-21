@@ -2,9 +2,9 @@
 using System.Net;
 using System.Net.Http;
 
-namespace TodoApp.Api.Tests.Utilities.ActionsResolution
+namespace TodoApp.Contract.Tests.Utilities.ActionsResolution
 {
-    internal class ReducedResponse
+    public class ReducedResponse
     {
         public ReducedResponse(HttpResponseMessage message)
         {
@@ -16,7 +16,7 @@ namespace TodoApp.Api.Tests.Utilities.ActionsResolution
         public HttpStatusCode StatusCode { get; }
     }
 
-    internal class ReducedResponse<TContent> : ReducedResponse
+    public class ReducedResponse<TContent> : ReducedResponse
     {
         public ReducedResponse(HttpResponseMessage message) : base(message)
         {

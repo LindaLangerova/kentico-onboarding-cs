@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using NUnit.Framework.Constraints;
 using TodoApp.Contract.Models;
 
-namespace TodoApp.Api.Tests.Utilities.Comparers
+namespace TodoApp.Contract.Tests.Utilities.Comparers
 {
-    internal static class EqualConstraintsExtensions
+    public static class EqualConstraintsExtensions
     {
         public static EqualConstraint UsingItemModelComparer(this EqualConstraint constraint)
             => constraint.Using(ItemModelComparer.Instance.Value);

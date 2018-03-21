@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework.Constraints;
 
-namespace TodoApp.Api.Tests.Utilities.FluentAssert
+namespace TodoApp.Contract.Tests.Utilities.FluentAssert
 {
     public interface IFluentAssert
     {

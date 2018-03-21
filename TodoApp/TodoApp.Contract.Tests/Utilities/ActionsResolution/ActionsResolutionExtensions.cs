@@ -4,9 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace TodoApp.Api.Tests.Utilities.ActionsResolution
+namespace TodoApp.Contract.Tests.Utilities.ActionsResolution
 {
-    internal static class ActionsResolutionExtensions
+    public static class ActionsResolutionExtensions
     {
         public static async Task<HttpResponseMessage> ResolveAction<TController>(
             this TController controller,

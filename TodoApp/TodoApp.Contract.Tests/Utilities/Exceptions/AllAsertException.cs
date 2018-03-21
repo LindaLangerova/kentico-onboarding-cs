@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TodoApp.Api.Tests.Utilities.Exceptions
+namespace TodoApp.Contract.Tests.Utilities.Exceptions
 {
     internal class AllAsertException : Exception
     {

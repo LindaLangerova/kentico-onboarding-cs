@@ -8,12 +8,12 @@ using System.Web.Http;
 using NSubstitute;
 using NUnit.Framework;
 using TodoApp.Api.Controllers;
-using TodoApp.Api.Tests.Utilities;
-using TodoApp.Api.Tests.Utilities.ActionsResolution;
-using TodoApp.Api.Tests.Utilities.Comparers;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services;
+using TodoApp.Contract.Tests.Utilities;
+using TodoApp.Contract.Tests.Utilities.ActionsResolution;
+using TodoApp.Contract.Tests.Utilities.Comparers;
 
 namespace TodoApp.Api.Tests.Controllers
 {

@@ -4,11 +4,11 @@ using System.Web.Http.Routing;
 using NSubstitute;
 using NUnit.Framework;
 using TodoApp.Api.Services;
-using TodoApp.Api.Tests.Utilities;
+using TodoApp.Contract.Tests.Utilities;
 
 namespace TodoApp.Api.Tests.Services
 {
-    internal class ItemUrlGeneratorTest : TestBase
+    public class UrlGeneratorTest : TestBase
     {
         [SetUp]
         public void SetUp()
