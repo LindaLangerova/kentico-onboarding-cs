@@ -16,12 +16,12 @@ namespace TodoApp.Data.Repositories
 
         public List<Item> GetAll() => _db.ItemsCollection.Find(new BsonDocument()).ToListAsync().Result;
 
-        public Item Get(Guid id) => _db.ItemsCollection.Find(item => item.Id == id).First();
+        public Item Get(Guid id) => _db.ItemsCollection.Find(item => item.Id == id).FirstOrDefault();
 
         public string Add(Item item)
         {
             _db.ItemsCollection.InsertOneAsync(item).Wait();
-            return item.Text;
+            return item?.Text;
         }
 
         public Item Update(Guid id, Item item) => throw new NotImplementedException();

@@ -22,19 +22,25 @@ namespace TodoApp.Api.Controllers
         }
 
         public async Task<IHttpActionResult> GetAllAsync()
-            => await Task.FromResult(Ok(_repository.GetAll()));
+        {
+            var result = await Task.FromResult(_repository.GetAll());
+            if (_repository == null) return NotFound();
+            return Ok(result);
+        }
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
-            var item = _repository.Get(id);
-            return await Task.FromResult(Ok(item));
+            var item = await Task.FromResult(_repository.Get(id));
+            if (item == null) return NotFound();
+            return Ok(item);
         }
 
         public async Task<IHttpActionResult> PostAsync(Item item)
         {
-            var newItem = _repository.Add(item);
+            if (item.Text == null) return BadRequest();
+            var newItemText = _repository.Add(item);
             var location = _urlGenerator.GetItemUrl(item.Id);
-            return await Task.FromResult(Created(location, newItem));
+            return await Task.FromResult(Created(location, newItemText));
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Item item)
