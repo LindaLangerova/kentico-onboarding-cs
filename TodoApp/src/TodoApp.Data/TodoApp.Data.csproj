@@ -103,9 +103,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contexts\ItemDbContext.cs" />
     <Compile Include="DataUnityBootstrapper.cs" />
-    <Compile Include="Contexts\MongoDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
   </ItemGroup>

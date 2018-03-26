@@ -1,7 +1,6 @@
 ﻿using System.Configuration;
 using TodoApp.Contract;
 using TodoApp.Contract.Repositories;
-using TodoApp.Data.Contexts;
 using TodoApp.Data.Repositories;
 using Unity;
 using Unity.Injection;
@@ -11,17 +10,11 @@ namespace TodoApp.Data
 {
     public class DataUnityBootstrapper : IUnityBootstrapper
     {
-        void IUnityBootstrapper.RegisterTypes(IUnityContainer container) => RegisterTypes(container);
+        void IUnityBootstrapper.RegisterTypes(IUnityContainer container) 
+            => RegisterTypes(container);
 
-        public static void RegisterTypes(IUnityContainer container) => container
-                                                                       .RegisterType<IItemRepository, ItemRepository>(
-                                                                           new HierarchicalLifetimeManager())
-                                                                       .RegisterType<MongoDbContext, MongoDbContext>(
-                                                                           new HierarchicalLifetimeManager(),
-                                                                           new InjectionConstructor(
-                                                                               ConfigurationManager
-                                                                                   .ConnectionStrings[
-                                                                                       "DefaultConnection"]
-                                                                                   .ConnectionString));
+        public static void RegisterTypes(IUnityContainer container) 
+            => container.RegisterType<IItemRepository, ItemRepository>(new ContainerControlledLifetimeManager(),
+                                                                      new InjectionConstructor(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString));
     }
 }

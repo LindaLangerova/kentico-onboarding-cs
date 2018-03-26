@@ -23,35 +23,37 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var result = await Task.FromResult(_repository.GetAll());
-            if (_repository == null) return NotFound();
-            return Ok(result);
+            var result = await _repository.GetAll();
+            if (result == null) return NotFound();
+            return await Task.FromResult(Ok(result));
         }
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
-            var item = await Task.FromResult(_repository.Get(id));
-            if (item == null) return NotFound();
-            return Ok(item);
+            var item = await _repository.Get(id);
+            if (item == null)
+                return NotFound();
+            return await Task.FromResult(Ok(item));
         }
 
         public async Task<IHttpActionResult> PostAsync(Item item)
         {
-            if (item.Text == null) return BadRequest();
-            var newItemText = _repository.Add(item);
+            if (item.Text == null)
+                return BadRequest();
+            var newItemText = await _repository.Add(item);
             var location = _urlGenerator.GetItemUrl(item.Id);
             return await Task.FromResult(Created(location, newItemText));
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Item item)
         {
-            var updatedItem = _repository.Update(id, item);
+            var updatedItem = await _repository.Update(id, item);
             return await Task.FromResult(Ok(updatedItem));
         }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
-            _repository.Delete(id);
+            await _repository.Delete(id);
             return await Task.FromResult(StatusCode(HttpStatusCode.NoContent));
         }
     }

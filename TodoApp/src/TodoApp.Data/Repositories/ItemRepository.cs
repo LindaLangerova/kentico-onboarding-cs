@@ -1,31 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
-using TodoApp.Data.Contexts;
 
 namespace TodoApp.Data.Repositories
 {
     public class ItemRepository : IItemRepository
     {
-        private readonly MongoDbContext _db;
+        private readonly IMongoCollection<Item> _itemsCollection;
 
-        public ItemRepository(MongoDbContext db) => _db = db;
-
-        public List<Item> GetAll() => _db.ItemsCollection.Find(new BsonDocument()).ToListAsync().Result;
-
-        public Item Get(Guid id) => _db.ItemsCollection.Find(item => item.Id == id).FirstOrDefault();
-
-        public string Add(Item item)
+        public ItemRepository(string connectionString)
         {
-            _db.ItemsCollection.InsertOneAsync(item).Wait();
-            return item?.Text;
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase("tododb");
+            _itemsCollection = database.GetCollection<Item>("Items");
         }
 
-        public Item Update(Guid id, Item item) => throw new NotImplementedException();
+        public async Task<List<Item>> GetAll() => await _itemsCollection.Find(FilterDefinition<Item>.Empty).ToListAsync();
 
-        public void Delete(Guid id) => throw new NotImplementedException();
+        public async Task<Item> Get(Guid id) => await _itemsCollection.Find(item => item.Id == id).FirstOrDefaultAsync();
+
+        public async Task<string> Add(Item item)
+        {
+            await _itemsCollection.InsertOneAsync(item);
+            return  item?.Text;
+        }
+
+        public Task<Item> Update(Guid id, Item item) => throw new NotImplementedException();
+
+        public Task Delete(Guid id) => throw new NotImplementedException();
     }
 }

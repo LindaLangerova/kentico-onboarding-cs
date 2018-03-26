@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TodoApp.Contract.Models;
 
 namespace TodoApp.Contract.Repositories
 {
     public interface IItemRepository
     {
-        List<Item> GetAll();
-        Item Get(Guid id);
-        Item Update(Guid id, Item item);
-        string Add(Item item);
-        void Delete(Guid id);
+        Task<List<Item>> GetAll();
+        Task<Item> Get(Guid id);
+        Task<Item> Update(Guid id, Item item);
+        Task<string> Add(Item item);
+        Task Delete(Guid id);
     }
 }
