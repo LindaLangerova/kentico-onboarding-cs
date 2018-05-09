@@ -8,6 +8,7 @@ namespace TodoApp.Api
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
             // Web API routes
             var versionConstraintResolver = new DefaultInlineConstraintResolver
             {

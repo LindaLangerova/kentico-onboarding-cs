@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Microsoft.Web.Http;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
@@ -9,6 +10,7 @@ using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Controllers
 {
+    [EnableCors("*", "*", "*")]
     [ApiVersion("1.0")]
     public class ItemListController : ApiController
     {
@@ -40,7 +42,7 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> PostAsync(Item item)
         {
-            if (item.Text == null)
+            if (item?.Text == null)
                 return BadRequest();
 
             var newItemText = await _repository.Add(item);
@@ -58,6 +60,6 @@ namespace TodoApp.Api.Controllers
         {
             await _repository.Delete(id);
             return await Task.FromResult(StatusCode(HttpStatusCode.NoContent));
-        }
+        }   
     }
 }
