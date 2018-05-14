@@ -127,9 +127,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\ItemUrlObtainer.test.cs" />
+    <Compile Include="Services\UrlGenerator.test.cs" />
     <Compile Include="Utilities\ActionsResolution\ActionsResolutionExtensions.cs" />
-    <Compile Include="Controllers\ItemListController.test.cs" />
+    <Compile Include="Controllers\ItemsController.test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ActionsResolution\ReducedResponse.cs" />
     <Compile Include="Utilities\Comparers\EqualConstraintsExtensions.cs" />

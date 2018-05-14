@@ -10,12 +10,12 @@ using TodoApp.Contract.Services;
 namespace TodoApp.Api.Controllers
 {
     [ApiVersion("1.0")]
-    public class ItemListController : ApiController
+    public class ItemsController : ApiController
     {
         private readonly IItemRepository _repository;
         private readonly IUrlGenerator _urlGenerator;
 
-        public ItemListController(IItemRepository repository, IUrlGenerator urlGenerator)
+        public ItemsController(IItemRepository repository, IUrlGenerator urlGenerator)
         {
             _repository = repository;
             _urlGenerator = urlGenerator;

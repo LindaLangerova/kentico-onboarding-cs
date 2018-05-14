@@ -15,7 +15,7 @@ using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Tests.Controllers
 {
-    public class ItemListControllerTest : TestBase
+    public class ItemsControllerTest : TestBase
     {
         [SetUp]
         public void SetUp()
@@ -27,7 +27,7 @@ namespace TodoApp.Api.Tests.Controllers
 
             var itemRepository = MockItemRepository();
 
-            _controller = new ItemListController(itemRepository, urlGenerator)
+            _controller = new ItemsController(itemRepository, urlGenerator)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
@@ -42,7 +42,7 @@ namespace TodoApp.Api.Tests.Controllers
             new Item {Id = Guid.Parse("250be0cc-438e-46cc-a0fe-549f4d3409e2"), Text = "Coffee overflow"}
         };
 
-        private ItemListController _controller;
+        private ItemsController _controller;
 
         private static IItemRepository MockItemRepository()
         {
