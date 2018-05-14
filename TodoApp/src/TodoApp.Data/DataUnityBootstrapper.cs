@@ -12,7 +12,6 @@ namespace TodoApp.Data
             => RegisterTypes(container);
 
         public void RegisterTypes(IUnityContainer container)
-            => container
-                .RegisterType<IItemRepository, ItemRepository>(new HierarchicalLifetimeManager());
+            => container.RegisterType<IItemRepository, ItemRepository>(new HierarchicalLifetimeManager());
     }
 }

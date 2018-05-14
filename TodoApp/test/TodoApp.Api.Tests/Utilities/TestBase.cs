@@ -5,7 +5,8 @@ using TodoApp.Api.Tests.Utilities.FluentAssert;
 
 namespace TodoApp.Api.Tests.Utilities
 {
-    [TestFixture] public abstract class TestBase : IDisposable
+    [TestFixture]
+    public abstract class TestBase : IDisposable
     {
         [SetUp]
         public void ResetAccumulatedExceptions()

@@ -9,7 +9,8 @@ using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Controllers
 {
-    [ApiVersion("1.0")] public class ItemListController : ApiController
+    [ApiVersion("1.0")]
+    public class ItemListController : ApiController
     {
         private readonly IItemRepository _repository;
         private readonly IUrlGenerator _urlGenerator;

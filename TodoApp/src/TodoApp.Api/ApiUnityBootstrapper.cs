@@ -15,10 +15,9 @@ namespace TodoApp.Api
             => RegisterTypes(container);
 
         public void RegisterTypes(IUnityContainer container)
-            => container
-               .RegisterType<IUrlGenerator, UrlGenerator>(new HierarchicalLifetimeManager())
-               .RegisterType<HttpRequestMessage, HttpRequestMessage>(new HierarchicalLifetimeManager(),
-                                                                     new InjectionFactory(GetActualRequestMessage));
+            => container.RegisterType<IUrlGenerator, UrlGenerator>(new HierarchicalLifetimeManager())
+                        .RegisterType<HttpRequestMessage, HttpRequestMessage>(
+                            new HierarchicalLifetimeManager(), new InjectionFactory(GetActualRequestMessage));
 
         private static HttpRequestMessage GetActualRequestMessage(IUnityContainer container)
             => HttpContext.Current.Items["MS_HttpRequestMessage"] as HttpRequestMessage;

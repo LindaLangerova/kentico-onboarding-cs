@@ -13,8 +13,7 @@ namespace TodoApp.Api.Tests.Services
         [SetUp]
         public void SetUp()
         {
-            var request = new HttpRequestMessage
-                {Version = new Version("2.1")};
+            var request = new HttpRequestMessage {Version = new Version("2.1")};
 
             var urlHelper = Substitute.For<UrlHelper>(request);
 
