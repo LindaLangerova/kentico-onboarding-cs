@@ -64,7 +64,7 @@ namespace TodoApp.Api.Tests.Controllers
                           }.ToList());
 
             itemRepository.Get(fakeId).Returns(fakeItem);
-            itemRepository.Add(Arg.Any<Item>()).Returns(fakeItem.Text);
+            itemRepository.Add(Arg.Any<Item>()).Returns(fakeItem.Id);
             itemRepository.Update(fakeId, Arg.Any<Item>()).Returns(fakeItem);
 
             return itemRepository;
@@ -125,7 +125,7 @@ namespace TodoApp.Api.Tests.Controllers
             var expectedRoute = new Uri($"api/v1/itemlist/{id}", UriKind.Relative);
 
             var response = await _controller
-                                 .ResolveAction(controller => controller.PostAsync(expectedItem))
+                                 .ResolveAction(controller => controller.PostAsync(expectedItem.Text))
                                  .BeItReducedResponse<string>();
 
             Assert

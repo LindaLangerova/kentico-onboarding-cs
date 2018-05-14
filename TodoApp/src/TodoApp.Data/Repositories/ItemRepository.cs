@@ -24,10 +24,10 @@ namespace TodoApp.Data.Repositories
         public async Task<Item> Get(Guid id)
             => await _itemsCollection.Find(item => item.Id == id).FirstOrDefaultAsync();
 
-        public async Task<string> Add(Item item)
+        public async Task<Guid> Add(Item item)
         {
             await _itemsCollection.InsertOneAsync(item);
-            return item?.Text;
+            return item.Id;
         }
 
         public Task<Item> Update(Guid id, Item item) => throw new NotImplementedException();
