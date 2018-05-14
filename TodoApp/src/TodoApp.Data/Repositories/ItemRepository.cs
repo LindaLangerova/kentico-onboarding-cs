@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 
@@ -15,17 +16,17 @@ namespace TodoApp.Data.Repositories
             new Item {Id = Guid.Parse("250be0cc-438e-46cc-a0fe-549f4d3409e2"), Text = "Coffee overflow"}
         };
 
-        public IEnumerable<Item> GetAll()
-            => ItemList;
+        public async Task<Item[]> GetAll()
+            => await Task.FromResult(ItemList);
 
-        public Item Get(Guid id)
-            => ItemList[0];
+        public async Task<Item> Get(Guid id)
+            => await Task.FromResult(ItemList[0]);
 
-        public Item Add(Item item)
-            => ItemList[0];
+        public async Task<Item> Add(Item item)
+            => await Task.FromResult(ItemList[0]);
 
-        public Item Update(Guid id, Item item)
-            => ItemList[0];
+        public async Task<Item> Update(Guid id, Item item)
+            => await Task.FromResult(ItemList[0]);
 
         public void Delete(Guid id) { }
     }
