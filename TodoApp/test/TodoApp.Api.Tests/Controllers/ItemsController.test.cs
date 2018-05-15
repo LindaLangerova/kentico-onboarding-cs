@@ -44,7 +44,7 @@ namespace TodoApp.Api.Tests.Controllers
 
         private ItemsController _controller;
         private IItemRepository _repository;
-        
+
         [Test]
         public async Task DeleteItem_ItemDeleted()
         {
@@ -74,7 +74,7 @@ namespace TodoApp.Api.Tests.Controllers
         public async Task GetItem_ExistingId_ItemReturned()
         {
             var fakeId = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
-            var fakeItem = new Item { Id = fakeId, Text = "Make a coffee" };
+            var fakeItem = new Item {Id = fakeId, Text = "Make a coffee"};
 
             _repository.Get(fakeId).Returns(Task.FromResult(fakeItem));
 
@@ -91,16 +91,15 @@ namespace TodoApp.Api.Tests.Controllers
         public async Task PostNewItem_UniqueItem_ItemAdded()
         {
             var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
-            var expectedItem = new Item { Id = id, Text = "Make a coffee" };
+            var expectedItem = new Item {Id = id, Text = "Make a coffee"};
 
             var fakeId = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d8");
-            var fakeItem = new Item { Id = fakeId, Text = "Make a coffee 2" };
+            var fakeItem = new Item {Id = fakeId, Text = "Make a coffee 2"};
 
-            _repository
-                .Add(Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d8" &&
-                                          item.Text == "Make a coffee 2"))
-                .Returns(Task.FromResult(expectedItem));
-            
+            _repository.Add(Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d8" &&
+                                                 item.Text == "Make a coffee 2"))
+                       .Returns(Task.FromResult(expectedItem));
+
             var expectedRoute = new Uri($"api/v1.1/itemlist/{id}", UriKind.Relative);
 
             var response = await _controller.ResolveAction(controller => controller.PostAsync(fakeItem))
@@ -115,12 +114,13 @@ namespace TodoApp.Api.Tests.Controllers
         public async Task PutItem_ExistingItem_ItemUpdated()
         {
             var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
-            var updateItem = new Item { Id = id, Text = "Make a coffee" };
+            var updateItem = new Item {Id = id, Text = "Make a coffee"};
 
             _repository
-                .Update(id,
-                        Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d3" &&
-                                             item.Text == "Make a coffee"))
+                .Update(
+                    id,
+                    Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d3" &&
+                                         item.Text == "Make a coffee"))
                 .Returns(Task.FromResult(updateItem));
 
             var response = await _controller.ResolveAction(controller => controller.PutAsync(updateItem.Id, updateItem))
