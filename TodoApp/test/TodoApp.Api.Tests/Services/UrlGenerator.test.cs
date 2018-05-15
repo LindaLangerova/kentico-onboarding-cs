@@ -17,7 +17,10 @@ namespace TodoApp.Api.Tests.Services
 
             var urlHelper = Substitute.For<UrlHelper>(request);
 
-            urlHelper.Route("DefaultApi", Arg.Any<object>())
+            urlHelper.Route("DEFAULT_API",
+                            Arg.Is<object>(o => o.ToString()
+                                                 .Equals(new {id = Guid.Parse("5f6a2723-040a-4398-8b63-9d55153378ba")}
+                                                             .ToString())))
                      .Returns("api/v2.1/itemlist/5f6a2723-040a-4398-8b63-9d55153378ba");
 
             _itemUrlGenerator = new UrlGenerator(urlHelper);

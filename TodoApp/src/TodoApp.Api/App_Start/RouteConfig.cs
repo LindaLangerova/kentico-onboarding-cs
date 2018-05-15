@@ -6,6 +6,8 @@ namespace TodoApp.Api
 {
     public static class RouteConfig
     {
+        public const string DefaultApi = "DEFAULT_API";
+
         public static void Register(HttpConfiguration config)
         {
             // Web API routes
@@ -16,7 +18,7 @@ namespace TodoApp.Api
 
             config.MapHttpAttributeRoutes(versionConstraintResolver);
 
-            config.Routes.MapHttpRoute("DefaultApi", "api/v{version:apiVersion}/{controller}/{id}",
+            config.Routes.MapHttpRoute(DefaultApi, "api/v{version:apiVersion}/{controller}/{id}",
                                        new {id = RouteParameter.Optional});
         }
     }
