@@ -3,10 +3,11 @@ using System.Web.Http.Routing;
 using System.Web.Routing;
 using NSubstitute;
 using NUnit.Framework;
-using TodoApp.Api.Services;
+using Todo.App.Services.UrlServices;
+using TodoApp.Api;
 using TodoApp.Contract.Tests.Utilities;
 
-namespace TodoApp.Api.Tests.Services
+namespace TodoApp.Services.Test.UrlServices
 {
     public class UrlGeneratorTest : TestBase
     {
@@ -32,7 +33,7 @@ namespace TodoApp.Api.Tests.Services
 
             var requestedUrl = "api/5f6a2723-040a-4398-8b63-9d55153378ba/v2.1/itemlist";
 
-            var receivedUrl = _itemUrlGenerator.GetItemUrl(id);
+            var receivedUrl = _itemUrlGenerator.GetItemUrl(id, RouteConfig.DefaultApi);
 
             Assert.That(receivedUrl, Is.EqualTo(requestedUrl));
         }

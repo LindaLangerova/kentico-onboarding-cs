@@ -91,7 +91,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\UrlGenerator.test.cs" />
     <Compile Include="Controllers\ItemsController.test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

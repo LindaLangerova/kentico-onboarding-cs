@@ -5,18 +5,18 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Microsoft.Web.Http;
 using Todo.App.Services.IdServices;
+using Todo.App.Services.UrlServices;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
-using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Controllers
 {
     [EnableCors("*", "*", "*"), ApiVersion("1.0")]
     public class ItemsController : ApiController
     {
+        private readonly IIdGenerator _idGenerator;
         private readonly IItemRepository _repository;
         private readonly IUrlGenerator _urlGenerator;
-        private readonly IIdGenerator _idGenerator;
 
         public ItemsController(IItemRepository repository, IUrlGenerator urlGenerator, IIdGenerator idGenerator)
         {
@@ -50,7 +50,7 @@ namespace TodoApp.Api.Controllers
             item.Id = _idGenerator.GenerateId();
 
             var newItemId = await _repository.Add(item);
-            var location = _urlGenerator.GetItemUrl(newItemId);
+            var location = _urlGenerator.GetItemUrl(newItemId, RouteConfig.DefaultApi);
             return Created(location, newItemId);
         }
 

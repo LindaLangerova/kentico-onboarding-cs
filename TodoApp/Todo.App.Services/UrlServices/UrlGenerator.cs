@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Web.Http.Routing;
-using TodoApp.Contract.Services;
 
-namespace TodoApp.Api.Services
+namespace Todo.App.Services.UrlServices
 {
     public class UrlGenerator : IUrlGenerator
     {
@@ -11,7 +10,7 @@ namespace TodoApp.Api.Services
         public UrlGenerator(UrlHelper urlHelper)
             => _urlHelper = urlHelper;
 
-        public string GetItemUrl(Guid id)
-            => _urlHelper.Route(RouteConfig.DefaultApi, new {id});
+        public string GetItemUrl(Guid id, string routeName)
+            => _urlHelper.Route(routeName, new {id});
     }
 }

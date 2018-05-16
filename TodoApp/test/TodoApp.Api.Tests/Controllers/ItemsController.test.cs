@@ -8,10 +8,10 @@ using System.Web.Http;
 using NSubstitute;
 using NUnit.Framework;
 using Todo.App.Services.IdServices;
+using Todo.App.Services.UrlServices;
 using TodoApp.Api.Controllers;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
-using TodoApp.Contract.Services;
 using TodoApp.Contract.Tests.Utilities;
 using TodoApp.Contract.Tests.Utilities.ActionsResolution;
 using TodoApp.Contract.Tests.Utilities.Comparers;
@@ -25,7 +25,10 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var itemRepository = MockItemRepository();
             var urlGenerator = Substitute.For<IUrlGenerator>();
-            urlGenerator.GetItemUrl(Arg.Any<Guid>()).Returns("api/v1/itemlist/c5cc89a0-ab8d-4328-9000-3da679ec02d3");
+
+            urlGenerator.GetItemUrl(Arg.Any<Guid>(), RouteConfig.DefaultApi)
+                        .Returns("api/v1/itemlist/c5cc89a0-ab8d-4328-9000-3da679ec02d3");
+
             var idGenerator = Substitute.For<IIdGenerator>();
             idGenerator.GenerateId().Returns(Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"));
 
