@@ -4,11 +4,11 @@ using Microsoft.Web.Http.Routing;
 
 namespace TodoApp.Api
 {
-    public static class RouteConfig { 
+    public static class RouteConfig
+    {
+        public const string DefaultApi = "DEFAULT_API";
 
-    public const string DefaultApi = "DEFAULT_API";
-
-    public static void Register(HttpConfiguration config)
+        public static void Register(HttpConfiguration config)
         {
             config.EnableCors();
 
