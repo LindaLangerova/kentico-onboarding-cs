@@ -11,12 +11,12 @@ using TodoApp.Contract.Services;
 namespace TodoApp.Api.Controllers
 {
     [EnableCors("*", "*", "*"), ApiVersion("1.0")]
-    public class ItemListController : ApiController
+    public class ItemsController : ApiController
     {
         private readonly IItemRepository _repository;
         private readonly IUrlGenerator _urlGenerator;
 
-        public ItemListController(IItemRepository repository, IUrlGenerator urlGenerator)
+        public ItemsController(IItemRepository repository, IUrlGenerator urlGenerator)
         {
             _repository = repository;
             _urlGenerator = urlGenerator;
@@ -26,7 +26,7 @@ namespace TodoApp.Api.Controllers
         {
             var result = await _repository.GetAll();
             if (result == null) return NotFound();
-            return await Task.FromResult(Ok(result));
+            return Ok(result);
         }
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
@@ -36,7 +36,7 @@ namespace TodoApp.Api.Controllers
             if (item == null)
                 return NotFound();
 
-            return await Task.FromResult(Ok(item));
+            return Ok(item);
         }
 
         public async Task<IHttpActionResult> PostAsync(Item item)
@@ -48,19 +48,19 @@ namespace TodoApp.Api.Controllers
 
             var newItemId = await _repository.Add(item);
             var location = _urlGenerator.GetItemUrl(newItemId);
-            return await Task.FromResult(Created(location, newItemId));
+            return Created(location, newItemId);
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Item item)
         {
             var updatedItem = await _repository.Update(id, item);
-            return await Task.FromResult(Ok(updatedItem));
+            return Ok(updatedItem);
         }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
             await _repository.Delete(id);
-            return await Task.FromResult(StatusCode(HttpStatusCode.NoContent));
+            return StatusCode(HttpStatusCode.NoContent);
         }
     }
 }

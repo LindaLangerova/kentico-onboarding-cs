@@ -17,7 +17,7 @@ using TodoApp.Contract.Tests.Utilities.Comparers;
 
 namespace TodoApp.Api.Tests.Controllers
 {
-    public class ItemListControllerTest : TestBase
+    public class ItemsControllerTest : TestBase
     {
         [SetUp]
         public void SetUp()
@@ -26,14 +26,14 @@ namespace TodoApp.Api.Tests.Controllers
             var urlGenerator = Substitute.For<IUrlGenerator>();
             urlGenerator.GetItemUrl(Arg.Any<Guid>()).Returns("api/v1/itemlist/c5cc89a0-ab8d-4328-9000-3da679ec02d3");
 
-            _controller = new ItemListController(itemRepository, urlGenerator)
+            _controller = new ItemsController(itemRepository, urlGenerator)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
             };
         }
 
-        private ItemListController _controller;
+        private ItemsController _controller;
 
         internal IItemRepository MockItemRepository()
         {
@@ -123,12 +123,12 @@ namespace TodoApp.Api.Tests.Controllers
             var expectedItem = new Item {Id = id, Text = "Make a coffee"};
             var expectedRoute = new Uri($"api/v1/itemlist/{id}", UriKind.Relative);
 
-            var response = await _controller.ResolveAction(controller => controller.PostAsync(expectedItem.Text))
-                                            .BeItReducedResponse<string>();
+            var response = await _controller.ResolveAction(controller => controller.PostAsync(expectedItem))
+                                            .BeItReducedResponse<Guid>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created))
                   .AndThat(response.Location, Is.EqualTo(expectedRoute))
-                  .AndThat(response.Content, Is.EqualTo(expectedItem.Text));
+                  .AndThat(response.Content, Is.EqualTo(expectedItem.Id));
         }
 
         [Test]

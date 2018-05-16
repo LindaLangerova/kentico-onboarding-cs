@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Api", "src\TodoApp.Api\TodoApp.Api.csproj", "{C429FF46-975A-4CC3-816F-FBC08B4CD7DB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D3AFE98B-4F30-4EEB-AB77-60B352E55590} = {D3AFE98B-4F30-4EEB-AB77-60B352E55590}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Api.Tests", "test\TodoApp.Api.Tests\TodoApp.Api.Tests.csproj", "{EF658A4B-550A-4934-A45F-35D5EDA38698}"
 EndProject

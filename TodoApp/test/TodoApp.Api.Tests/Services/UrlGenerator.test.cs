@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Net.Http;
 using System.Web.Http.Routing;
+using System.Web.Routing;
 using NSubstitute;
 using NUnit.Framework;
 using TodoApp.Api.Services;
@@ -10,26 +10,27 @@ namespace TodoApp.Api.Tests.Services
 {
     public class UrlGeneratorTest : TestBase
     {
-        [SetUp]
-        public void SetUp()
-        {
-            var request = new HttpRequestMessage {Version = new Version("2.1")};
-
-            var urlHelper = Substitute.For<UrlHelper>(request);
-
-            urlHelper.Route("DefaultApi", Arg.Any<object>())
-                     .Returns("api/v2.1/itemlist/5f6a2723-040a-4398-8b63-9d55153378ba");
-
-            _itemUrlGenerator = new UrlGenerator(urlHelper);
-        }
-
         private UrlGenerator _itemUrlGenerator;
+
+        private static string AnonymousArg(object first, string argName)
+        {
+            new RouteValueDictionary(first).TryGetValue(argName, out var firstId);
+            return firstId?.ToString();
+        }
 
         [Test]
         public void GetItemUrl_UrlReceived()
         {
+            var urlHelper = Substitute.For<UrlHelper>();
+            _itemUrlGenerator = new UrlGenerator(urlHelper);
+
+            urlHelper.Route(RouteConfig.DefaultApi,
+                            Arg.Is<object>(o => AnonymousArg(o, "id").Equals("5f6a2723-040a-4398-8b63-9d55153378ba")))
+                     .Returns("api/5f6a2723-040a-4398-8b63-9d55153378ba/v2.1/itemlist");
+
             var id = Guid.Parse("5f6a2723-040a-4398-8b63-9d55153378ba");
-            const string requestedUrl = "api/v2.1/itemlist/5f6a2723-040a-4398-8b63-9d55153378ba";
+
+            var requestedUrl = "api/5f6a2723-040a-4398-8b63-9d55153378ba/v2.1/itemlist";
 
             var receivedUrl = _itemUrlGenerator.GetItemUrl(id);
 
