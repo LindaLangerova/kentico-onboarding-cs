@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Microsoft.Web.Http;
+using Todo.App.Services.IdServices;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services;
@@ -15,11 +16,13 @@ namespace TodoApp.Api.Controllers
     {
         private readonly IItemRepository _repository;
         private readonly IUrlGenerator _urlGenerator;
+        private readonly IIdGenerator _idGenerator;
 
-        public ItemsController(IItemRepository repository, IUrlGenerator urlGenerator)
+        public ItemsController(IItemRepository repository, IUrlGenerator urlGenerator, IIdGenerator idGenerator)
         {
             _repository = repository;
             _urlGenerator = urlGenerator;
+            _idGenerator = idGenerator;
         }
 
         public async Task<IHttpActionResult> GetAllAsync()
@@ -44,7 +47,7 @@ namespace TodoApp.Api.Controllers
             if (item?.Text == null)
                 return BadRequest();
 
-            item.Id = Guid.NewGuid();
+            item.Id = _idGenerator.GenerateId();
 
             var newItemId = await _repository.Add(item);
             var location = _urlGenerator.GetItemUrl(newItemId);

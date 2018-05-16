@@ -162,6 +162,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Todo.App.Services\Todo.App.Services.csproj">
+      <Project>{310D4D50-21A1-4DD4-9A52-FCFF6F0800B5}</Project>
+      <Name>Todo.App.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TodoApp.Contract\TodoApp.Contract.csproj">
       <Project>{ca56bd12-29d1-42bb-ae9a-f26b271d8982}</Project>
       <Name>TodoApp.Contract</Name>
