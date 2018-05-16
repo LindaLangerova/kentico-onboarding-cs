@@ -10,8 +10,7 @@ using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Controllers
 {
-    [EnableCors("*", "*", "*")]
-    [ApiVersion("1.0")]
+    [EnableCors("*", "*", "*"), ApiVersion("1.0")]
     public class ItemListController : ApiController
     {
         private readonly IItemRepository _repository;
@@ -39,12 +38,12 @@ namespace TodoApp.Api.Controllers
 
             return await Task.FromResult(Ok(item));
         }
-        
+
         public async Task<IHttpActionResult> PostAsync(Item item)
         {
             if (item?.Text == null)
                 return BadRequest();
-            
+
             item.Id = Guid.NewGuid();
 
             var newItemId = await _repository.Add(item);
@@ -62,6 +61,6 @@ namespace TodoApp.Api.Controllers
         {
             await _repository.Delete(id);
             return await Task.FromResult(StatusCode(HttpStatusCode.NoContent));
-        }   
+        }
     }
 }
