@@ -58,7 +58,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetAllItems_AllItemsReturned()
         {
-            _repository.GetAll().Returns(Task.FromResult(ReferencedItems));
+            _repository.GetAllAsync().Returns(Task.FromResult(ReferencedItems));
 
             var expectedItems = ReferencedItems;
 
@@ -74,7 +74,7 @@ namespace TodoApp.Api.Tests.Controllers
             var fakeId = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
             var fakeItem = new Item {Id = fakeId, Text = "Make a coffee"};
 
-            _repository.Get(fakeId).Returns(Task.FromResult(fakeItem));
+            _repository.GetAsync(fakeId).Returns(Task.FromResult(fakeItem));
 
             var expectedItem = await Task.FromResult(fakeItem);
 
@@ -93,7 +93,7 @@ namespace TodoApp.Api.Tests.Controllers
             var fakeId = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d8");
             var fakeItem = new Item {Id = fakeId, Text = "Make a coffee 2"};
 
-            _repository.Add(Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d8"
+            _repository.AddAsync(Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d8"
                                                  && item.Text == "Make a coffee 2"))
                        .Returns(Task.FromResult(expectedItem));
 
@@ -112,7 +112,7 @@ namespace TodoApp.Api.Tests.Controllers
             var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
             var updateItem = new Item {Id = id, Text = "Make a coffee"};
 
-            _repository.Update(id,
+            _repository.UpdateAsync(id,
                                Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d3"
                                                     && item.Text == "Make a coffee"))
                        .Returns(Task.FromResult(updateItem));
