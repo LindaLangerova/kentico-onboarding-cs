@@ -94,7 +94,7 @@ namespace TodoApp.Api.Tests.Controllers
             var fakeItem = new Item {Id = fakeId, Text = "Make a coffee 2"};
 
             _repository.AddAsync(Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d8"
-                                                 && item.Text == "Make a coffee 2"))
+                                                   && item.Text == "Make a coffee 2"))
                        .Returns(Task.FromResult(expectedItem));
 
             var expectedRoute = new Uri($"api/v1.1/itemlist/{id}", UriKind.Relative);
@@ -112,9 +112,7 @@ namespace TodoApp.Api.Tests.Controllers
             var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
             var updateItem = new Item {Id = id, Text = "Make a coffee"};
 
-            _repository.UpdateAsync(id,
-                               Arg.Is<Item>(item => item.Equals(updateItem) ))
-                       .Returns(Task.FromResult(updateItem));
+            _repository.UpdateAsync(id, Arg.Is<Item>(item => item.Equals(updateItem))).Returns(Task.FromResult(updateItem));
 
             var response = await _controller.ResolveAction(controller => controller.PutAsync(updateItem.Id, updateItem))
                                             .BeItReducedResponse<Item>();
