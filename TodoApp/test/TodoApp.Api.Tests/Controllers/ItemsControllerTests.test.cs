@@ -113,8 +113,7 @@ namespace TodoApp.Api.Tests.Controllers
             var updateItem = new Item {Id = id, Text = "Make a coffee"};
 
             _repository.UpdateAsync(id,
-                               Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d3"
-                                                    && item.Text == "Make a coffee"))
+                               Arg.Is<Item>(item => item.Equals(updateItem) ))
                        .Returns(Task.FromResult(updateItem));
 
             var response = await _controller.ResolveAction(controller => controller.PutAsync(updateItem.Id, updateItem))
