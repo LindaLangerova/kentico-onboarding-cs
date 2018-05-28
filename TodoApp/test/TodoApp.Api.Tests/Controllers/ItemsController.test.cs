@@ -50,8 +50,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
 
-            var response = await _controller.ResolveAction(controller => controller.DeleteAsync(id))
-                                            .BeItReducedResponse();
+            var response = await _controller.ResolveAction(controller => controller.DeleteAsync(id)).BeItReducedResponse();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
@@ -63,8 +62,7 @@ namespace TodoApp.Api.Tests.Controllers
 
             var expectedItems = ReferencedItems;
 
-            var response = await _controller.ResolveAction(controller => controller.GetAllAsync())
-                                            .BeItReducedResponse<Item[]>();
+            var response = await _controller.ResolveAction(controller => controller.GetAllAsync()).BeItReducedResponse<Item[]>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK))
                   .AndThat(response.Content, Is.EqualTo(expectedItems).UsingItemModelComparer());
@@ -80,8 +78,7 @@ namespace TodoApp.Api.Tests.Controllers
 
             var expectedItem = await Task.FromResult(fakeItem);
 
-            var response = await _controller.ResolveAction(controller => controller.GetAsync(fakeId))
-                                            .BeItReducedResponse<Item>();
+            var response = await _controller.ResolveAction(controller => controller.GetAsync(fakeId)).BeItReducedResponse<Item>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK))
                   .AndThat(response.Content, Is.EqualTo(expectedItem).UsingItemModelComparer());
@@ -96,14 +93,13 @@ namespace TodoApp.Api.Tests.Controllers
             var fakeId = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d8");
             var fakeItem = new Item {Id = fakeId, Text = "Make a coffee 2"};
 
-            _repository.Add(Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d8" &&
-                                                 item.Text == "Make a coffee 2"))
+            _repository.Add(Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d8"
+                                                 && item.Text == "Make a coffee 2"))
                        .Returns(Task.FromResult(expectedItem));
 
             var expectedRoute = new Uri($"api/v1.1/itemlist/{id}", UriKind.Relative);
 
-            var response = await _controller.ResolveAction(controller => controller.PostAsync(fakeItem))
-                                            .BeItReducedResponse<Item>();
+            var response = await _controller.ResolveAction(controller => controller.PostAsync(fakeItem)).BeItReducedResponse<Item>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created))
                   .AndThat(response.Location, Is.EqualTo(expectedRoute))
@@ -116,12 +112,10 @@ namespace TodoApp.Api.Tests.Controllers
             var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
             var updateItem = new Item {Id = id, Text = "Make a coffee"};
 
-            _repository
-                .Update(
-                    id,
-                    Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d3" &&
-                                         item.Text == "Make a coffee"))
-                .Returns(Task.FromResult(updateItem));
+            _repository.Update(id,
+                               Arg.Is<Item>(item => item.Id.ToString() == "c5cc89a0-ab8d-4328-9000-3da679ec02d3"
+                                                    && item.Text == "Make a coffee"))
+                       .Returns(Task.FromResult(updateItem));
 
             var response = await _controller.ResolveAction(controller => controller.PutAsync(updateItem.Id, updateItem))
                                             .BeItReducedResponse<Item>();

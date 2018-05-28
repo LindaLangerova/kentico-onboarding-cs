@@ -15,6 +15,7 @@ namespace TodoApp.Api.Tests.Services
         private static string AnonymousArg(object first, string argName)
         {
             new RouteValueDictionary(first).TryGetValue(argName, out var firstId);
+
             return firstId?.ToString();
         }
 
@@ -24,8 +25,7 @@ namespace TodoApp.Api.Tests.Services
             var urlHelper = Substitute.For<UrlHelper>();
             _itemUrlGenerator = new UrlGenerator(urlHelper);
 
-            urlHelper.Route("DEFAULT_API",
-                            Arg.Is<object>(o => AnonymousArg(o, "id").Equals("5f6a2723-040a-4398-8b63-9d55153378ba")))
+            urlHelper.Route("DEFAULT_API", Arg.Is<object>(o => AnonymousArg(o, "id").Equals("5f6a2723-040a-4398-8b63-9d55153378ba")))
                      .Returns("api/5f6a2723-040a-4398-8b63-9d55153378ba/v2.1/itemlist");
 
             var id = Guid.Parse("5f6a2723-040a-4398-8b63-9d55153378ba");

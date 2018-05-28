@@ -22,6 +22,7 @@ namespace TodoApp.Api.Tests.Utilities.Exceptions
                 for (var i = 0; i < _exceptions.Count; i++)
                 {
                     finalMessage.AppendLine($"{i + 1})");
+
                     finalMessage.AppendLine(_exceptions[i].Message);
                 }
 

@@ -11,15 +11,12 @@ namespace TodoApp.Api
         public static void Register(HttpConfiguration config)
         {
             // Web API routes
-            var versionConstraintResolver = new DefaultInlineConstraintResolver
-            {
-                ConstraintMap = {["apiVersion"] = typeof(ApiVersionRouteConstraint)}
-            };
+            var versionConstraintResolver =
+                new DefaultInlineConstraintResolver {ConstraintMap = {["apiVersion"] = typeof(ApiVersionRouteConstraint)}};
 
             config.MapHttpAttributeRoutes(versionConstraintResolver);
 
-            config.Routes.MapHttpRoute(DefaultApi, "api/v{version:apiVersion}/{controller}/{id}",
-                                       new {id = RouteParameter.Optional});
+            config.Routes.MapHttpRoute(DefaultApi, "api/v{version:apiVersion}/{controller}/{id}", new {id = RouteParameter.Optional});
         }
     }
 }

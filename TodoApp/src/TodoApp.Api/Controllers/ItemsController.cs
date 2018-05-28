@@ -27,6 +27,7 @@ namespace TodoApp.Api.Controllers
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
             var item = await _repository.Get(id);
+
             return Ok(item);
         }
 
@@ -34,18 +35,21 @@ namespace TodoApp.Api.Controllers
         {
             var newItem = await _repository.Add(item);
             var location = _urlGenerator.GetItemUrl(item.Id);
+
             return Created(location, newItem);
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Item item)
         {
             var updatedItem = await _repository.Update(id, item);
+
             return Ok(updatedItem);
         }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
-             _repository.Delete(id);
+            _repository.Delete(id);
+
             return await Task.FromResult(StatusCode(HttpStatusCode.NoContent));
         }
     }

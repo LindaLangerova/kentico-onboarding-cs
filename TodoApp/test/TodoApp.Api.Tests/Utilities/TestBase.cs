@@ -12,21 +12,23 @@ namespace TodoApp.Api.Tests.Utilities
         public void ResetAccumulatedExceptions()
             => Assert = new FluentAssert.FluentAssert();
 
-        [TearDown, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [TearDown]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ThrowAccumulatedExceptions()
             => Assert.Dispose();
 
         protected IFirstFluentAssert Assert { get; private set; }
 
-        protected virtual void Dispose(bool isCalledFromDestructor)
-        {
-            if (!isCalledFromDestructor) Assert?.Dispose();
-        }
-
         public void Dispose()
         {
             Dispose(false);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool isCalledFromDestructor)
+        {
+            if (!isCalledFromDestructor)
+                Assert?.Dispose();
         }
 
         ~TestBase()
