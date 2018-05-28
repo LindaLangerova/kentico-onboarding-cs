@@ -8,7 +8,7 @@ using TodoApp.Api.Tests.Utilities;
 
 namespace TodoApp.Api.Tests.Services
 {
-    internal class UrlGeneratorTest : TestBase
+    internal class UrlGeneratorTests : TestBase
     {
         private UrlGenerator _itemUrlGenerator;
 

@@ -15,7 +15,7 @@ using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Tests.Controllers
 {
-    public class ItemsControllerTest : TestBase
+    public class ItemsControllerTests : TestBase
     {
         [SetUp]
         public void SetUp()
