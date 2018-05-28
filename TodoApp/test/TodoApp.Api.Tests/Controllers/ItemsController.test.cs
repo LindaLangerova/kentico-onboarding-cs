@@ -8,6 +8,7 @@ using System.Web.Http;
 using NSubstitute;
 using NUnit.Framework;
 using Todo.App.Services.IdServices;
+using Todo.App.Services.ItemServices;
 using Todo.App.Services.UrlServices;
 using TodoApp.Api.Controllers;
 using TodoApp.Contract.Models;
@@ -29,10 +30,10 @@ namespace TodoApp.Api.Tests.Controllers
             urlGenerator.GetItemUrl(Arg.Any<Guid>(), RouteConfig.DefaultApi)
                         .Returns("api/v1/itemlist/c5cc89a0-ab8d-4328-9000-3da679ec02d3");
 
-            var idGenerator = Substitute.For<IIdGenerator>();
-            idGenerator.GenerateId().Returns(Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"));
+            var itemCreator = Substitute.For<IItemCreator>();
+            itemCreator.SetItem(Arg.Any<string>()).Returns(new Item{Text = "Make a coffee", Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3")});
 
-            _controller = new ItemsController(itemRepository, urlGenerator, idGenerator)
+            _controller = new ItemsController(itemRepository, urlGenerator, itemCreator)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()

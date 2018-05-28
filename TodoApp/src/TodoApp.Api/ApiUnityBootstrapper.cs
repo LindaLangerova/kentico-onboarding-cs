@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Web;
 using Todo.App.Services.IdServices;
+using Todo.App.Services.ItemServices;
 using Todo.App.Services.UrlServices;
 using TodoApp.Contract;
 using Unity;
@@ -18,7 +19,7 @@ namespace TodoApp.Api
             => container.RegisterType<IUrlGenerator, UrlGenerator>(new HierarchicalLifetimeManager())
                         .RegisterType<HttpRequestMessage, HttpRequestMessage>(
                             new HierarchicalLifetimeManager(), new InjectionFactory(GetActualRequestMessage))
-                        .RegisterType<IIdGenerator, IdGenerator>(new HierarchicalLifetimeManager());
+                        .RegisterType<IItemCreator, ItemCreator>(new HierarchicalLifetimeManager());
 
         private static HttpRequestMessage GetActualRequestMessage(IUnityContainer container)
             => HttpContext.Current.Items["MS_HttpRequestMessage"] as HttpRequestMessage;
