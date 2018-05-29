@@ -13,8 +13,8 @@ namespace TodoApp.Data.Repositories
 
         public ItemRepository(string connectionString)
         {
-            var client = new MongoClient(connectionString);
-            var database = client.GetDatabase("tododb");
+            var databaseUrl = MongoUrl.Create(connectionString);
+            var database = new MongoClient(databaseUrl).GetDatabase(databaseUrl.DatabaseName);
             _itemsCollection = database.GetCollection<Item>("Items");
         }
 
