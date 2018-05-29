@@ -29,7 +29,8 @@ namespace TodoApp.Contract.Tests.Utilities.FluentAssert
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
-            if (_accumulatedExceptions.Any()) throw new AllAsertException(_accumulatedExceptions);
+            if (_accumulatedExceptions.Any())
+                throw new AllAsertException(_accumulatedExceptions);
         }
 
         public IFluentAssert AndThat<TActual>(TActual actual, IResolveConstraint expression)

@@ -27,11 +27,14 @@ namespace TodoApp.Data.Repositories
         public async Task<Guid> AddAsync(Item item)
         {
             await _itemsCollection.InsertOneAsync(item);
+
             return item.Id;
         }
 
-        public Task<Item> UpdateAsync(Guid id, Item item) => throw new NotImplementedException();
+        public Task<Item> UpdateAsync(Guid id, Item item)
+            => throw new NotImplementedException();
 
-        public Task DeleteAsync(Guid id) => throw new NotImplementedException();
+        public Task DeleteAsync(Guid id)
+            => throw new NotImplementedException();
     }
 }

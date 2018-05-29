@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Todo.App.Services.IdServices;
+﻿using Todo.App.Services.IdServices;
 using TodoApp.Contract.Models;
 
 namespace Todo.App.Services.ItemServices
@@ -12,11 +7,10 @@ namespace Todo.App.Services.ItemServices
     {
         private readonly IdGenerator _idGenerator;
 
-        public ItemCreator(IdGenerator idGenerator) => _idGenerator = idGenerator;
+        public ItemCreator(IdGenerator idGenerator)
+            => _idGenerator = idGenerator;
 
-        public Item SetItem(string text) => new Item
-        {
-            Id = _idGenerator.GenerateId()
-        };
+        public Item SetItem(string text)
+            => new Item {Id = _idGenerator.GenerateId()};
     }
 }

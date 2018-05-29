@@ -13,21 +13,13 @@ namespace TodoApp.Services.Test.UrlServices
     {
         private UrlGenerator _itemUrlGenerator;
 
-        private static bool ContainsCorrectId(object first)
-        {
-            new RouteValueDictionary(first).TryGetValue("id", out var firstId);
-
-            return firstId != null && firstId.Equals(Guid.Parse("5f6a2723-040a-4398-8b63-9d55153378ba"));
-        }
-
         [Test]
         public void GetItemUrl_UrlReceived()
         {
             var urlHelper = Substitute.For<UrlHelper>();
             _itemUrlGenerator = new UrlGenerator(urlHelper);
 
-            urlHelper.Route(RouteConfig.DefaultApi,
-                            Arg.Is<object>(o => ContainsCorrectId(o)))
+            urlHelper.Route(RouteConfig.DefaultApi, Arg.Is<object>(o => ContainsCorrectId(o)))
                      .Returns("api/5f6a2723-040a-4398-8b63-9d55153378ba/v2.1/itemlist");
 
             var id = Guid.Parse("5f6a2723-040a-4398-8b63-9d55153378ba");
@@ -37,6 +29,13 @@ namespace TodoApp.Services.Test.UrlServices
             var receivedUrl = _itemUrlGenerator.GetItemUrl(id, RouteConfig.DefaultApi);
 
             Assert.That(receivedUrl, Is.EqualTo(requestedUrl));
+        }
+
+        private static bool ContainsCorrectId(object first)
+        {
+            new RouteValueDictionary(first).TryGetValue("id", out var firstId);
+
+            return firstId != null && firstId.Equals(Guid.Parse("5f6a2723-040a-4398-8b63-9d55153378ba"));
         }
     }
 }

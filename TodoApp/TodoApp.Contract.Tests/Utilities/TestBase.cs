@@ -12,7 +12,8 @@ namespace TodoApp.Contract.Tests.Utilities
         public void ResetAccumulatedExceptions()
             => Assert = new FluentAssert.FluentAssert();
 
-        [TearDown, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [TearDown]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ThrowAccumulatedExceptions()
             => Assert.Dispose();
 
@@ -20,7 +21,8 @@ namespace TodoApp.Contract.Tests.Utilities
 
         protected virtual void Dispose(bool isCalledFromDestructor)
         {
-            if (!isCalledFromDestructor) Assert?.Dispose();
+            if (!isCalledFromDestructor)
+                Assert?.Dispose();
         }
 
         public void Dispose()

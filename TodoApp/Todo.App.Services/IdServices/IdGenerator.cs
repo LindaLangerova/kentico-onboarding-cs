@@ -4,6 +4,7 @@ namespace Todo.App.Services.IdServices
 {
     public class IdGenerator : IIdGenerator
     {
-        public Guid GenerateId() => Guid.NewGuid();
+        public Guid GenerateId()
+            => Guid.NewGuid();
     }
 }
