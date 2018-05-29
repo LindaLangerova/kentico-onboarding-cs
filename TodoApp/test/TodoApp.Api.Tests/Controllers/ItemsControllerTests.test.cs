@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using NSubstitute;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using Todo.App.Services.IdServices;
 using Todo.App.Services.ItemServices;
 using Todo.App.Services.UrlServices;
@@ -19,21 +20,20 @@ using TodoApp.Contract.Tests.Utilities.Comparers;
 
 namespace TodoApp.Api.Tests.Controllers
 {
-    public class ItemsControllerTest : TestBase
+    public class ItemsControllerTests : TestBase
     {
         [SetUp]
         public void SetUp()
         {
-            var itemRepository = MockItemRepository();
-            var urlGenerator = Substitute.For<IUrlGenerator>();
+            _repository = Substitute.For<IItemRepository>();
 
-            urlGenerator.GetItemUrl(Arg.Any<Guid>(), RouteConfig.DefaultApi)
+            var urlGenerator = Substitute.For<IUrlGenerator>();
+            urlGenerator.GetItemUrl(Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), RouteConfig.DefaultApi)
                         .Returns("api/v1/itemlist/c5cc89a0-ab8d-4328-9000-3da679ec02d3");
 
-            var itemCreator = Substitute.For<IItemCreator>();
-            itemCreator.SetItem(Arg.Any<string>()).Returns(new Item{Text = "Make a coffee", Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3")});
+            _itemCreator = Substitute.For<IItemCreator>();
 
-            _controller = new ItemsController(itemRepository, urlGenerator, itemCreator)
+            _controller = new ItemsController(_repository, urlGenerator, _itemCreator)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
@@ -41,51 +41,15 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         private ItemsController _controller;
-
-        internal IItemRepository MockItemRepository()
-        {
-            var itemRepository = Substitute.For<IItemRepository>();
-
-            var fakeId = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
-            var fakeItem = new Item {Id = fakeId, Text = "Make a coffee"};
-
-            itemRepository.GetAll()
-                          .Returns(new[]
-                          {
-                              new Item
-                              {
-                                  Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"),
-                                  Text = "Make a coffee"
-                              },
-                              new Item
-                              {
-                                  Id = Guid.Parse("55b0d56d-48d7-4f93-bd73-e4b801e26faa"),
-                                  Text = "Make second coffee"
-                              },
-                              new Item
-                              {
-                                  Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d2"),
-                                  Text = "Add some coffee"
-                              },
-                              new Item
-                              {
-                                  Id = Guid.Parse("250be0cc-438e-46cc-a0fe-549f4d3409e2"),
-                                  Text = "Coffee overflow"
-                              }
-                          }.ToList());
-
-            itemRepository.Get(fakeId).Returns(fakeItem);
-            itemRepository.Add(Arg.Any<Item>()).Returns(fakeItem.Id);
-            itemRepository.Update(fakeId, Arg.Any<Item>()).Returns(fakeItem);
-
-            return itemRepository;
-        }
+        private IItemRepository _repository;
+        private IItemCreator _itemCreator;
 
         [Test]
         public async Task DeleteItem_ItemDeleted()
         {
             var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
-
+            _repository.DeleteAsync(id)
+                       .Returns(Task.FromResult(HttpStatusCode.NoContent));
             var response = await _controller.ResolveAction(controller => controller.DeleteAsync(id))
                                             .BeItReducedResponse();
 
@@ -103,11 +67,13 @@ namespace TodoApp.Api.Tests.Controllers
                 new Item {Id = Guid.Parse("250be0cc-438e-46cc-a0fe-549f4d3409e2"), Text = "Coffee overflow"}
             };
 
+            _repository.GetAllAsync().Returns(expectedItems.ToList());
+
             var response = await _controller.ResolveAction(controller => controller.GetAllAsync())
                                             .BeItReducedResponse<List<Item>>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK))
-                  .AndThat(response.Content, Is.EqualTo(expectedItems).UsingItemModelComparer());
+                  .AndThat(response.Content, Is.EqualTo(expectedItems.ToList()).UsingItemModelComparer());
         }
 
         [Test]
@@ -115,6 +81,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
             var expectedItem = new Item {Id = id, Text = "Make a coffee"};
+            _repository.GetAsync(id).Returns(Task.FromResult<Item>(expectedItem));
 
             var response = await _controller.ResolveAction(controller => controller.GetAsync(id))
                                             .BeItReducedResponse<Item>();
@@ -130,6 +97,9 @@ namespace TodoApp.Api.Tests.Controllers
             var expectedItem = new Item {Id = id, Text = "Make a coffee"};
             var expectedRoute = new Uri($"api/v1/itemlist/{id}", UriKind.Relative);
 
+            _repository.AddAsync(Arg.Any<Item>()).Returns(id);
+            _itemCreator.SetItem(Arg.Any<string>()).Returns(new Item { Text = "Make a coffee", Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3") });
+
             var response = await _controller.ResolveAction(controller => controller.PostAsync(expectedItem))
                                             .BeItReducedResponse<Guid>();
 
@@ -143,6 +113,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
             var updateItem = new Item {Id = id, Text = "Make a coffee"};
+            _repository.UpdateAsync(id, updateItem).Returns(updateItem);
 
             var response = await _controller.ResolveAction(controller => controller.PutAsync(updateItem.Id, updateItem))
                                             .BeItReducedResponse<Item>();

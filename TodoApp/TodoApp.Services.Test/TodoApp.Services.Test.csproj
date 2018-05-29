@@ -67,9 +67,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IdServices\IdGenerator.test.cs" />
+    <Compile Include="IdServices\IdGeneratorTests.test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UrlServices\UrlGenerator.test.cs" />
+    <Compile Include="UrlServices\UrlGeneratorTests.test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\TodoApp.Api\TodoApp.Api.csproj">

@@ -4,7 +4,7 @@ using TodoApp.Contract.Tests.Utilities;
 
 namespace TodoApp.Services.Test.IdServices
 {
-    public class IdGeneratorTest : TestBase
+    public class IdGeneratorTests : TestBase
     {
         private IdGenerator _idGenerator;
 

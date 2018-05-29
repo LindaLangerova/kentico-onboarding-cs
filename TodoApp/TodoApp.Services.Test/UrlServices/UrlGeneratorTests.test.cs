@@ -9,14 +9,15 @@ using TodoApp.Contract.Tests.Utilities;
 
 namespace TodoApp.Services.Test.UrlServices
 {
-    public class UrlGeneratorTest : TestBase
+    public class UrlGeneratorTests : TestBase
     {
         private UrlGenerator _itemUrlGenerator;
 
-        private static string AnonymousArg(object first, string argName)
+        private static bool ContainsCorrectId(object first)
         {
-            new RouteValueDictionary(first).TryGetValue(argName, out var firstId);
-            return firstId?.ToString();
+            new RouteValueDictionary(first).TryGetValue("id", out var firstId);
+
+            return firstId != null && firstId.Equals(Guid.Parse("5f6a2723-040a-4398-8b63-9d55153378ba"));
         }
 
         [Test]
@@ -26,7 +27,7 @@ namespace TodoApp.Services.Test.UrlServices
             _itemUrlGenerator = new UrlGenerator(urlHelper);
 
             urlHelper.Route(RouteConfig.DefaultApi,
-                            Arg.Is<object>(o => AnonymousArg(o, "id").Equals("5f6a2723-040a-4398-8b63-9d55153378ba")))
+                            Arg.Is<object>(o => ContainsCorrectId(o)))
                      .Returns("api/5f6a2723-040a-4398-8b63-9d55153378ba/v2.1/itemlist");
 
             var id = Guid.Parse("5f6a2723-040a-4398-8b63-9d55153378ba");
