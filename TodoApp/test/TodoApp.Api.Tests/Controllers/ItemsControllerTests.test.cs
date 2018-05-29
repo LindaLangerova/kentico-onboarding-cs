@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using NSubstitute;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using Todo.App.Services.ItemServices;
 using Todo.App.Services.UrlServices;
 using TodoApp.Api.Controllers;
@@ -21,6 +20,13 @@ namespace TodoApp.Api.Tests.Controllers
 {
     public class ItemsControllerTests : TestBase
     {
+        private ItemsController _controller;
+        private IItemRepository _repository;
+        private IItemCreator _itemCreator;
+
+        private static readonly Item FakeItem =
+            new Item {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee"};
+
         [SetUp]
         public void SetUp()
         {
@@ -28,8 +34,7 @@ namespace TodoApp.Api.Tests.Controllers
 
             var urlGenerator = Substitute.For<IUrlGenerator>();
 
-            urlGenerator.GetItemUrl(FakeItem.Id, RouteConfig.DefaultApi)
-                        .Returns($"api/v1/itemlist/{FakeItem.Id}");
+            urlGenerator.GetItemUrl(FakeItem.Id, RouteConfig.DefaultApi).Returns($"api/v1/itemlist/{FakeItem.Id}");
 
             _itemCreator = Substitute.For<IItemCreator>();
 
@@ -38,20 +43,6 @@ namespace TodoApp.Api.Tests.Controllers
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
             };
-        }
-
-        private ItemsController _controller;
-        private IItemRepository _repository;
-        private IItemCreator _itemCreator;
-        private static readonly Item FakeItem = new Item {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee"};
-
-        [Test]
-        public async Task DeleteItem_ItemDeleted()
-        {
-            _repository.DeleteAsync(FakeItem.Id).Returns(Task.FromResult(HttpStatusCode.NoContent));
-            var response = await _controller.ResolveAction(controller => controller.DeleteAsync(FakeItem.Id)).BeItReducedResponse();
-
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 
         [Test]
@@ -88,12 +79,11 @@ namespace TodoApp.Api.Tests.Controllers
         public async Task PostNewItem_UniqueItem_ItemAdded()
         {
             var expectedRoute = new Uri($"api/v1/itemlist/{FakeItem.Id}", UriKind.Relative);
-            
-            _itemCreator.SetItem(Arg.Is<Item>(item => item.IsValidForCreating()))
-                        .Returns(FakeItem);
+
+            _itemCreator.SetItem(Arg.Is<Item>(item => item.IsValidForCreating())).Returns(FakeItem);
             _repository.AddAsync(FakeItem).Returns(FakeItem);
 
-            var response = await _controller.ResolveAction(controller => controller.PostAsync(new Item{Text = FakeItem.Text}))
+            var response = await _controller.ResolveAction(controller => controller.PostAsync(new Item {Text = FakeItem.Text}))
                                             .BeItReducedResponse<Item>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created))
@@ -111,6 +101,15 @@ namespace TodoApp.Api.Tests.Controllers
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK))
                   .AndThat(response.Content, Is.EqualTo(FakeItem).UsingItemModelComparer());
+        }
+
+        [Test]
+        public async Task DeleteItem_ItemDeleted()
+        {
+            _repository.DeleteAsync(FakeItem.Id).Returns(Task.FromResult(HttpStatusCode.NoContent));
+            var response = await _controller.ResolveAction(controller => controller.DeleteAsync(FakeItem.Id)).BeItReducedResponse();
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
     }
 }
