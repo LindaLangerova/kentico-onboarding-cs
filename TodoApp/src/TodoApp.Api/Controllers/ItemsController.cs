@@ -28,9 +28,9 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var result = await _repository.GetAllAsync();
+            var items = await _repository.GetAllAsync();
 
-            return Ok(result);
+            return Ok(items);
         }
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
@@ -50,10 +50,10 @@ namespace TodoApp.Api.Controllers
 
             item = _itemCreator.SetItem(item.Text);
 
-            var newItemId = await _repository.AddAsync(item);
-            var location = _urlGenerator.GetItemUrl(newItemId, RouteConfig.DefaultApi);
+            var newItem = await _repository.AddAsync(item);
+            var location = _urlGenerator.GetItemUrl(newItem.Id, RouteConfig.DefaultApi);
 
-            return Created(location, newItemId);
+            return Created(location, newItem);
         }
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Item item)

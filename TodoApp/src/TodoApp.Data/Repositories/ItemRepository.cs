@@ -24,11 +24,11 @@ namespace TodoApp.Data.Repositories
         public async Task<Item> GetAsync(Guid id)
             => await _itemsCollection.Find(item => item.Id == id).FirstOrDefaultAsync();
 
-        public async Task<Guid> AddAsync(Item item)
+        public async Task<Item> AddAsync(Item item)
         {
             await _itemsCollection.InsertOneAsync(item);
 
-            return item.Id;
+            return item;
         }
 
         public Task<Item> UpdateAsync(Guid id, Item item)

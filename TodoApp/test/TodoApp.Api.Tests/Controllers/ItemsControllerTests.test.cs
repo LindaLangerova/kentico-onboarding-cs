@@ -92,17 +92,17 @@ namespace TodoApp.Api.Tests.Controllers
             var expectedItem = new Item {Id = id, Text = "Make a coffee"};
             var expectedRoute = new Uri($"api/v1/itemlist/{id}", UriKind.Relative);
 
-            _repository.AddAsync(Arg.Any<Item>()).Returns(id);
+            _repository.AddAsync(Arg.Any<Item>()).Returns(expectedItem);
 
             _itemCreator.SetItem(Arg.Any<string>())
                         .Returns(new Item {Text = "Make a coffee", Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3")});
 
             var response = await _controller.ResolveAction(controller => controller.PostAsync(expectedItem))
-                                            .BeItReducedResponse<Guid>();
+                                            .BeItReducedResponse<Item>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created))
                   .AndThat(response.Location, Is.EqualTo(expectedRoute))
-                  .AndThat(response.Content, Is.EqualTo(expectedItem.Id));
+                  .AndThat(response.Content, Is.EqualTo(expectedItem));
         }
 
         [Test]
