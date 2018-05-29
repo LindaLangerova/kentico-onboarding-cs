@@ -54,6 +54,7 @@
     <Compile Include="IdServices\IIdGenerator.cs" />
     <Compile Include="ItemServices\IItemCreator.cs" />
     <Compile Include="ItemServices\ItemCreator.cs" />
+    <Compile Include="ItemServices\ItemValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UrlServices\IUrlGenerator.cs" />
     <Compile Include="UrlServices\UrlGenerator.cs" />

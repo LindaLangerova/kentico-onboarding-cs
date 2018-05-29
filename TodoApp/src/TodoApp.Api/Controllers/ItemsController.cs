@@ -37,18 +37,12 @@ namespace TodoApp.Api.Controllers
         {
             var item = await _repository.GetAsync(id);
 
-            if (item == null)
-                return NotFound();
-
             return Ok(item);
         }
 
         public async Task<IHttpActionResult> PostAsync(Item item)
         {
-            if (item?.Text == null)
-                return BadRequest();
-
-            item = _itemCreator.SetItem(item.Text);
+            item = _itemCreator.SetItem(item);
 
             var newItem = await _repository.AddAsync(item);
             var location = _urlGenerator.GetItemUrl(newItem.Id, RouteConfig.DefaultApi);

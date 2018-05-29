@@ -4,12 +4,6 @@ namespace TodoApp.Contract.Models
 {
     public class Item
     {
-        public Item()
-        {
-            CreatedAt = DateTime.Now;
-            LastChange = CreatedAt;
-        }
-
         public Guid Id { get; set; }
         public string Text { get; set; }
         public DateTime CreatedAt { get; set; }

@@ -1,4 +1,5 @@
-﻿using Todo.App.Services.IdServices;
+﻿using System;
+using Todo.App.Services.IdServices;
 using TodoApp.Contract.Models;
 
 namespace Todo.App.Services.ItemServices
@@ -10,7 +11,9 @@ namespace Todo.App.Services.ItemServices
         public ItemCreator(IdGenerator idGenerator)
             => _idGenerator = idGenerator;
 
-        public Item SetItem(string text)
-            => new Item {Id = _idGenerator.GenerateId()};
+        public Item SetItem(Item item)
+            => item.IsValidForCreating()
+                   ? new Item {Id = _idGenerator.GenerateId(), Text = item.Text, CreatedAt = DateTime.Now, LastChange = DateTime.Now}
+                   : throw new ArgumentException();
     }
 }

@@ -4,6 +4,6 @@ namespace Todo.App.Services.ItemServices
 {
     public interface IItemCreator
     {
-        Item SetItem(string text);
+        Item SetItem(Item sampleItem);
     }
 }
