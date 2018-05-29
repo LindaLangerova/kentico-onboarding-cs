@@ -10,6 +10,6 @@ namespace TodoApp.Contract.Models
         public DateTime LastChange { get; set; }
 
         public override string ToString()
-            => $"{nameof(Id)}: {Id}, {nameof(Text)}: {Text}";
+            => $"{nameof(Id)}: {Id}, {nameof(Text)}: {Text}, Created at: {CreatedAt}, Last change: {LastChange}";
     }
 }
