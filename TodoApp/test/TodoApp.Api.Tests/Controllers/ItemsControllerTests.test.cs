@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using NSubstitute;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using Todo.App.Services.ItemServices;
 using Todo.App.Services.UrlServices;
 using TodoApp.Api.Controllers;
@@ -27,8 +28,8 @@ namespace TodoApp.Api.Tests.Controllers
 
             var urlGenerator = Substitute.For<IUrlGenerator>();
 
-            urlGenerator.GetItemUrl(Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), RouteConfig.DefaultApi)
-                        .Returns("api/v1/itemlist/c5cc89a0-ab8d-4328-9000-3da679ec02d3");
+            urlGenerator.GetItemUrl(FakeItem.Id, RouteConfig.DefaultApi)
+                        .Returns($"api/v1/itemlist/{FakeItem.Id}");
 
             _itemCreator = Substitute.For<IItemCreator>();
 
@@ -42,13 +43,13 @@ namespace TodoApp.Api.Tests.Controllers
         private ItemsController _controller;
         private IItemRepository _repository;
         private IItemCreator _itemCreator;
+        private static readonly Item FakeItem = new Item {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee"};
 
         [Test]
         public async Task DeleteItem_ItemDeleted()
         {
-            var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
-            _repository.DeleteAsync(id).Returns(Task.FromResult(HttpStatusCode.NoContent));
-            var response = await _controller.ResolveAction(controller => controller.DeleteAsync(id)).BeItReducedResponse();
+            _repository.DeleteAsync(FakeItem.Id).Returns(Task.FromResult(HttpStatusCode.NoContent));
+            var response = await _controller.ResolveAction(controller => controller.DeleteAsync(FakeItem.Id)).BeItReducedResponse();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
@@ -75,47 +76,41 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetItem_ExistingId_ItemReturned()
         {
-            var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
-            var expectedItem = new Item {Id = id, Text = "Make a coffee"};
-            _repository.GetAsync(id).Returns(Task.FromResult(expectedItem));
+            _repository.GetAsync(FakeItem.Id).Returns(Task.FromResult(FakeItem));
 
-            var response = await _controller.ResolveAction(controller => controller.GetAsync(id)).BeItReducedResponse<Item>();
+            var response = await _controller.ResolveAction(controller => controller.GetAsync(FakeItem.Id)).BeItReducedResponse<Item>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK))
-                  .AndThat(response.Content, Is.EqualTo(expectedItem).UsingItemModelComparer());
+                  .AndThat(response.Content, Is.EqualTo(FakeItem).UsingItemModelComparer());
         }
 
         [Test]
         public async Task PostNewItem_UniqueItem_ItemAdded()
         {
-            var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
-            var expectedItem = new Item {Id = id, Text = "Make a coffee"};
-            var expectedRoute = new Uri($"api/v1/itemlist/{id}", UriKind.Relative);
+            var expectedRoute = new Uri($"api/v1/itemlist/{FakeItem.Id}", UriKind.Relative);
             
             _itemCreator.SetItem(Arg.Is<Item>(item => item.IsValidForCreating()))
-                        .Returns(expectedItem);
-            _repository.AddAsync(expectedItem).Returns(expectedItem);
+                        .Returns(FakeItem);
+            _repository.AddAsync(FakeItem).Returns(FakeItem);
 
-            var response = await _controller.ResolveAction(controller => controller.PostAsync(new Item{Text = expectedItem .Text}))
+            var response = await _controller.ResolveAction(controller => controller.PostAsync(new Item{Text = FakeItem.Text}))
                                             .BeItReducedResponse<Item>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created))
                   .AndThat(response.Location, Is.EqualTo(expectedRoute))
-                  .AndThat(response.Content, Is.EqualTo(expectedItem));
+                  .AndThat(response.Content, Is.EqualTo(FakeItem));
         }
 
         [Test]
         public async Task PutItem_ExistingItem_ItemUpdated()
         {
-            var id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3");
-            var updateItem = new Item {Id = id, Text = "Make a coffee"};
-            _repository.UpdateAsync(id, updateItem).Returns(updateItem);
+            _repository.UpdateAsync(FakeItem.Id, FakeItem).Returns(FakeItem);
 
-            var response = await _controller.ResolveAction(controller => controller.PutAsync(updateItem.Id, updateItem))
+            var response = await _controller.ResolveAction(controller => controller.PutAsync(FakeItem.Id, FakeItem))
                                             .BeItReducedResponse<Item>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK))
-                  .AndThat(response.Content, Is.EqualTo(updateItem).UsingItemModelComparer());
+                  .AndThat(response.Content, Is.EqualTo(FakeItem).UsingItemModelComparer());
         }
     }
 }
