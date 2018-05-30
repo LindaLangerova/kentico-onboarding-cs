@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using NSubstitute;
 using NUnit.Framework;
-using Todo.App.Services.ItemServices;
-using Todo.App.Services.UrlServices;
+using TodoApp.Services.ItemServices;
+using TodoApp.Services.UrlServices;
 using TodoApp.Api.Controllers;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
@@ -108,7 +108,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostNewItem_Invalid_BadRequestReturned()
         {
-            var reffedItem = new Item { Text = FakeItem.Text, Id = Guid.Empty};
+            var reffedItem = new Item {Text = FakeItem.Text, Id = Guid.Empty};
             _itemCreator.SetItem(ref reffedItem).Returns(false).AndDoes(_ => reffedItem = FakeItem);
             _repository.AddAsync(reffedItem).Returns(FakeItem);
 

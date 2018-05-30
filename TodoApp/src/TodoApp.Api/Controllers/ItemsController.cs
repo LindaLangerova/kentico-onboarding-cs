@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Microsoft.Web.Http;
-using Todo.App.Services.ItemServices;
-using Todo.App.Services.UrlServices;
+using TodoApp.Services.ItemServices;
+using TodoApp.Services.UrlServices;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 
@@ -15,10 +15,10 @@ namespace TodoApp.Api.Controllers
     [ApiVersion("1.0")]
     public class ItemsController : ApiController
     {
+        private readonly IItemCacher _itemCacher;
         private readonly IItemCreator _itemCreator;
         private readonly IItemRepository _repository;
         private readonly IUrlGenerator _urlGenerator;
-        private readonly IItemCacher _itemCacher;
 
         public ItemsController(
             IItemRepository repository,

@@ -1,7 +1,7 @@
 ﻿using System;
 using TodoApp.Contract.Models;
 
-namespace Todo.App.Services.ItemServices
+namespace TodoApp.Services.ItemServices
 {
     public static class ItemValidator
     {

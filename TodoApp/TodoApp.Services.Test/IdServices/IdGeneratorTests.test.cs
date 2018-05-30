@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Todo.App.Services.IdServices;
+using TodoApp.Services.IdServices;
 using TodoApp.Contract.Tests.Utilities;
 
 namespace TodoApp.Services.Test.IdServices

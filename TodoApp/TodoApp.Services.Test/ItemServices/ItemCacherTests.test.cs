@@ -1,27 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web.Http.Routing;
 using NSubstitute;
 using NUnit.Framework;
-using Todo.App.Services.ItemServices;
-using Todo.App.Services.UrlServices;
-using TodoApp.Api;
+using TodoApp.Services.ItemServices;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Tests.Utilities;
-using TodoApp.Data.Repositories;
 
 namespace TodoApp.Services.Test.ItemServices
 {
-    class ItemCacherTests : TestBase
+    internal class ItemCacherTests : TestBase
     {
         private IItemCacher _itemCacher;
         private IItemRepository _repository;
-        private static readonly Item FakeItem = new Item { Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee" };
-            
+
+        private static readonly Item FakeItem =
+            new Item {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee"};
+
         [SetUp]
         public void SetUp()
         {
@@ -32,7 +27,7 @@ namespace TodoApp.Services.Test.ItemServices
         }
 
         [Test]
-        public async Task GetItem_ExistingItemId_ItemReturned ()
+        public async Task GetItem_ExistingItemId_ItemReturned()
         {
             var receivedItem = await _itemCacher.GetItem(FakeItem.Id);
 

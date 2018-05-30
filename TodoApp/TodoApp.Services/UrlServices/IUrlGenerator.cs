@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Todo.App.Services.UrlServices
+namespace TodoApp.Services.UrlServices
 {
     public interface IUrlGenerator
     {

@@ -1,4 +1,4 @@
-﻿namespace Todo.App.Services.ConnectionStringServices
+﻿namespace TodoApp.Services.ConnectionStringServices
 {
     public interface IConnectionStringProvider
     {

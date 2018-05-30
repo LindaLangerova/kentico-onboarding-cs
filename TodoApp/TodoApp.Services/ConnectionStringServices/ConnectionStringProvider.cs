@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace Todo.App.Services.ConnectionStringServices
+namespace TodoApp.Services.ConnectionStringServices
 {
     public class ConnectionStringProvider : IConnectionStringProvider
     {

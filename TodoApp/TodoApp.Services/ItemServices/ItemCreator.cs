@@ -1,8 +1,8 @@
 ﻿using System;
-using Todo.App.Services.IdServices;
+using TodoApp.Services.IdServices;
 using TodoApp.Contract.Models;
 
-namespace Todo.App.Services.ItemServices
+namespace TodoApp.Services.ItemServices
 {
     public class ItemCreator : IItemCreator
     {
@@ -15,7 +15,7 @@ namespace Todo.App.Services.ItemServices
         {
             if (!item.IsValidForCreating())
                 return false;
-            
+
             item.Id = _idGenerator.GenerateId();
             item.Text = item.Text;
             item.CreatedAt = DateTime.Now;

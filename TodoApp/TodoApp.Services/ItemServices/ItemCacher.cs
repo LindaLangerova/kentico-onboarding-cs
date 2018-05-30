@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 
-namespace Todo.App.Services.ItemServices
+namespace TodoApp.Services.ItemServices
 {
     public class ItemCacher : IItemCacher
     {
-        private Item _actualItem;
         private readonly IItemRepository _repository;
+        private Item _actualItem;
 
         public ItemCacher(IItemRepository repository)
         {
