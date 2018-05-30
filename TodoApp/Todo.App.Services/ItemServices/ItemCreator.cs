@@ -11,9 +11,17 @@ namespace Todo.App.Services.ItemServices
         public ItemCreator(IdGenerator idGenerator)
             => _idGenerator = idGenerator;
 
-        public Item SetItem(Item item)
-            => item.IsValidForCreating()
-                   ? new Item {Id = _idGenerator.GenerateId(), Text = item.Text, CreatedAt = DateTime.Now, LastChange = DateTime.Now}
-                   : throw new ArgumentException();
+        public bool SetItem(ref Item item)
+        {
+            if (!item.IsValidForCreating())
+                return false;
+            
+            item.Id = _idGenerator.GenerateId();
+            item.Text = item.Text;
+            item.CreatedAt = DateTime.Now;
+            item.LastChange = DateTime.Now;
+
+            return true;
+        }
     }
 }

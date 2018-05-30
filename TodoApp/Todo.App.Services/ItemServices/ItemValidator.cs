@@ -9,6 +9,8 @@ namespace Todo.App.Services.ItemServices
             => itemFromServer.IsValidForUpdating() && itemFromServer.Id == Guid.Empty;
 
         public static bool IsValidForUpdating(this Item itemFromServer)
-            => itemFromServer.CreatedAt == default(DateTime) && itemFromServer.LastChange == default(DateTime);
+            => itemFromServer.CreatedAt == default(DateTime)
+            && itemFromServer.LastChange == default(DateTime)
+            && !string.IsNullOrEmpty(itemFromServer.Text);
     }
 }

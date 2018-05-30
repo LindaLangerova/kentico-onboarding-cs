@@ -91,19 +91,30 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         [Test]
-        public async Task PostNewItem_UniqueItem_ItemAdded()
+        public async Task PostNewItem_Valid_ItemAdded()
         {
             var expectedRoute = new Uri($"api/v1/itemlist/{FakeItem.Id}", UriKind.Relative);
+            var reffedItem = new Item {Text = FakeItem.Text};
+            _itemCreator.SetItem(ref reffedItem).Returns(true).AndDoes(_ => reffedItem = FakeItem);
+            _repository.AddAsync(reffedItem).Returns(FakeItem);
 
-            _itemCreator.SetItem(Arg.Is<Item>(item => item.IsValidForCreating())).Returns(FakeItem);
-            _repository.AddAsync(FakeItem).Returns(FakeItem);
-
-            var response = await _controller.ResolveAction(controller => controller.PostAsync(new Item {Text = FakeItem.Text}))
-                                            .BeItReducedResponse<Item>();
+            var response = await _controller.ResolveAction(controller => controller.PostAsync(reffedItem)).BeItReducedResponse<Item>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created))
                   .AndThat(response.Location, Is.EqualTo(expectedRoute))
                   .AndThat(response.Content, Is.EqualTo(FakeItem));
+        }
+
+        [Test]
+        public async Task PostNewItem_Invalid_BadRequestReturned()
+        {
+            var reffedItem = new Item { Text = FakeItem.Text, Id = Guid.Empty};
+            _itemCreator.SetItem(ref reffedItem).Returns(false).AndDoes(_ => reffedItem = FakeItem);
+            _repository.AddAsync(reffedItem).Returns(FakeItem);
+
+            var response = await _controller.ResolveAction(controller => controller.PostAsync(reffedItem)).BeItReducedResponse<Item>();
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }
 
         [Test]
