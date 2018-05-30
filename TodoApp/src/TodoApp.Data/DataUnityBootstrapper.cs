@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using Todo.App.Services.ConnectionStringServices;
 using TodoApp.Contract;
 using TodoApp.Contract.Repositories;
 using TodoApp.Data.Repositories;
@@ -14,10 +15,9 @@ namespace TodoApp.Data
             => RegisterTypes(container);
 
         public static void RegisterTypes(IUnityContainer container)
-            => container.RegisterType<IItemRepository, ItemRepository>(new ContainerControlledLifetimeManager(),
-                                                                       new InjectionConstructor(
-                                                                           ConfigurationManager
-                                                                               .ConnectionStrings["DefaultConnection"]
-                                                                               .ConnectionString));
+        {
+            container.RegisterType<IItemRepository, ItemRepository>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IConnectionStringProvider, ConnectionStringProvider>(new ContainerControlledLifetimeManager());
+        }
     }
 }

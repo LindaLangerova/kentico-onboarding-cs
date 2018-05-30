@@ -35,6 +35,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.5\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -50,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionStringServices\ConnectionStringProvider.cs" />
+    <Compile Include="ConnectionStringServices\IConnectionStringProvider.cs" />
     <Compile Include="IdServices\IdGenerator.cs" />
     <Compile Include="IdServices\IIdGenerator.cs" />
     <Compile Include="ItemServices\IItemCreator.cs" />

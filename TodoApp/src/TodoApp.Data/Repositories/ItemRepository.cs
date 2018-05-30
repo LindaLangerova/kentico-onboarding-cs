@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Driver;
+using Todo.App.Services.ConnectionStringServices;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 
@@ -11,9 +12,9 @@ namespace TodoApp.Data.Repositories
     {
         private readonly IMongoCollection<Item> _itemsCollection;
 
-        public ItemRepository(string connectionString)
+        public ItemRepository(IConnectionStringProvider connectionStringProvider)
         {
-            var databaseUrl = MongoUrl.Create(connectionString);
+            var databaseUrl = MongoUrl.Create(connectionStringProvider.GetConnectionString());
             var database = new MongoClient(databaseUrl).GetDatabase(databaseUrl.DatabaseName);
             _itemsCollection = database.GetCollection<Item>("Items");
         }
