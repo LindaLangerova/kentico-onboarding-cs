@@ -55,7 +55,9 @@
     <Compile Include="ConnectionStringServices\IConnectionStringProvider.cs" />
     <Compile Include="IdServices\IdGenerator.cs" />
     <Compile Include="IdServices\IIdGenerator.cs" />
+    <Compile Include="ItemServices\IItemCacher.cs" />
     <Compile Include="ItemServices\IItemCreator.cs" />
+    <Compile Include="ItemServices\ItemCacher.cs" />
     <Compile Include="ItemServices\ItemCreator.cs" />
     <Compile Include="ItemServices\ItemValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

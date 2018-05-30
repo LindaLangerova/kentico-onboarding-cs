@@ -23,6 +23,7 @@ namespace TodoApp.Api.Tests.Controllers
         private ItemsController _controller;
         private IItemRepository _repository;
         private IItemCreator _itemCreator;
+        private IItemCacher _itemCacher;
 
         private static readonly Item FakeItem =
             new Item {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee"};
@@ -37,8 +38,9 @@ namespace TodoApp.Api.Tests.Controllers
             urlGenerator.GetItemUrl(FakeItem.Id, RouteConfig.DefaultApi).Returns($"api/v1/itemlist/{FakeItem.Id}");
 
             _itemCreator = Substitute.For<IItemCreator>();
+            _itemCacher = Substitute.For<IItemCacher>();
 
-            _controller = new ItemsController(_repository, urlGenerator, _itemCreator)
+            _controller = new ItemsController(_repository, urlGenerator, _itemCreator, _itemCacher)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
@@ -67,12 +69,25 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task GetItem_ExistingId_ItemReturned()
         {
-            _repository.GetAsync(FakeItem.Id).Returns(Task.FromResult(FakeItem));
+            _itemCacher.ItemExists(FakeItem.Id).Returns(true);
+            _itemCacher.GetItem(FakeItem.Id).Returns(FakeItem);
+
+            _itemCacher.ItemExists(Guid.Empty).Returns(false);
 
             var response = await _controller.ResolveAction(controller => controller.GetAsync(FakeItem.Id)).BeItReducedResponse<Item>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK))
                   .AndThat(response.Content, Is.EqualTo(FakeItem).UsingItemModelComparer());
+        }
+
+        [Test]
+        public async Task GetItem_NotExistingId_NotFoundReturned()
+        {
+            _itemCacher.ItemExists(Guid.Empty).Returns(false);
+
+            var response = await _controller.ResolveAction(controller => controller.GetAsync(Guid.Empty)).BeItReducedResponse();
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         }
 
         [Test]

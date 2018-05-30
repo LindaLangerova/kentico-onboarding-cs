@@ -18,12 +18,14 @@ namespace TodoApp.Api.Controllers
         private readonly IItemCreator _itemCreator;
         private readonly IItemRepository _repository;
         private readonly IUrlGenerator _urlGenerator;
+        private readonly IItemCacher _itemCacher;
 
-        public ItemsController(IItemRepository repository, IUrlGenerator urlGenerator, IItemCreator itemCreator)
+        public ItemsController(IItemRepository repository, IUrlGenerator urlGenerator, IItemCreator itemCreator, IItemCacher itemCacher)
         {
             _repository = repository;
             _urlGenerator = urlGenerator;
             _itemCreator = itemCreator;
+            _itemCacher = itemCacher;
         }
 
         public async Task<IHttpActionResult> GetAllAsync()
@@ -35,7 +37,10 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> GetAsync(Guid id)
         {
-            var item = await _repository.GetAsync(id);
+            if (!await _itemCacher.ItemExists(id))
+                return NotFound();
+
+            var item = await _itemCacher.GetItem(id);
 
             return Ok(item);
         }
