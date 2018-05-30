@@ -6,9 +6,9 @@ namespace Todo.App.Services.ItemServices
 {
     public class ItemCreator : IItemCreator
     {
-        private readonly IdGenerator _idGenerator;
+        private readonly IIdGenerator _idGenerator;
 
-        public ItemCreator(IdGenerator idGenerator)
+        public ItemCreator(IIdGenerator idGenerator)
             => _idGenerator = idGenerator;
 
         public bool SetItem(ref Item item)
