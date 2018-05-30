@@ -20,7 +20,11 @@ namespace TodoApp.Api.Controllers
         private readonly IUrlGenerator _urlGenerator;
         private readonly IItemCacher _itemCacher;
 
-        public ItemsController(IItemRepository repository, IUrlGenerator urlGenerator, IItemCreator itemCreator, IItemCacher itemCacher)
+        public ItemsController(
+            IItemRepository repository,
+            IUrlGenerator urlGenerator,
+            IItemCreator itemCreator,
+            IItemCacher itemCacher)
         {
             _repository = repository;
             _urlGenerator = urlGenerator;

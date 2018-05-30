@@ -1,10 +1,8 @@
-﻿using System.Configuration;
-using Todo.App.Services.ConnectionStringServices;
+﻿using Todo.App.Services.ConnectionStringServices;
 using TodoApp.Contract;
 using TodoApp.Contract.Repositories;
 using TodoApp.Data.Repositories;
 using Unity;
-using Unity.Injection;
 using Unity.Lifetime;
 
 namespace TodoApp.Data
@@ -15,10 +13,7 @@ namespace TodoApp.Data
             => RegisterTypes(container);
 
         public static void RegisterTypes(IUnityContainer container)
-        {
-            container.RegisterType<IItemRepository, ItemRepository>(new ContainerControlledLifetimeManager())
-                     .RegisterType<IConnectionStringProvider, ConnectionStringProvider>(new ContainerControlledLifetimeManager());
-
-        }
+            => container.RegisterType<IItemRepository, ItemRepository>(new ContainerControlledLifetimeManager())
+                        .RegisterType<IConnectionStringProvider, ConnectionStringProvider>(new ContainerControlledLifetimeManager());
     }
 }

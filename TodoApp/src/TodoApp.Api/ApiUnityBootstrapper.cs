@@ -3,7 +3,6 @@ using System.Web;
 using Todo.App.Services.ItemServices;
 using Todo.App.Services.UrlServices;
 using TodoApp.Contract;
-using TodoApp.Contract.Repositories;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
