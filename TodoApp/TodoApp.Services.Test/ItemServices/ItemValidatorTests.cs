@@ -1,8 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
-using TodoApp.Services.ItemServices;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Tests.Utilities;
+using TodoApp.Services.Validators;
 
 namespace TodoApp.Services.Test.ItemServices
 {

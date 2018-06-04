@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using TodoApp.Contract.Models;
 
-namespace TodoApp.Services.ItemServices
+namespace TodoApp.Contract.Services
 {
     public interface IItemCacher
     {

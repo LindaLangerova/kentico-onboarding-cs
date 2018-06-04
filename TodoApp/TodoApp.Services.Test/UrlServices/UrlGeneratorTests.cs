@@ -5,7 +5,7 @@ using NSubstitute;
 using NUnit.Framework;
 using TodoApp.Api;
 using TodoApp.Contract.Tests.Utilities;
-using TodoApp.Services.UrlServices;
+using TodoApp.Services.Generators;
 
 namespace TodoApp.Services.Test.UrlServices
 {

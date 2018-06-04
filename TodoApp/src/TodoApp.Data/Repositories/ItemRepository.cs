@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Driver;
-using TodoApp.Services.ConnectionStringServices;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
+using TodoApp.Contract.Services;
 
 namespace TodoApp.Data.Repositories
 {

@@ -51,19 +51,14 @@
     <Reference Include="Unity.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConnectionStringServices\ConnectionStringProvider.cs" />
-    <Compile Include="ConnectionStringServices\IConnectionStringProvider.cs" />
-    <Compile Include="IdServices\IdGenerator.cs" />
-    <Compile Include="IdServices\IIdGenerator.cs" />
-    <Compile Include="ItemServices\IItemCacher.cs" />
-    <Compile Include="ItemServices\IItemCreator.cs" />
-    <Compile Include="ItemServices\ItemCacher.cs" />
-    <Compile Include="ItemServices\ItemCreator.cs" />
-    <Compile Include="ItemServices\ItemValidator.cs" />
+    <Compile Include="Providers\ConnectionStringProvider.cs" />
+    <Compile Include="Generators\IdGenerator.cs" />
+    <Compile Include="Providers\ItemCacher.cs" />
+    <Compile Include="Creators\ItemCreator.cs" />
+    <Compile Include="Validators\ItemValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicesUnityBootstrapper.cs" />
-    <Compile Include="UrlServices\IUrlGenerator.cs" />
-    <Compile Include="UrlServices\UrlGenerator.cs" />
+    <Compile Include="Generators\UrlGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -74,5 +69,6 @@
       <Name>TodoApp.Contract</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

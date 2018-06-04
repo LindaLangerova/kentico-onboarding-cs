@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Web.Http.Routing;
+using TodoApp.Contract.Services;
 
-namespace TodoApp.Services.UrlServices
+namespace TodoApp.Services.Generators
 {
     public class UrlGenerator : IUrlGenerator
     {

@@ -1,8 +1,6 @@
 ﻿using System.Net.Http;
 using System.Web;
 using TodoApp.Contract;
-using TodoApp.Services.ItemServices;
-using TodoApp.Services.UrlServices;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;

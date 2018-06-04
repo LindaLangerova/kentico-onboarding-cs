@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TodoApp.Services.IdServices
+namespace TodoApp.Contract.Services
 {
     public interface IIdGenerator
     {

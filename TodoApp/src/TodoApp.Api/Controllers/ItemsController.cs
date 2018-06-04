@@ -4,10 +4,9 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Microsoft.Web.Http;
-using TodoApp.Services.ItemServices;
-using TodoApp.Services.UrlServices;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
+using TodoApp.Contract.Services;
 
 namespace TodoApp.Api.Controllers
 {

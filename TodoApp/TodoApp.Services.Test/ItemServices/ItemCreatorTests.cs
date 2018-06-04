@@ -1,10 +1,10 @@
 ﻿using System;
 using NSubstitute;
 using NUnit.Framework;
-using TodoApp.Services.IdServices;
-using TodoApp.Services.ItemServices;
 using TodoApp.Contract.Models;
+using TodoApp.Contract.Services;
 using TodoApp.Contract.Tests.Utilities;
+using TodoApp.Services.Creators;
 
 namespace TodoApp.Services.Test.ItemServices
 {

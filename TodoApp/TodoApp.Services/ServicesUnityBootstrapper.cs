@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TodoApp.Contract;
 using TodoApp.Contract.Repositories;
-using TodoApp.Services.ConnectionStringServices;
-using TodoApp.Services.IdServices;
-using TodoApp.Services.ItemServices;
-using TodoApp.Services.UrlServices;
+using TodoApp.Contract.Services;
+using TodoApp.Services.Creators;
+using TodoApp.Services.Generators;
+using TodoApp.Services.Providers;
 using Unity;
 using Unity.Lifetime;
 

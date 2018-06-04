@@ -2,8 +2,9 @@
 using System.Threading.Tasks;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
+using TodoApp.Contract.Services;
 
-namespace TodoApp.Services.ItemServices
+namespace TodoApp.Services.Providers
 {
     public class ItemCacher : IItemCacher
     {

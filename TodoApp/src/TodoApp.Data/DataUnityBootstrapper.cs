@@ -1,7 +1,8 @@
-﻿using TodoApp.Services.ConnectionStringServices;
-using TodoApp.Contract;
+﻿using TodoApp.Contract;
 using TodoApp.Contract.Repositories;
+using TodoApp.Contract.Services;
 using TodoApp.Data.Repositories;
+using TodoApp.Services.Providers;
 using Unity;
 using Unity.Lifetime;
 

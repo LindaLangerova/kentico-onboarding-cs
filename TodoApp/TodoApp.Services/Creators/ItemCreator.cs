@@ -1,8 +1,9 @@
 ﻿using System;
-using TodoApp.Services.IdServices;
 using TodoApp.Contract.Models;
+using TodoApp.Contract.Services;
+using TodoApp.Services.Validators;
 
-namespace TodoApp.Services.ItemServices
+namespace TodoApp.Services.Creators
 {
     public class ItemCreator : IItemCreator
     {
