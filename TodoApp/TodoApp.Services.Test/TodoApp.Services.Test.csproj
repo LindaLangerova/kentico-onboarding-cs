@@ -65,12 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IdServices\IdGeneratorTests.test.cs" />
-    <Compile Include="ItemServices\ItemCacherTests.test.cs" />
-    <Compile Include="ItemServices\ItemCreatorTests.test.cs" />
-    <Compile Include="ItemServices\ItemValidatorTests.test.cs" />
+    <Compile Include="IdServices\IdGeneratorTests.cs" />
+    <Compile Include="ItemServices\ItemCacherTests.cs" />
+    <Compile Include="ItemServices\ItemCreatorTests.cs" />
+    <Compile Include="ItemServices\ItemValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UrlServices\UrlGeneratorTests.test.cs" />
+    <Compile Include="UrlServices\UrlGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\TodoApp.Api\TodoApp.Api.csproj">
