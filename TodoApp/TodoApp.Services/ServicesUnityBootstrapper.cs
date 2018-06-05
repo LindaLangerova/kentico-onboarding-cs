@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TodoApp.Contract;
-using TodoApp.Contract.Repositories;
+﻿using TodoApp.Contract;
 using TodoApp.Contract.Services;
 using TodoApp.Services.Creators;
 using TodoApp.Services.Generators;
@@ -14,7 +8,7 @@ using Unity.Lifetime;
 
 namespace TodoApp.Services
 {
-    public class ServicesUnityBootstrapper: IUnityBootstrapper
+    public class ServicesUnityBootstrapper : IUnityBootstrapper
     {
         void IUnityBootstrapper.RegisterTypes(IUnityContainer container)
             => RegisterTypes(container);

@@ -25,7 +25,8 @@ namespace TodoApp.Data.Repositories
         public async Task<Item> GetAsync(Guid id)
             => await _itemsCollection.Find(item => item.Id == id).FirstOrDefaultAsync();
 
-        public async Task AddAsync(Item item) => await _itemsCollection.InsertOneAsync(item);
+        public async Task AddAsync(Item item)
+            => await _itemsCollection.InsertOneAsync(item);
 
         public Task<Item> UpdateAsync(Guid id, Item item)
             => throw new NotImplementedException();

@@ -6,8 +6,8 @@ namespace TodoApp.Services.Generators
 {
     public class UrlGenerator : IUrlGenerator
     {
-        private readonly UrlHelper _urlHelper;
         private readonly IRouteNameProvider _routeNameProvider;
+        private readonly UrlHelper _urlHelper;
 
         public UrlGenerator(UrlHelper urlHelper, IRouteNameProvider routeNameProvider)
         {
