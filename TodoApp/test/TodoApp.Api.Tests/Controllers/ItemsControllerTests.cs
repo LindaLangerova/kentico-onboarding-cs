@@ -94,7 +94,7 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         [Test]
-        public async Task PostNewItem_Valid_ItemAdded()
+        public async Task PostNewItem_ValidItem_ItemAdded()
         {
             var expectedRoute = new Uri($"api/v1/itemlist/{FakeItem.Id}", UriKind.Relative);
             var reffedItem = new Item {Text = FakeItem.Text};
@@ -108,7 +108,7 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         [Test]
-        public async Task PostNewItem_Invalid_BadRequestReturned()
+        public async Task PostNewItem_InvalidItem_BadRequestReturned()
         {
             _itemCreator.SetItem(FakeItem).Returns(FakeItem);
             _repository.AddAsync(FakeItem).Returns(Task.FromResult(FakeItem));

@@ -17,7 +17,7 @@ namespace TodoApp.Services.Test.UrlServices
         private static readonly Guid FakeId = Guid.Parse("5f6a2723-040a-4398-8b63-9d55153378ba");
 
         [Test]
-        public void GetItemUrl_UrlReceived()
+        public void GetItemUrl_ItemId_UrlReceived()
         {
             var urlHelper = Substitute.For<UrlHelper>();
             _routeNameProvider = Substitute.For<IRouteNameProvider>();

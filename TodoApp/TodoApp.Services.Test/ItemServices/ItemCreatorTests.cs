@@ -27,7 +27,7 @@ namespace TodoApp.Services.Test.ItemServices
         }
 
         [Test]
-        public void SetItem_ValidItem_ReturnTrueAndCorrectItem()
+        public void SetItem_ValidItem_CorrectItem()
         {
             var validItem = new Item {Text = "Make a coffee", CreatedAt = DateTime.MinValue, LastChange = DateTime.MinValue};
             var result = _itemCreator.SetItem(validItem);

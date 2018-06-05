@@ -16,7 +16,7 @@ namespace TodoApp.Services.Test.ItemServices
         private readonly Item _notValidItem = new Item {Text = ""};
 
         [Test]
-        public void IsValidForUpdating_ItemIsValid_TrueReturned()
+        public void IsValidForUpdating_ItemHasOnlyText_TrueReturned()
         {
             var result = _validItem1.IsValidForUpdating();
             var result2 = _validaItem2.IsValidForUpdating();
@@ -25,7 +25,7 @@ namespace TodoApp.Services.Test.ItemServices
         }
 
         [Test]
-        public void IsValidForUpdating_ItemIsNotValid_FalseReturned()
+        public void IsValidForUpdating_ItemHasEmptyText_FalseReturned()
         {
             var result = _notValidItem.IsValidForUpdating();
 
@@ -33,7 +33,7 @@ namespace TodoApp.Services.Test.ItemServices
         }
 
         [Test]
-        public void IsValidForCreting_ItemIsValid_TrueReturned()
+        public void IsValidForCreting_ItemHasOnlyText_TrueReturned()
         {
             var result = _validItem1.IsValidForCreating();
 
@@ -41,7 +41,7 @@ namespace TodoApp.Services.Test.ItemServices
         }
 
         [Test]
-        public void IsValidForCreting_ItemIsNotValid_FalseReturned()
+        public void IsValidForCreting_ItemHasEmptyText_FalseReturned()
         {
             var result = _notValidItem.IsValidForUpdating();
 
@@ -49,7 +49,7 @@ namespace TodoApp.Services.Test.ItemServices
         }
 
         [Test]
-        public void IsValidForCreting_ItemIsValidOnlyForUpdating_FalseReturned()
+        public void IsValidForCreting_ItemHasGuid_FalseReturned()
         {
             var result = _validaItem2.IsValidForCreating();
 
