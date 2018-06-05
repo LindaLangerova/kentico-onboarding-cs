@@ -69,6 +69,7 @@
     <Compile Include="Services\IIdGenerator.cs" />
     <Compile Include="Services\IItemCacher.cs" />
     <Compile Include="Services\IItemCreator.cs" />
+    <Compile Include="Services\IRouteNameProvider.cs" />
     <Compile Include="Services\IUrlGenerator.cs" />
   </ItemGroup>
   <ItemGroup>

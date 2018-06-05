@@ -57,7 +57,7 @@ namespace TodoApp.Api.Controllers
             var newItem = _itemCreator.SetItem(item);
 
             await _repository.AddAsync(newItem);
-            var location = _urlGenerator.GetItemUrl(newItem.Id, RouteConfig.DefaultApi);
+            var location = _urlGenerator.GetItemUrl(newItem.Id);
 
             return Created(location, newItem);
         }

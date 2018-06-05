@@ -55,6 +55,7 @@
     <Compile Include="Generators\IdGenerator.cs" />
     <Compile Include="Providers\ItemCacher.cs" />
     <Compile Include="Creators\ItemCreator.cs" />
+    <Compile Include="Providers\RouteNameProvider.cs" />
     <Compile Include="Validators\ItemValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicesUnityBootstrapper.cs" />

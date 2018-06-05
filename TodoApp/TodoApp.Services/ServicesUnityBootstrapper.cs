@@ -24,6 +24,7 @@ namespace TodoApp.Services
                         .RegisterType<IItemCreator, ItemCreator>(new HierarchicalLifetimeManager())
                         .RegisterType<IItemCacher, ItemCacher>(new HierarchicalLifetimeManager())
                         .RegisterType<IIdGenerator, IdGenerator>(new HierarchicalLifetimeManager())
-                        .RegisterType<IConnectionStringProvider, ConnectionStringProvider>(new ContainerControlledLifetimeManager());
+                        .RegisterType<IConnectionStringProvider, ConnectionStringProvider>(new ContainerControlledLifetimeManager())
+                        .RegisterType<IRouteNameProvider, RouteNameProvider>(new HierarchicalLifetimeManager());
     }
 }

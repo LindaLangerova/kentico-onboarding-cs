@@ -25,6 +25,7 @@ namespace TodoApp.Api.Tests.Controllers
         private IItemRepository _repository;
         private IItemCreator _itemCreator;
         private IItemCacher _itemCacher;
+        private IRouteNameProvider _routeNameProvider;
 
         private static readonly Item FakeItem =
             new Item {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee"};
@@ -35,8 +36,9 @@ namespace TodoApp.Api.Tests.Controllers
             _repository = Substitute.For<IItemRepository>();
 
             var urlGenerator = Substitute.For<IUrlGenerator>();
+            _routeNameProvider = Substitute.For<IRouteNameProvider>();
 
-            urlGenerator.GetItemUrl(FakeItem.Id, RouteConfig.DefaultApi).Returns($"api/v1/itemlist/{FakeItem.Id}");
+            urlGenerator.GetItemUrl(FakeItem.Id).Returns($"api/v1/itemlist/{FakeItem.Id}");
 
             _itemCreator = Substitute.For<IItemCreator>();
             _itemCacher = Substitute.For<IItemCacher>();
