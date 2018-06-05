@@ -14,7 +14,6 @@ namespace TodoApp.Data
             => RegisterTypes(container);
 
         public static void RegisterTypes(IUnityContainer container)
-            => container.RegisterType<IItemRepository, ItemRepository>(new ContainerControlledLifetimeManager())
-                        .RegisterType<IConnectionStringProvider, ConnectionStringProvider>(new ContainerControlledLifetimeManager());
+            => container.RegisterType<IItemRepository, ItemRepository>(new ContainerControlledLifetimeManager());
     }
 }

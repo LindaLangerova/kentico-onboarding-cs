@@ -19,10 +19,7 @@ namespace TodoApp.Services.Providers
 
         public async Task<Item> GetItem(Guid id)
         {
-            if (_actualItem != null && _actualItem.Id == id)
-                return _actualItem;
-
-            _actualItem = await _repository.GetAsync(id);
+            _actualItem = _actualItem?.Id == id ? _actualItem : await _repository.GetAsync(id);
 
             return _actualItem;
         }
@@ -32,13 +29,7 @@ namespace TodoApp.Services.Providers
             if (_actualItem != null && _actualItem.Id == id)
                 return true;
 
-            try
-            {
-                _actualItem = await _repository.GetAsync(id);
-            } catch (NullReferenceException)
-            {
-                return false;
-            }
+            _actualItem = await _repository.GetAsync(id);
 
             return _actualItem != null;
         }

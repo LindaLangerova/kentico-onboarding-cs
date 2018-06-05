@@ -23,6 +23,7 @@ namespace TodoApp.Services
             => container.RegisterType<IUrlGenerator, UrlGenerator>(new ContainerControlledLifetimeManager())
                         .RegisterType<IItemCreator, ItemCreator>(new HierarchicalLifetimeManager())
                         .RegisterType<IItemCacher, ItemCacher>(new HierarchicalLifetimeManager())
-                        .RegisterType<IIdGenerator, IdGenerator>(new HierarchicalLifetimeManager());
+                        .RegisterType<IIdGenerator, IdGenerator>(new HierarchicalLifetimeManager())
+                        .RegisterType<IConnectionStringProvider, ConnectionStringProvider>(new ContainerControlledLifetimeManager());
     }
 }
