@@ -10,7 +10,7 @@ namespace TodoApp.Contract.Repositories
         Task<List<Item>> GetAllAsync();
         Task<Item> GetAsync(Guid id);
         Task<Item> UpdateAsync(Guid id, Item item);
-        Task<Item> AddAsync(Item item);
+        Task AddAsync(Item item);
         Task DeleteAsync(Guid id);
     }
 }

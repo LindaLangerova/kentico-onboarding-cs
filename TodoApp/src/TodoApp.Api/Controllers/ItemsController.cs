@@ -54,9 +54,9 @@ namespace TodoApp.Api.Controllers
             if (!item.IsValidForCreating())
                 return BadRequest();
 
-            var filledItem = _itemCreator.SetItem(item);
+            var newItem = _itemCreator.SetItem(item);
 
-            var newItem = await _repository.AddAsync(filledItem);
+            await _repository.AddAsync(newItem);
             var location = _urlGenerator.GetItemUrl(newItem.Id, RouteConfig.DefaultApi);
 
             return Created(location, newItem);

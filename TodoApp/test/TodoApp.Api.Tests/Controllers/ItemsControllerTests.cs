@@ -96,8 +96,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var expectedRoute = new Uri($"api/v1/itemlist/{FakeItem.Id}", UriKind.Relative);
             var reffedItem = new Item {Text = FakeItem.Text};
-            _itemCreator.SetItem(reffedItem).Returns(reffedItem);
-            _repository.AddAsync(reffedItem).Returns(FakeItem);
+            _itemCreator.SetItem(reffedItem).Returns(FakeItem);
 
             var response = await _controller.ResolveAction(controller => controller.PostAsync(reffedItem)).BeItReducedResponse<Item>();
 
