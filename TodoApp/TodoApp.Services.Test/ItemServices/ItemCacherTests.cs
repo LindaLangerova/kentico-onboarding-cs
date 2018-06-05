@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using NSubstitute;
+using NSubstitute.Core;
 using NUnit.Framework;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
@@ -57,6 +59,16 @@ namespace TodoApp.Services.Test.ItemServices
             var result = await _itemCacher.ItemExists(Guid.Empty);
 
             Assert.That(result, Is.EqualTo(false));
+        }
+
+        [Test]
+        public async Task ItemIsCached_ExistingItem_CalledRepositoryOnlyOnce()
+        {
+            await _itemCacher.ItemExists(FakeItem.Id);
+            await _itemCacher.ItemExists(FakeItem.Id);
+
+
+            Assert.That(_repository.ReceivedCalls().Count(), Is.EqualTo(1));
         }
     }
 }
