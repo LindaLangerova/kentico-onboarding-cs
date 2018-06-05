@@ -7,6 +7,7 @@ using Microsoft.Web.Http;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services;
+using TodoApp.Services.Validators;
 
 namespace TodoApp.Api.Controllers
 {
@@ -50,13 +51,12 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> PostAsync(Item item)
         {
-            if (!_itemCreator.SetItem(ref item))
+            if (!item.IsValidForCreating())
                 return BadRequest();
 
-            if (await _itemCacher.ItemExists(item.Id))
-                return BadRequest();
+            var filledItem = _itemCreator.SetItem(item);
 
-            var newItem = await _repository.AddAsync(item);
+            var newItem = await _repository.AddAsync(filledItem);
             var location = _urlGenerator.GetItemUrl(newItem.Id, RouteConfig.DefaultApi);
 
             return Created(location, newItem);

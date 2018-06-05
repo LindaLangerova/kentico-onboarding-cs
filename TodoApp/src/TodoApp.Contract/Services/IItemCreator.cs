@@ -4,6 +4,6 @@ namespace TodoApp.Contract.Services
 {
     public interface IItemCreator
     {
-        bool SetItem(ref Item sampleItem);
+        Item SetItem(Item sampleItem);
     }
 }

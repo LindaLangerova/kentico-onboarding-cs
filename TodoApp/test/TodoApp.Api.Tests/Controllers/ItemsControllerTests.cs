@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using NSubstitute;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using TodoApp.Api.Controllers;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
@@ -14,6 +15,7 @@ using TodoApp.Contract.Services;
 using TodoApp.Contract.Tests.Utilities;
 using TodoApp.Contract.Tests.Utilities.ActionsResolution;
 using TodoApp.Contract.Tests.Utilities.Comparers;
+using TodoApp.Services.Validators;
 
 namespace TodoApp.Api.Tests.Controllers
 {
@@ -94,7 +96,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             var expectedRoute = new Uri($"api/v1/itemlist/{FakeItem.Id}", UriKind.Relative);
             var reffedItem = new Item {Text = FakeItem.Text};
-            _itemCreator.SetItem(ref reffedItem).Returns(true).AndDoes(_ => reffedItem = FakeItem);
+            _itemCreator.SetItem(reffedItem).Returns(reffedItem);
             _repository.AddAsync(reffedItem).Returns(FakeItem);
 
             var response = await _controller.ResolveAction(controller => controller.PostAsync(reffedItem)).BeItReducedResponse<Item>();
@@ -107,11 +109,10 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PostNewItem_Invalid_BadRequestReturned()
         {
-            var reffedItem = new Item {Text = FakeItem.Text, Id = Guid.Empty};
-            _itemCreator.SetItem(ref reffedItem).Returns(false).AndDoes(_ => reffedItem = FakeItem);
-            _repository.AddAsync(reffedItem).Returns(FakeItem);
+            _itemCreator.SetItem(FakeItem).Returns(FakeItem);
+            _repository.AddAsync(FakeItem).Returns(Task.FromResult(FakeItem));
 
-            var response = await _controller.ResolveAction(controller => controller.PostAsync(reffedItem)).BeItReducedResponse<Item>();
+            var response = await _controller.ResolveAction(controller => controller.PostAsync(FakeItem)).BeItReducedResponse<Item>();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         }

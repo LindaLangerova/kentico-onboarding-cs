@@ -27,9 +27,9 @@ namespace TodoApp.Services.Test.ItemServices
         public void SetItem_ValidItem_ReturnTrueAndCorrectItem()
         {
             var validItem = new Item {Text = "Make a coffee"};
-            var result = _itemCreator.SetItem(ref validItem);
+            var result = _itemCreator.SetItem(validItem);
 
-            Assert.That(result, Is.EqualTo(true)).AndThat(validItem.Id, Is.EqualTo(FakeItem.Id));
+            Assert.That(result.Id, Is.EqualTo(FakeItem.Id));
         }
     }
 }

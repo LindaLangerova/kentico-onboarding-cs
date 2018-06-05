@@ -12,17 +12,13 @@ namespace TodoApp.Services.Creators
         public ItemCreator(IIdGenerator idGenerator)
             => _idGenerator = idGenerator;
 
-        public bool SetItem(ref Item item)
+        public Item SetItem(Item item)
         {
-            if (!item.IsValidForCreating())
-                return false;
-
             item.Id = _idGenerator.GenerateId();
-            item.Text = item.Text;
             item.CreatedAt = DateTime.Now;
             item.LastChange = DateTime.Now;
 
-            return true;
+            return item;
         }
     }
 }
