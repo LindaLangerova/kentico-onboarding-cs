@@ -4,6 +4,7 @@ using NUnit.Framework;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Services;
 using TodoApp.Contract.Tests.Utilities;
+using TodoApp.Contract.Tests.Utilities.Comparers;
 using TodoApp.Services.Creators;
 
 namespace TodoApp.Services.Test.ItemServices
@@ -19,17 +20,19 @@ namespace TodoApp.Services.Test.ItemServices
         public void SetUp()
         {
             var idGenerator = Substitute.For<IIdGenerator>();
+            var dateTimeGenerator = Substitute.For<IDateTimeGenerator>();
+            dateTimeGenerator.GetActualDateTime().Returns(DateTime.MinValue);
             idGenerator.GenerateId().Returns(FakeItem.Id);
-            _itemCreator = new ItemCreator(idGenerator);
+            _itemCreator = new ItemCreator(idGenerator, dateTimeGenerator);
         }
 
         [Test]
         public void SetItem_ValidItem_ReturnTrueAndCorrectItem()
         {
-            var validItem = new Item {Text = "Make a coffee"};
+            var validItem = new Item {Text = "Make a coffee", CreatedAt = DateTime.MinValue, LastChange = DateTime.MinValue};
             var result = _itemCreator.SetItem(validItem);
 
-            Assert.That(result.Id, Is.EqualTo(FakeItem.Id));
+            Assert.That(result, Is.EqualTo(FakeItem).UsingItemModelComparer());
         }
     }
 }

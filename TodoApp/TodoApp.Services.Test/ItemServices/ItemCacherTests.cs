@@ -16,6 +16,7 @@ namespace TodoApp.Services.Test.ItemServices
     {
         private IItemCacher _itemCacher;
         private IItemRepository _repository;
+        
 
         private static readonly Item FakeItem =
             new Item {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee"};
@@ -66,8 +67,7 @@ namespace TodoApp.Services.Test.ItemServices
         {
             await _itemCacher.ItemExists(FakeItem.Id);
             await _itemCacher.ItemExists(FakeItem.Id);
-
-
+            
             Assert.That(_repository.ReceivedCalls().Count(), Is.EqualTo(1));
         }
     }

@@ -51,6 +51,7 @@
     <Reference Include="Unity.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generators\DateTimeGenerator.cs" />
     <Compile Include="Providers\ConnectionStringProvider.cs" />
     <Compile Include="Generators\IdGenerator.cs" />
     <Compile Include="Providers\ItemCacher.cs" />

@@ -66,6 +66,7 @@
     <Compile Include="Repositories\IItemRepository.cs" />
     <Compile Include="IUnityBootstrapper.cs" />
     <Compile Include="Services\IConnectionStringProvider.cs" />
+    <Compile Include="Services\IDateTimeGenerator.cs" />
     <Compile Include="Services\IIdGenerator.cs" />
     <Compile Include="Services\IItemCacher.cs" />
     <Compile Include="Services\IItemCreator.cs" />
