@@ -7,7 +7,7 @@ using TodoApp.Contract.Services.Providers;
 
 namespace TodoApp.Services.Providers
 {
-    public class ItemCacher : IItemCacher
+    internal class ItemCacher : IItemCacher
     {
         private readonly IItemRepository _repository;
         private Item _actualItem;

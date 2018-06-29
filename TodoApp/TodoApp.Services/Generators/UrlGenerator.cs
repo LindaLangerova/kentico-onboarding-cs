@@ -6,7 +6,7 @@ using TodoApp.Contract.Services.Providers;
 
 namespace TodoApp.Services.Generators
 {
-    public class UrlGenerator : IUrlGenerator
+    internal class UrlGenerator : IUrlGenerator
     {
         private readonly IRouteNameProvider _routeNameProvider;
         private readonly UrlHelper _urlHelper;

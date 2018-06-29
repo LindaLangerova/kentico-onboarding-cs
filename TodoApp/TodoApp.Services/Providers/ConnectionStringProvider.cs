@@ -4,7 +4,7 @@ using TodoApp.Contract.Services.Providers;
 
 namespace TodoApp.Services.Providers
 {
-    public class ConnectionStringProvider : IConnectionStringProvider
+    internal class ConnectionStringProvider : IConnectionStringProvider
     {
         private readonly string _connectionString;
 

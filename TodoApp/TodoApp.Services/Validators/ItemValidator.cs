@@ -3,7 +3,7 @@ using TodoApp.Contract.Models;
 
 namespace TodoApp.Services.Validators
 {
-    public static class ItemValidator
+    internal static class ItemValidator
     {
         public static bool IsValidForCreating(this Item itemFromServer)
             => itemFromServer.IsValidForUpdating() && itemFromServer.Id == Guid.Empty;

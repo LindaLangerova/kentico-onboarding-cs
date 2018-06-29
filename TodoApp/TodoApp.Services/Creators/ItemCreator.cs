@@ -5,7 +5,7 @@ using TodoApp.Contract.Services.Generators;
 
 namespace TodoApp.Services.Creators
 {
-    public class ItemCreator : IItemCreator
+    internal class ItemCreator : IItemCreator
     {
         private readonly IDateTimeGenerator _dateTimeGenerator;
         private readonly IIdGenerator _idGenerator;
