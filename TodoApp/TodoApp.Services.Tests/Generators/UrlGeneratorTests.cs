@@ -4,7 +4,6 @@ using System.Web.Routing;
 using NSubstitute;
 using NUnit.Framework;
 using TodoApp.Api;
-using TodoApp.Contract.Services;
 using TodoApp.Contract.Services.Providers;
 using TodoApp.Contract.Tests.Utilities;
 using TodoApp.Services.Generators;

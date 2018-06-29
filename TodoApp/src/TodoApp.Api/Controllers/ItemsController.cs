@@ -6,7 +6,6 @@ using System.Web.Http.Cors;
 using Microsoft.Web.Http;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
-using TodoApp.Contract.Services;
 using TodoApp.Contract.Services.Creators;
 using TodoApp.Contract.Services.Generators;
 using TodoApp.Contract.Services.Providers;

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
-using TodoApp.Contract.Services;
 using TodoApp.Contract.Services.Providers;
 
 namespace TodoApp.Services.Providers
@@ -19,11 +18,7 @@ namespace TodoApp.Services.Providers
         }
 
         public async Task<Item> GetItem(Guid id)
-        {
-            _actualItem = _actualItem?.Id == id ? _actualItem : await _repository.GetAsync(id);
-
-            return _actualItem;
-        }
+            => _actualItem?.Id == id ? _actualItem : await _repository.GetAsync(id);
 
         public async Task<bool> ItemExists(Guid id)
         {

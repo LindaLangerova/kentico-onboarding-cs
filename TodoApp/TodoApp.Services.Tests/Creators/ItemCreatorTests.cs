@@ -2,7 +2,6 @@
 using NSubstitute;
 using NUnit.Framework;
 using TodoApp.Contract.Models;
-using TodoApp.Contract.Services;
 using TodoApp.Contract.Services.Creators;
 using TodoApp.Contract.Services.Generators;
 using TodoApp.Contract.Tests.Utilities;

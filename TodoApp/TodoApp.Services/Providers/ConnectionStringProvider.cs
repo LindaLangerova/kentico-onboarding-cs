@@ -1,5 +1,4 @@
 ﻿using System.Configuration;
-using TodoApp.Contract.Services;
 using TodoApp.Contract.Services.Providers;
 
 namespace TodoApp.Services.Providers
