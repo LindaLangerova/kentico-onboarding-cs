@@ -1,6 +1,6 @@
 ﻿using TodoApp.Contract.Models;
 
-namespace TodoApp.Contract.Services
+namespace TodoApp.Contract.Services.Creators
 {
     public interface IItemCreator
     {

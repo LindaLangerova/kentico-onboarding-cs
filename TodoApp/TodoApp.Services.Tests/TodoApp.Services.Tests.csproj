@@ -8,8 +8,8 @@
     <ProjectGuid>{C4C89E0F-4998-4668-9845-1DF715575CD9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TodoApp.Services.Test</RootNamespace>
-    <AssemblyName>TodoApp.Services.Test</AssemblyName>
+    <RootNamespace>TodoApp.Services.Tests</RootNamespace>
+    <AssemblyName>TodoApp.Services.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -65,12 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IdServices\IdGeneratorTests.cs" />
-    <Compile Include="ItemServices\ItemCacherTests.cs" />
-    <Compile Include="ItemServices\ItemCreatorTests.cs" />
-    <Compile Include="ItemServices\ItemValidatorTests.cs" />
+    <Compile Include="Generators\IdGeneratorTests.cs" />
+    <Compile Include="Generators\UrlGeneratorTests.cs" />
+    <Compile Include="Providers\ItemCacherTests.cs" />
+    <Compile Include="Creators\ItemCreatorTests.cs" />
+    <Compile Include="Validators\ItemValidatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UrlServices\UrlGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\TodoApp.Api\TodoApp.Api.csproj">

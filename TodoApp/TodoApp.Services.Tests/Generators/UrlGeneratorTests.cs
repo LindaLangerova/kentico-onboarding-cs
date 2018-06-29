@@ -5,10 +5,11 @@ using NSubstitute;
 using NUnit.Framework;
 using TodoApp.Api;
 using TodoApp.Contract.Services;
+using TodoApp.Contract.Services.Providers;
 using TodoApp.Contract.Tests.Utilities;
 using TodoApp.Services.Generators;
 
-namespace TodoApp.Services.Test.UrlServices
+namespace TodoApp.Services.Tests.Generators
 {
     public class UrlGeneratorTests : TestBase
     {

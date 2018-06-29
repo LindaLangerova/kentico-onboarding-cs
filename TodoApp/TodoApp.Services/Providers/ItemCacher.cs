@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services;
+using TodoApp.Contract.Services.Providers;
 
 namespace TodoApp.Services.Providers
 {

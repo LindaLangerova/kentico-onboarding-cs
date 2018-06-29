@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Contract.Services
+﻿namespace TodoApp.Contract.Services.Providers
 {
     public interface IRouteNameProvider
     {

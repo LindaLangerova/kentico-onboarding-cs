@@ -3,11 +3,13 @@ using NSubstitute;
 using NUnit.Framework;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Services;
+using TodoApp.Contract.Services.Creators;
+using TodoApp.Contract.Services.Generators;
 using TodoApp.Contract.Tests.Utilities;
 using TodoApp.Contract.Tests.Utilities.Comparers;
 using TodoApp.Services.Creators;
 
-namespace TodoApp.Services.Test.ItemServices
+namespace TodoApp.Services.Tests.Creators
 {
     internal class ItemCreatorTests : TestBase
     {

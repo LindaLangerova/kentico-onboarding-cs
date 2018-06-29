@@ -3,7 +3,7 @@ using NUnit.Framework;
 using TodoApp.Contract.Tests.Utilities;
 using TodoApp.Services.Generators;
 
-namespace TodoApp.Services.Test.IdServices
+namespace TodoApp.Services.Tests.Generators
 {
     public class IdGeneratorTests : TestBase
     {

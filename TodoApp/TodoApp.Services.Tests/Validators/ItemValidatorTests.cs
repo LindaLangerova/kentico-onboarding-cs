@@ -4,7 +4,7 @@ using TodoApp.Contract.Models;
 using TodoApp.Contract.Tests.Utilities;
 using TodoApp.Services.Validators;
 
-namespace TodoApp.Services.Test.ItemServices
+namespace TodoApp.Services.Tests.Validators
 {
     internal class ItemValidatorTests : TestBase
     {
