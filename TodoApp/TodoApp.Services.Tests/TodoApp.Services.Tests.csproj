@@ -81,10 +81,6 @@
       <Project>{CA56BD12-29D1-42BB-AE9A-F26B271D8982}</Project>
       <Name>TodoApp.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\src\TodoApp.Data\TodoApp.Data.csproj">
-      <Project>{D3AFE98B-4F30-4EEB-AB77-60B352E55590}</Project>
-      <Name>TodoApp.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TodoApp.Contract.Tests\TodoApp.Contract.Tests.csproj">
       <Project>{6A4C1C35-C61A-4F48-A590-86D094655EFE}</Project>
       <Name>TodoApp.Contract.Tests</Name>
