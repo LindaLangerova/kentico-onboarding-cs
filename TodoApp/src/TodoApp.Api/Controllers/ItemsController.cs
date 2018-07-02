@@ -17,6 +17,7 @@ namespace TodoApp.Api.Controllers
     [ApiVersion("1.0")]
     public class ItemsController : ApiController
     {
+        private readonly IDateTimeGenerator _dateTimeGenerator;
         private readonly IItemCacher _itemCacher;
         private readonly IItemCreator _itemCreator;
         private readonly IItemRepository _repository;
@@ -26,12 +27,14 @@ namespace TodoApp.Api.Controllers
             IItemRepository repository,
             IUrlGenerator urlGenerator,
             IItemCreator itemCreator,
-            IItemCacher itemCacher)
+            IItemCacher itemCacher,
+            IDateTimeGenerator dateTimeGenerator)
         {
             _repository = repository;
             _urlGenerator = urlGenerator;
             _itemCreator = itemCreator;
             _itemCacher = itemCacher;
+            _dateTimeGenerator = dateTimeGenerator;
         }
 
         public async Task<IHttpActionResult> GetAllAsync()
@@ -66,7 +69,7 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Item item)
         {
-            var updatedItem = await _repository.UpdateAsync(id, item);
+            var updatedItem = await _repository.UpdateAsync(id, item, _dateTimeGenerator.GetActualDateTime());
 
             return Ok(updatedItem);
         }

@@ -109,10 +109,6 @@
       <Project>{6A4C1C35-C61A-4F48-A590-86D094655EFE}</Project>
       <Name>TodoApp.Contract.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\TodoApp.Services\TodoApp.Services.csproj">
-      <Project>{310D4D50-21A1-4DD4-9A52-FCFF6F0800B5}</Project>
-      <Name>TodoApp.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

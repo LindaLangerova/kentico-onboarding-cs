@@ -1,6 +1,8 @@
 ﻿using System.Net.Http;
 using System.Web;
 using TodoApp.Contract;
+using TodoApp.Contract.Services.Generators;
+using TodoApp.Services.Generators;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
@@ -13,8 +15,10 @@ namespace TodoApp.Api
             => RegisterTypes(container);
 
         public void RegisterTypes(IUnityContainer container)
-            => container.RegisterType<HttpRequestMessage, HttpRequestMessage>(new HierarchicalLifetimeManager(),
-                                                                              new InjectionFactory(GetActualRequestMessage));
+            => container
+               .RegisterType<HttpRequestMessage, HttpRequestMessage>(new HierarchicalLifetimeManager(),
+                                                                     new InjectionFactory(GetActualRequestMessage))
+               .RegisterType<IDateTimeGenerator, DateTimeGenerator>(new HierarchicalLifetimeManager());
 
         private static HttpRequestMessage GetActualRequestMessage(IUnityContainer container)
             => HttpContext.Current.Items["MS_HttpRequestMessage"] as HttpRequestMessage;
