@@ -2,6 +2,7 @@ using System;
 using System.Web.Http;
 using TodoApp.Contract;
 using TodoApp.Data;
+using TodoApp.Services;
 using Unity;
 using Unity.WebApi;
 
@@ -13,6 +14,7 @@ namespace TodoApp.Api
         {
             IUnityContainer container = new UnityContainer();
 
+            container.RegisterTypesBy<ServicesUnityBootstrapper>();
             container.RegisterTypesBy<DataUnityBootstrapper>();
             container.RegisterTypesBy<ApiUnityBootstrapper>();
 

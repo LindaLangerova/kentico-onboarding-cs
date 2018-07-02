@@ -1,32 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using MongoDB.Driver;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
+using TodoApp.Contract.Services.Providers;
 
 namespace TodoApp.Data.Repositories
 {
     public class ItemRepository : IItemRepository
     {
-        internal static Item[] ItemList =
-        {
-            new Item {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee"},
-            new Item {Id = Guid.Parse("55b0d56d-48d7-4f93-bd73-e4b801e26faa"), Text = "Make second coffee"},
-            new Item {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d2"), Text = "Add some coffee"},
-            new Item {Id = Guid.Parse("250be0cc-438e-46cc-a0fe-549f4d3409e2"), Text = "Coffee overflow"}
-        };
+        private readonly IMongoCollection<Item> _itemsCollection;
 
-        public async Task<Item[]> GetAllAsync()
-            => await Task.FromResult(ItemList);
+        public ItemRepository(IConnectionStringProvider connectionStringProvider)
+        {
+            var databaseUrl = MongoUrl.Create(connectionStringProvider.GetConnectionString());
+            var database = new MongoClient(databaseUrl).GetDatabase(databaseUrl.DatabaseName);
+            _itemsCollection = database.GetCollection<Item>("Items");
+        }
+
+        public async Task<List<Item>> GetAllAsync()
+            => await _itemsCollection.Find(FilterDefinition<Item>.Empty).ToListAsync();
 
         public async Task<Item> GetAsync(Guid id)
-            => await Task.FromResult(ItemList[0]);
+            => await _itemsCollection.Find(item => item.Id == id).FirstOrDefaultAsync();
 
-        public async Task<Item> AddAsync(Item item)
-            => await Task.FromResult(ItemList[0]);
+        public async Task AddAsync(Item item)
+            => await _itemsCollection.InsertOneAsync(item);
 
-        public async Task<Item> UpdateAsync(Guid id, Item item)
-            => await Task.FromResult(ItemList[0]);
+        public Task<Item> UpdateAsync(Guid id, Item item)
+            => throw new NotImplementedException();
 
-        public void Delete(Guid id) { }
+        public Task DeleteAsync(Guid id)
+            => throw new NotImplementedException();
     }
 }
