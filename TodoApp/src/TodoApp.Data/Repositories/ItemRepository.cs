@@ -19,7 +19,7 @@ namespace TodoApp.Data.Repositories
             _itemsCollection = database.GetCollection<Item>("Items");
         }
 
-        public async Task<List<Item>> GetAllAsync()
+        public async Task<IEnumerable<Item>> GetAllAsync()
             => await _itemsCollection.Find(FilterDefinition<Item>.Empty).ToListAsync();
 
         public async Task<Item> GetAsync(Guid id)

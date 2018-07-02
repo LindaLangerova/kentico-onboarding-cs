@@ -7,7 +7,7 @@ namespace TodoApp.Contract.Repositories
 {
     public interface IItemRepository
     {
-        Task<List<Item>> GetAllAsync();
+        Task<IEnumerable<Item>> GetAllAsync();
         Task<Item> GetAsync(Guid id);
         Task<Item> UpdateAsync(Guid id, Item item);
         Task AddAsync(Item item);
