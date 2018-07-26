@@ -1,4 +1,0 @@
-language: csharp
-solution: "./TodoApp/TodoApp.sln"
-script:
-- xbuild ./TodoApp/TodoApp.sln
