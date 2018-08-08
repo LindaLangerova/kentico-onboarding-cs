@@ -41,7 +41,7 @@ namespace TodoApp.Data.Repositories
         public async Task DeleteAsync(Guid id)
         {
             Expression<Func<Item, bool>> filter = i => i.Id == id;
-            await Task.FromResult(_itemsCollection.FindOneAndDelete(filter));
+            await _itemsCollection.FindOneAndDeleteAsync(filter);
         }
     }
 }
