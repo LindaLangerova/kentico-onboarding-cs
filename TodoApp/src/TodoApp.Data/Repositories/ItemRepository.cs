@@ -6,6 +6,7 @@ using MongoDB.Driver;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services.Providers;
+using TodoApp.Services.Updators;
 
 namespace TodoApp.Data.Repositories
 {
@@ -35,7 +36,8 @@ namespace TodoApp.Data.Repositories
             var update = Builders<Item>.Update.Set("Text", $"{item.Text}").Set("LastChange", $"{actualDateTime}");
             var options = new FindOneAndUpdateOptions<Item, Item> {ReturnDocument = ReturnDocument.After, IsUpsert = false};
 
-            return await _itemsCollection.FindOneAndUpdateAsync(filter, update, options);
+            //return await _itemsCollection.FindOneAndUpdateAsync(filter, update, options);
+            return await _itemsCollection.Update(item);
         }
 
         public async Task DeleteAsync(Guid id)
