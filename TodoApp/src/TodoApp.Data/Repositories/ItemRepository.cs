@@ -6,6 +6,7 @@ using MongoDB.Driver;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services.Providers;
+using TodoApp.Contract.Services.Updaters;
 using TodoApp.Services.Updaters;
 
 namespace TodoApp.Data.Repositories
@@ -13,12 +14,14 @@ namespace TodoApp.Data.Repositories
     public class ItemRepository : IItemRepository
     {
         private readonly IMongoCollection<Item> _itemsCollection;
+        private readonly IItemUpdater _itemUpdater;
 
-        public ItemRepository(IConnectionStringProvider connectionStringProvider)
+        public ItemRepository(IConnectionStringProvider connectionStringProvider,IItemUpdater itemUpdater)
         {
             var databaseUrl = MongoUrl.Create(connectionStringProvider.GetConnectionString());
             var database = new MongoClient(databaseUrl).GetDatabase(databaseUrl.DatabaseName);
             _itemsCollection = database.GetCollection<Item>("Items");
+            _itemUpdater = itemUpdater;
         }
 
         public async Task<IEnumerable<Item>> GetAllAsync()
@@ -30,15 +33,8 @@ namespace TodoApp.Data.Repositories
         public async Task AddAsync(Item item)
             => await _itemsCollection.InsertOneAsync(item);
 
-        public async Task<Item> UpdateAsync(Guid id, Item item)
-        {
-            //Expression<Func<Item, bool>> filter = i => i.Id == id;
-            //var update = Builders<Item>.Update.Set("Text", $"{item.Text}").Set("LastChange", $"{actualDateTime}");
-            //var options = new FindOneAndUpdateOptions<Item, Item> {ReturnDocument = ReturnDocument.After, IsUpsert = false};
-
-            //return await _itemsCollection.FindOneAndUpdateAsync(filter, update, options);
-            return await _itemsCollection.Update(id, item);
-        }
+        public async Task<Item> UpdateAsync(Guid id, Item item) 
+            => await _itemUpdater.UpdateItemInCollection(_itemsCollection, id, item);
 
         public async Task DeleteAsync(Guid id)
         {
