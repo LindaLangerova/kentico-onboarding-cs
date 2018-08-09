@@ -22,7 +22,8 @@ namespace TodoApp.Services.Tests.Creators
         {
             var idGenerator = Substitute.For<IIdGenerator>();
             idGenerator.GenerateId().Returns(FakeItem.Id);
-            _itemCreator = new ItemCreator(idGenerator);
+            var dateTimeGenerator = Substitute.For<IDateTimeGenerator>();
+            _itemCreator = new ItemCreator(idGenerator, dateTimeGenerator);
         }
 
         [Test]

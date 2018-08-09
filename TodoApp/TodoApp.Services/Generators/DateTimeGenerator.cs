@@ -1,10 +1,11 @@
 ﻿using System;
+using TodoApp.Contract.Services.Generators;
 
 namespace TodoApp.Services.Generators
 {
-    internal static class DateTimeGenerator
+    internal class DateTimeGenerator : IDateTimeGenerator
     {
-        public static DateTime GetActualDateTime()
+        public DateTime GetActualDateTime()
             => DateTime.Now;
     }
 }
