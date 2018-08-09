@@ -33,9 +33,29 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CodeMash.MongoDbRepository, Version=2.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CodeMash.MongoDb.Repository.2.0.0.14\lib\net45\CodeMash.MongoDbRepository.dll</HintPath>
-    </Reference>
+    <Compile Include="Generators\DateTimeGenerator.cs" />
+    <Compile Include="Providers\ConnectionStringProvider.cs" />
+    <Compile Include="Generators\IdGenerator.cs" />
+    <Compile Include="Providers\ItemCacher.cs" />
+    <Compile Include="Creators\ItemCreator.cs" />
+    <Compile Include="Providers\RouteNameProvider.cs" />
+    <Compile Include="Updaters\ItemUpdater.cs" />
+    <Compile Include="Validators\ItemValidator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServicesUnityBootstrapper.cs" />
+    <Compile Include="Generators\UrlGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\TodoApp.Contract\TodoApp.Contract.csproj">
+      <Project>{ca56bd12-29d1-42bb-ae9a-f26b271d8982}</Project>
+      <Name>TodoApp.Contract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="DnsClient, Version=1.0.7.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
       <HintPath>..\packages\DnsClient.1.0.7\lib\net45\DnsClient.dll</HintPath>
     </Reference>
@@ -52,14 +72,13 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.3.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.5\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
@@ -67,32 +86,7 @@
     <Reference Include="System.Web.Http, Version=5.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.5\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
     <Reference Include="Unity.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Generators\DateTimeGenerator.cs" />
-    <Compile Include="Providers\ConnectionStringProvider.cs" />
-    <Compile Include="Generators\IdGenerator.cs" />
-    <Compile Include="Providers\ItemCacher.cs" />
-    <Compile Include="Creators\ItemCreator.cs" />
-    <Compile Include="Providers\RouteNameProvider.cs" />
-    <Compile Include="Updaters\ItemUpdater.cs" />
-    <Compile Include="Validators\ItemValidator.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServicesUnityBootstrapper.cs" />
-    <Compile Include="Generators\UrlGenerator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\src\TodoApp.Contract\TodoApp.Contract.csproj">
-      <Project>{CA56BD12-29D1-42BB-AE9A-F26B271D8982}</Project>
-      <Name>TodoApp.Contract</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

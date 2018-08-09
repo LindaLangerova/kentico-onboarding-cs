@@ -88,6 +88,10 @@
     <Compile Include="Repositories\ItemRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\TodoApp.Services\TodoApp.Services.csproj">
+      <Project>{310d4d50-21a1-4dd4-9a52-fcff6f0800b5}</Project>
+      <Name>TodoApp.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TodoApp.Contract\TodoApp.Contract.csproj">
       <Project>{CA56BD12-29D1-42BB-AE9A-F26B271D8982}</Project>
       <Name>TodoApp.Contract</Name>
