@@ -17,7 +17,6 @@ namespace TodoApp.Api.Controllers
     [ApiVersion("1.0")]
     public class ItemsController : ApiController
     {
-        
         private readonly IItemCacher _itemCacher;
         private readonly IItemCreator _itemCreator;
         private readonly IItemRepository _repository;

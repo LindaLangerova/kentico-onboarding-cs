@@ -1,8 +1,6 @@
 ﻿using System.Net.Http;
 using System.Web;
 using TodoApp.Contract;
-using TodoApp.Contract.Services.Generators;
-using TodoApp.Services.Generators;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;

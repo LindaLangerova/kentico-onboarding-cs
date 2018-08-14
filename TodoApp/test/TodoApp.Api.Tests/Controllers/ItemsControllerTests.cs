@@ -41,7 +41,6 @@ namespace TodoApp.Api.Tests.Controllers
             _itemCreator = Substitute.For<IItemCreator>();
             _itemCacher = Substitute.For<IItemCacher>();
 
-
             _controller = new ItemsController(_repository, urlGenerator, _itemCreator, _itemCacher)
             {
                 Request = new HttpRequestMessage(),

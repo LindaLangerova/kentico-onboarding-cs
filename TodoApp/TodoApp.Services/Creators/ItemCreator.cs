@@ -1,14 +1,13 @@
 ﻿using TodoApp.Contract.Models;
 using TodoApp.Contract.Services.Creators;
 using TodoApp.Contract.Services.Generators;
-using TodoApp.Services.Generators;
 
 namespace TodoApp.Services.Creators
 {
     internal class ItemCreator : IItemCreator
     {
-        private readonly IIdGenerator _idGenerator;
         private readonly IDateTimeGenerator _dateTimeGenerator;
+        private readonly IIdGenerator _idGenerator;
 
         public ItemCreator(IIdGenerator idGenerator, IDateTimeGenerator dateTimeGenerator)
         {
