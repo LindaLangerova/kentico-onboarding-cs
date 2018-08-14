@@ -3,7 +3,7 @@ using TodoApp.Contract.Services.Generators;
 
 namespace TodoApp.Services.Generators
 {
-    internal class DateTimeGenerator : IDateTimeGenerator
+    public class DateTimeGenerator : IDateTimeGenerator
     {
         public DateTime GetActualDateTime()
             => DateTime.Now;
