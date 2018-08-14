@@ -11,6 +11,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Api.Tests", "test\TodoApp.Api.Tests\TodoApp.Api.Tests.csproj", "{EF658A4B-550A-4934-A45F-35D5EDA38698}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Data", "src\TodoApp.Data\TodoApp.Data.csproj", "{D3AFE98B-4F30-4EEB-AB77-60B352E55590}"
+	ProjectSection(ProjectDependencies) = postProject
+		{310D4D50-21A1-4DD4-9A52-FCFF6F0800B5} = {310D4D50-21A1-4DD4-9A52-FCFF6F0800B5}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Contract", "src\TodoApp.Contract\TodoApp.Contract.csproj", "{CA56BD12-29D1-42BB-AE9A-F26B271D8982}"
 EndProject
