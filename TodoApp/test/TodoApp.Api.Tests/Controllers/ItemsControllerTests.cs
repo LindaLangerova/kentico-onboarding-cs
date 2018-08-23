@@ -13,6 +13,7 @@ using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services.Creators;
 using TodoApp.Contract.Services.Generators;
 using TodoApp.Contract.Services.Providers;
+using TodoApp.Contract.Services.Updaters;
 using TodoApp.Contract.Tests.Utilities;
 using TodoApp.Contract.Tests.Utilities.ActionsResolution;
 using TodoApp.Contract.Tests.Utilities.Comparers;
@@ -25,6 +26,7 @@ namespace TodoApp.Api.Tests.Controllers
         private IItemRepository _repository;
         private IItemCreator _itemCreator;
         private IItemCacher _itemCacher;
+        private IItemUpdater _itemUpdater;
 
         private static readonly Item FakeItem =
             new Item {Id = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d3"), Text = "Make a coffee"};
@@ -40,8 +42,9 @@ namespace TodoApp.Api.Tests.Controllers
 
             _itemCreator = Substitute.For<IItemCreator>();
             _itemCacher = Substitute.For<IItemCacher>();
+            _itemUpdater = Substitute.For<IItemUpdater>();
 
-            _controller = new ItemsController(_repository, urlGenerator, _itemCreator, _itemCacher)
+            _controller = new ItemsController(_repository, urlGenerator, _itemCreator, _itemCacher, _itemUpdater)
             {
                 Request = new HttpRequestMessage(),
                 Configuration = new HttpConfiguration()
@@ -119,7 +122,8 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PutItem_ExistingItem_ItemUpdated()
         {
-            _repository.UpdateAsync(FakeItem.Id, FakeItem).Returns(FakeItem);
+            _itemCacher.ItemExists(FakeItem.Id).Returns(true);
+            _itemUpdater.UpdateItem(FakeItem.Id, FakeItem).Returns(Task.FromResult(FakeItem));
 
             var response = await _controller.ResolveAction(controller => controller.PutAsync(FakeItem.Id, FakeItem))
                                             .BeItReducedResponse<Item>();
@@ -131,6 +135,8 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task DeleteItem_ItemDeleted()
         {
+            _itemCacher.ItemExists(FakeItem.Id).Returns(true);
+
             _repository.DeleteAsync(FakeItem.Id).Returns(Task.FromResult(HttpStatusCode.NoContent));
             var response = await _controller.ResolveAction(controller => controller.DeleteAsync(FakeItem.Id)).BeItReducedResponse();
 

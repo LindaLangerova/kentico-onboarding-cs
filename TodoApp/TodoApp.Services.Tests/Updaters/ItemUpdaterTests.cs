@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MongoDB.Driver;
 using NSubstitute;
+using NSubstitute.Core.Arguments;
 using NUnit.Framework;
 using TodoApp.Contract.Models;
+using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services.Generators;
 using TodoApp.Contract.Services.Updaters;
 using TodoApp.Contract.Tests.Utilities;
@@ -30,15 +33,15 @@ namespace TodoApp.Services.Tests.Updaters
         {
             var dateTimeGenerator = Substitute.For<IDateTimeGenerator>();
             dateTimeGenerator.GetActualDateTime().Returns(TimeNow);
-            _itemUpdater = new ItemUpdater(dateTimeGenerator);
+            var itemRepository = Substitute.For<IItemRepository>();
+
+            _itemUpdater = new ItemUpdater(itemRepository, dateTimeGenerator);
         }
 
         [Test]
         public void UpdateItem_ItemWithTheUpdatedTimeOfLastChangeReturned()
         {
-            var mongoCollection = Substitute.For<IMongoCollection<Item>>();
-
-            var receivedItem = _itemUpdater.UpdateItemInCollection(mongoCollection, DefaultId, DefaultItem).Result;
+            var receivedItem = _itemUpdater.UpdateItem(DefaultId, DefaultItem).Result;
 
             Assert.That(receivedItem.LastChange, Is.EqualTo(TimeNow));
         }
