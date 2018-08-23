@@ -31,8 +31,6 @@ namespace TodoApp.Services.Providers
         }
 
         public void ClearCache()
-        {
-            _actualItem = null;
-        }
+            => _actualItem = null;
     }
 }

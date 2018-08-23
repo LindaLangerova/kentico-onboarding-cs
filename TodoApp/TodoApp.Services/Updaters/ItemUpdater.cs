@@ -9,8 +9,8 @@ namespace TodoApp.Services.Updaters
 {
     public class ItemUpdater : IItemUpdater
     {
-        private readonly IItemRepository _itemRepository;
         private readonly IDateTimeGenerator _dateTimeGenerator;
+        private readonly IItemRepository _itemRepository;
 
         public ItemUpdater(IItemRepository itemRepository, IDateTimeGenerator dateTimeGenerator)
         {
@@ -22,6 +22,7 @@ namespace TodoApp.Services.Updaters
         {
             item.LastChange = _dateTimeGenerator.GetActualDateTime();
             await _itemRepository.UpdateAsync(id, item);
+
             return item;
         }
     }

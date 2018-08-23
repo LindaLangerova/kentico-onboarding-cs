@@ -20,9 +20,9 @@ namespace TodoApp.Api.Controllers
     {
         private readonly IItemCacher _itemCacher;
         private readonly IItemCreator _itemCreator;
+        private readonly IItemUpdater _itemUpdater;
         private readonly IItemRepository _repository;
         private readonly IUrlGenerator _urlGenerator;
-        private readonly IItemUpdater _itemUpdater;
 
         public ItemsController(
             IItemRepository repository,
@@ -92,6 +92,7 @@ namespace TodoApp.Api.Controllers
             await _repository.DeleteAsync(id);
 
             _itemCacher.ClearCache();
+
             return StatusCode(HttpStatusCode.NoContent);
         }
     }

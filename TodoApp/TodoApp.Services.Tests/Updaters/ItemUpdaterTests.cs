@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
-using MongoDB.Driver;
 using NSubstitute;
-using NSubstitute.Core.Arguments;
 using NUnit.Framework;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
