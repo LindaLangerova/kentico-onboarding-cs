@@ -8,7 +8,7 @@ namespace TodoApp.Services.Providers
         private readonly string _connectionString;
 
         public ConnectionStringProvider()
-            => _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            => _connectionString = ConfigurationManager.ConnectionStrings["mongo_list_connection"].ConnectionString;
 
         public string GetConnectionString()
             => _connectionString;
