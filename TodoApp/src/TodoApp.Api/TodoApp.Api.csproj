@@ -159,6 +159,10 @@
       <Project>{ca56bd12-29d1-42bb-ae9a-f26b271d8982}</Project>
       <Name>TodoApp.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TodoApp.Data\TodoApp.Data.csproj">
+      <Project>{d3afe98b-4f30-4eeb-ab77-60b352e55590}</Project>
+      <Name>TodoApp.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -122,6 +122,7 @@ namespace TodoApp.Api.Tests.Controllers
         [Test]
         public async Task PutItem_ExistingItem_ItemUpdated()
         {
+            _itemCacher.GetItem(FakeItem.Id).Returns(FakeItem);
             _itemCacher.ItemExists(FakeItem.Id).Returns(true);
             _itemUpdater.UpdateItem(FakeItem.Id, FakeItem).Returns(Task.FromResult(FakeItem));
 

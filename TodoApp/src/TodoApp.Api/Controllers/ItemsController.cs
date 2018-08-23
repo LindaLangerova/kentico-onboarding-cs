@@ -73,13 +73,16 @@ namespace TodoApp.Api.Controllers
             if (id == Guid.Empty)
                 return await PostAsync(item);
 
-            if (!item.IsValidForUpdating())
-                return BadRequest();
-
             if (!await _itemCacher.ItemExists(id))
                 return NotFound();
 
-            var updatedItem = await _itemUpdater.UpdateItem(id, item);
+            if (!item.IsValidForUpdating())
+                return BadRequest();
+
+            var composedItem = await _itemCacher.GetItem(id);
+            composedItem.Text = item?.Text;
+            
+            var updatedItem = await _itemUpdater.UpdateItem(id, composedItem);
 
             return Ok(updatedItem);
         }
