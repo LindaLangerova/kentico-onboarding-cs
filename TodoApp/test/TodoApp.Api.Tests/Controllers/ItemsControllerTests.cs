@@ -124,7 +124,7 @@ namespace TodoApp.Api.Tests.Controllers
         {
             _itemCacher.GetItem(FakeItem.Id).Returns(FakeItem);
             _itemCacher.ItemExists(FakeItem.Id).Returns(true);
-            _itemUpdater.UpdateItem(FakeItem.Id, FakeItem).Returns(Task.FromResult(FakeItem));
+            _itemUpdater.UpdateItem(FakeItem, FakeItem).Returns(Task.FromResult(FakeItem));
 
             var response = await _controller.ResolveAction(controller => controller.PutAsync(FakeItem.Id, FakeItem))
                                             .BeItReducedResponse<Item>();

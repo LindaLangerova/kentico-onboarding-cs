@@ -6,6 +6,7 @@ using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services.Generators;
 using TodoApp.Contract.Services.Updaters;
 using TodoApp.Contract.Tests.Utilities;
+using TodoApp.Contract.Tests.Utilities.Comparers;
 using TodoApp.Services.Updaters;
 
 namespace TodoApp.Services.Tests.Updaters
@@ -36,11 +37,17 @@ namespace TodoApp.Services.Tests.Updaters
         }
 
         [Test]
-        public void UpdateItem_ItemWithTheUpdatedTimeOfLastChangeReturned()
+        public void UpdateItem_UpdatedItemReturned()
         {
-            var receivedItem = _itemUpdater.UpdateItem(DefaultId, DefaultItem).Result;
+            var itemWithUpdates = new Item
+            {
+                Text = "ItemUpdated"
+            };
 
-            Assert.That(receivedItem.LastChange, Is.EqualTo(TimeNow));
+            var expectedItem =new Item {Id = DefaultId, Text = "ItemUpdated", CreatedAt = DateTime.MinValue, LastChange = TimeNow};
+            var receivedItem = _itemUpdater.UpdateItem(DefaultItem, itemWithUpdates).Result;
+
+            Assert.That(receivedItem, Is.EqualTo(expectedItem).UsingItemModelComparer());
         }
     }
 }

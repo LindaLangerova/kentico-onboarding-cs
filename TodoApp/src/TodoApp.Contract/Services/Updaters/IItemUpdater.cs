@@ -6,6 +6,6 @@ namespace TodoApp.Contract.Services.Updaters
 {
     public interface IItemUpdater
     {
-        Task<Item> UpdateItem(Guid id, Item item);
+        Task<Item> UpdateItem(Item item, Item itemWithUpdates);
     }
 }

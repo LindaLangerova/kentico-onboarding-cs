@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using TodoApp.Contract.Models;
 using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services.Generators;
+using TodoApp.Contract.Services.Providers;
 using TodoApp.Contract.Services.Updaters;
 
 namespace TodoApp.Services.Updaters
@@ -18,10 +19,12 @@ namespace TodoApp.Services.Updaters
             _dateTimeGenerator = dateTimeGenerator;
         }
 
-        public async Task<Item> UpdateItem(Guid id, Item item)
+        public async Task<Item> UpdateItem(Item item, Item itemWithUpdates)
         {
             item.LastChange = _dateTimeGenerator.GetActualDateTime();
-            await _itemRepository.UpdateAsync(id, item);
+            item.Text = itemWithUpdates.Text;
+
+            await _itemRepository.UpdateAsync(item.Id, item);
 
             return item;
         }

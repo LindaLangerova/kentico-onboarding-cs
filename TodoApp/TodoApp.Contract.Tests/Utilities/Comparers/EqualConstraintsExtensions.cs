@@ -18,7 +18,10 @@ namespace TodoApp.Contract.Tests.Utilities.Comparers
                 => new Lazy<ItemModelComparer>(() => new ItemModelComparer());
 
             public bool Equals(Item x, Item y)
-                => x?.Id == y?.Id && x?.Text == y?.Text;
+                => x?.Id == y?.Id 
+                && x?.Text == y?.Text 
+                && x?.LastChange == y?.LastChange
+                && x?.CreatedAt == y?.CreatedAt;
 
             public int GetHashCode(Item obj)
                 => obj.Id.GetHashCode();

@@ -79,10 +79,7 @@ namespace TodoApp.Api.Controllers
             if (!item.IsValidForUpdating())
                 return BadRequest();
 
-            var composedItem = await _itemCacher.GetItem(id);
-            composedItem.Text = item?.Text;
-            
-            var updatedItem = await _itemUpdater.UpdateItem(id, composedItem);
+            var updatedItem = await _itemUpdater.UpdateItem(await _itemCacher.GetItem(id), item);
 
             return Ok(updatedItem);
         }
