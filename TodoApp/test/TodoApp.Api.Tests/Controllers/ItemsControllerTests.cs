@@ -134,7 +134,44 @@ namespace TodoApp.Api.Tests.Controllers
         }
 
         [Test]
-        public async Task DeleteItem_ItemDeleted()
+        public async Task PutItem_ItemWithEmptyGuid_ItemAdded()
+        {
+            var expectedRoute = new Uri($"api/v1/itemlist/{FakeItem.Id}", UriKind.Relative);
+            var reffedItem = new Item { Text = FakeItem.Text };
+            _itemCreator.SetItem(reffedItem).Returns(FakeItem);
+
+            var response = await _controller.ResolveAction(controller => controller.PutAsync(Guid.Empty, reffedItem)).BeItReducedResponse<Item>();
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created))
+                  .AndThat(response.Location, Is.EqualTo(expectedRoute))
+                  .AndThat(response.Content, Is.EqualTo(FakeItem));
+        }
+
+        [Test]
+        public async Task PutItem_ItemWithNonexistingId_NotFoundReturned()
+        {
+            var reffedItem = new Item { Text = FakeItem.Text };
+            var nonexistingId = Guid.Parse("c5cc89a0-ab8d-4328-9000-3da679ec02d0");
+            _itemCacher.ItemExists(nonexistingId).Returns(false);
+
+            var response = await _controller.ResolveAction(controller => controller.PutAsync(nonexistingId, reffedItem)).BeItReducedResponse<Item>();
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        }
+
+        [Test]
+        public async Task PutItem_ItemInvalidForUpdating_BadRequestReturned()
+        {
+            var reffedItem = new Item { Text = "" };
+            _itemCacher.ItemExists(FakeItem.Id).Returns(true);
+
+            var response = await _controller.ResolveAction(controller => controller.PutAsync(FakeItem.Id, reffedItem)).BeItReducedResponse<Item>();
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        }
+
+        [Test]
+        public async Task DeleteItem_ExistingId_ItemDeleted()
         {
             _itemCacher.ItemExists(FakeItem.Id).Returns(true);
 
@@ -142,6 +179,17 @@ namespace TodoApp.Api.Tests.Controllers
             var response = await _controller.ResolveAction(controller => controller.DeleteAsync(FakeItem.Id)).BeItReducedResponse();
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+        }
+
+        [Test]
+        public async Task DeleteItem_NonExistingId_NotFoundReturned()
+        {
+            _itemCacher.ItemExists(FakeItem.Id).Returns(false);
+
+            _repository.DeleteAsync(FakeItem.Id).Returns(Task.FromResult(HttpStatusCode.NoContent));
+            var response = await _controller.ResolveAction(controller => controller.DeleteAsync(FakeItem.Id)).BeItReducedResponse();
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         }
     }
 }
