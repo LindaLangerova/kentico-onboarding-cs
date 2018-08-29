@@ -65,13 +65,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IItemRepository.cs" />
     <Compile Include="IUnityBootstrapper.cs" />
-    <Compile Include="Services\Providers\IConnectionStringProvider.cs" />
     <Compile Include="Services\Generators\IDateTimeGenerator.cs" />
+    <Compile Include="Services\Providers\IConnectionStringProvider.cs" />
     <Compile Include="Services\Generators\IIdGenerator.cs" />
     <Compile Include="Services\Providers\IItemCacher.cs" />
     <Compile Include="Services\Creators\IItemCreator.cs" />
     <Compile Include="Services\Providers\IRouteNameProvider.cs" />
     <Compile Include="Services\Generators\IUrlGenerator.cs" />
+    <Compile Include="Services\Updaters\IItemUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
