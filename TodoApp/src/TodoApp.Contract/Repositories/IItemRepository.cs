@@ -9,7 +9,7 @@ namespace TodoApp.Contract.Repositories
     {
         Task<IEnumerable<Item>> GetAllAsync();
         Task<Item> GetAsync(Guid id);
-        Task<Item> UpdateAsync(Guid id, Item item, DateTime actualDateTime);
+        Task UpdateAsync(Guid id, Item item);
         Task AddAsync(Item item);
         Task DeleteAsync(Guid id);
     }

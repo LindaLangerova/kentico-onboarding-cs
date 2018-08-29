@@ -1,0 +1,33 @@
+configuration: Release
+
+image: Visual Studio 2017
+
+before_build:
+  - ps: New-Item C:\projects\kentico-onboarding-cs\TodoApp\src\TodoApp.Api\ConnectionStrings.config -type file
+  - nuget restore TodoApp/TodoApp.sln
+
+build:
+  publish_wap: true
+  verbosity: minimal
+
+after_build:
+ - ps: Remove-Item C:\projects\kentico-onboarding-cs\TodoApp\src\TodoApp.Api\ConnectionStrings.config
+
+test:
+  assemblies:
+    except:
+      - '**\*Contract.Tests.dll'
+
+artifacts:
+- path: .
+  name: PublishRelease
+  type: WebDeployPackage
+deploy:
+- provider: WebDeploy
+  server: https://lindal-todoapp.scm.azurewebsites.net:443/msdeploy.axd?site=lindal-todoapp
+  website: lindal-todoapp
+  username: $LindaL-TodoApp
+  password:
+    secure: LJV56DHSLoTGwdlh/57seenYILwJAhcafrRXIqM2LcNg87ZJ+2oZjT4BHdnJuW8t4C5573ehsI3gdJG39WKddQ==
+  remove_files: true
+  app_offline: true

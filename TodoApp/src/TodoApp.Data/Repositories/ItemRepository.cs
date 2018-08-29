@@ -22,26 +22,23 @@ namespace TodoApp.Data.Repositories
 
         public async Task<IEnumerable<Item>> GetAllAsync()
             => await _itemsCollection.Find(FilterDefinition<Item>.Empty).ToListAsync();
-
+         
         public async Task<Item> GetAsync(Guid id)
             => await _itemsCollection.Find(item => item.Id == id).FirstOrDefaultAsync();
 
         public async Task AddAsync(Item item)
             => await _itemsCollection.InsertOneAsync(item);
 
-        public async Task<Item> UpdateAsync(Guid id, Item item, DateTime actualDateTime)
+        public async Task UpdateAsync(Guid id, Item item)
         {
             Expression<Func<Item, bool>> filter = i => i.Id == id;
-            var update = Builders<Item>.Update.Set("Text", $"{item.Text}").Set("LastChange", $"{actualDateTime}");
-            var options = new FindOneAndUpdateOptions<Item, Item> {ReturnDocument = ReturnDocument.After, IsUpsert = false};
-
-            return await _itemsCollection.FindOneAndUpdateAsync(filter, update, options);
+            await _itemsCollection.ReplaceOneAsync<Item>(filter, item);
         }
 
         public async Task DeleteAsync(Guid id)
         {
             Expression<Func<Item, bool>> filter = i => i.Id == id;
-            await Task.FromResult(_itemsCollection.FindOneAndDelete(filter));
+            await _itemsCollection.FindOneAndDeleteAsync(filter);
         }
     }
 }

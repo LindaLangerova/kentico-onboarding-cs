@@ -9,6 +9,7 @@ using TodoApp.Contract.Repositories;
 using TodoApp.Contract.Services.Creators;
 using TodoApp.Contract.Services.Generators;
 using TodoApp.Contract.Services.Providers;
+using TodoApp.Contract.Services.Updaters;
 using TodoApp.Services.Validators;
 
 namespace TodoApp.Api.Controllers
@@ -17,9 +18,9 @@ namespace TodoApp.Api.Controllers
     [ApiVersion("1.0")]
     public class ItemsController : ApiController
     {
-        private readonly IDateTimeGenerator _dateTimeGenerator;
         private readonly IItemCacher _itemCacher;
         private readonly IItemCreator _itemCreator;
+        private readonly IItemUpdater _itemUpdater;
         private readonly IItemRepository _repository;
         private readonly IUrlGenerator _urlGenerator;
 
@@ -28,13 +29,13 @@ namespace TodoApp.Api.Controllers
             IUrlGenerator urlGenerator,
             IItemCreator itemCreator,
             IItemCacher itemCacher,
-            IDateTimeGenerator dateTimeGenerator)
+            IItemUpdater itemUpdater)
         {
             _repository = repository;
             _urlGenerator = urlGenerator;
             _itemCreator = itemCreator;
             _itemCacher = itemCacher;
-            _dateTimeGenerator = dateTimeGenerator;
+            _itemUpdater = itemUpdater;
         }
 
         public async Task<IHttpActionResult> GetAllAsync()
@@ -69,14 +70,28 @@ namespace TodoApp.Api.Controllers
 
         public async Task<IHttpActionResult> PutAsync(Guid id, Item item)
         {
-            var updatedItem = await _repository.UpdateAsync(id, item, _dateTimeGenerator.GetActualDateTime());
+            if (id == Guid.Empty)
+                return await PostAsync(item);
+
+            if (!await _itemCacher.ItemExists(id))
+                return NotFound();
+
+            if (!item.IsValidForUpdating())
+                return BadRequest();
+
+            var updatedItem = await _itemUpdater.UpdateItem(await _itemCacher.GetItem(id), item);
 
             return Ok(updatedItem);
         }
 
         public async Task<IHttpActionResult> DeleteAsync(Guid id)
         {
+            if (!await _itemCacher.ItemExists(id))
+                return NotFound();
+
             await _repository.DeleteAsync(id);
+
+            _itemCacher.ClearCache();
 
             return StatusCode(HttpStatusCode.NoContent);
         }

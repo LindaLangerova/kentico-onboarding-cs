@@ -2,9 +2,11 @@
 using TodoApp.Contract.Services.Creators;
 using TodoApp.Contract.Services.Generators;
 using TodoApp.Contract.Services.Providers;
+using TodoApp.Contract.Services.Updaters;
 using TodoApp.Services.Creators;
 using TodoApp.Services.Generators;
 using TodoApp.Services.Providers;
+using TodoApp.Services.Updaters;
 using Unity;
 using Unity.Lifetime;
 
@@ -22,6 +24,7 @@ namespace TodoApp.Services
                         .RegisterType<IIdGenerator, IdGenerator>(new HierarchicalLifetimeManager())
                         .RegisterType<IConnectionStringProvider, ConnectionStringProvider>(new ContainerControlledLifetimeManager())
                         .RegisterType<IRouteNameProvider, RouteNameProvider>(new HierarchicalLifetimeManager())
+                        .RegisterType<IItemUpdater, ItemUpdater>(new HierarchicalLifetimeManager())
                         .RegisterType<IDateTimeGenerator, DateTimeGenerator>(new HierarchicalLifetimeManager());
     }
 }

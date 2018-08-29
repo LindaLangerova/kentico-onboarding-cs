@@ -8,5 +8,6 @@ namespace TodoApp.Contract.Services.Providers
     {
         Task<Item> GetItem(Guid id);
         Task<bool> ItemExists(Guid id);
+        void ClearCache();
     }
 }
